@@ -1,4 +1,5 @@
-﻿using ActionCommandGame.Services.Abstractions;
+﻿using ActionCommandGame.Model;
+using ActionCommandGame.Services.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ActionCommandGame.RestApi.Controllers
@@ -14,18 +15,42 @@ namespace ActionCommandGame.RestApi.Controllers
             _playerService = playerService;
         }
 
-        [HttpGet]
+        /// <summary>
+        /// Finds a player
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> Get(int id)
         {
             var result = await _playerService.Get(id);
             return Ok(result);
         }
 
+        /// <summary>
+        /// Returns all players
+        /// </summary>
+        /// <returns>All players</returns>
         [HttpGet]
         public async Task<IActionResult> Find()
         {
             var result = await _playerService.Find();
             return Ok(result);
         }
-     }
+
+        /*
+        public Player Create(Player player)
+        {
+            throw new System.NotImplementedException();
+        }
+        public Player Update(int id, Player player)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool Delete(int id)
+        {
+            throw new System.NotImplementedException();
+        }*/
+    }
 }

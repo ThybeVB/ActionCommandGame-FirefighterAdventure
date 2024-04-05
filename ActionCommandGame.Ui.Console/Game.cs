@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ActionCommandGame.Model;
+using ActionCommandGame.Sdk;
 using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Services.Extensions;
 using ActionCommandGame.Services.Model.Core;
@@ -20,18 +21,22 @@ namespace ActionCommandGame.Ui.ConsoleApp
         private readonly IItemService _itemService;
         private readonly IPlayerItemService _playerItemService;
 
+        private readonly PlayerSdk _playerSdk;
+
         public Game(
             AppSettings settings,
             IGameService gameService,
             IPlayerService playerService,
             IItemService itemService,
-            IPlayerItemService playerItemService)
+            IPlayerItemService playerItemService,
+            PlayerSdk playerSdk)
         {
             _settings = settings;
             _gameService = gameService;
             _playerService = playerService;
             _itemService = itemService;
             _playerItemService = playerItemService;
+            _playerSdk = playerSdk;
         }
 
         public async Task Start()
@@ -91,7 +96,8 @@ namespace ActionCommandGame.Ui.ConsoleApp
 
                 if (CheckCommand(command, new[] { "leaderboard", "lead", "top", "rank", "ranking" }))
                 {
-                    var players = (await _playerService.Find()).OrderByDescending(p => p.Experience).ToList();
+                    //var players = (await _playerService.Find()).OrderByDescending(p => p.Experience).ToList(); //todo replace with sdk test
+                    var players = (await _playerSdk.Find()).OrderByDescending(p => p.Experience).ToList();
                     ShowLeaderboard(players, currentPlayerId);
                 }
 

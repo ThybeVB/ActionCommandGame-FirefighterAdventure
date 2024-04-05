@@ -7,5 +7,6 @@
         public string ActionCommand { get; set; }
         public string ActionText { get; set; }
         public int DefaultCooldown { get; set; }
+        public string BaseAddress { get; set; }
     }
 }

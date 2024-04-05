@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using ActionCommandGame.Repository;
+using ActionCommandGame.Sdk;
 using ActionCommandGame.Services;
 using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Settings;
@@ -52,13 +53,25 @@ namespace ActionCommandGame.Ui.ConsoleApp
                 options.UseInMemoryDatabase("InMemoryDb");
             }, ServiceLifetime.Singleton, ServiceLifetime.Singleton);
 
+            services.AddHttpClient("ActionCommandGameApi", options =>
+            {
+                if (!string.IsNullOrWhiteSpace(appSettings.BaseAddress))
+                {
+                    options.BaseAddress = new Uri(appSettings.BaseAddress);
+                }
+            });
+
+            services.AddScoped<PlayerSdk>();
+
             services.AddTransient<Game>();
 
             services.AddTransient<IGameService, GameService>();
             services.AddTransient<IPositiveGameEventService, PositiveGameEventService>();
             services.AddTransient<INegativeGameEventService, NegativeGameEventService>();
             services.AddTransient<IItemService, ItemService>();
-            services.AddTransient<IPlayerService, PlayerService>();
+            
+            services.AddTransient<IPlayerService, PlayerService>(); //first oen to phase out
+
             services.AddTransient<IPlayerItemService, PlayerItemService>();
         }
     }
