@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using ActionCommandGame.Model;
 using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Services.Extensions;
@@ -33,7 +34,7 @@ namespace ActionCommandGame.Ui.ConsoleApp
             _playerItemService = playerItemService;
         }
 
-        public void Start()
+        public async Task Start()
         {
             Console.OutputEncoding = Encoding.UTF8;
             ConsoleBlockWriter.Write(_settings.GameName, 4 , ConsoleColor.Blue);
@@ -80,7 +81,7 @@ namespace ActionCommandGame.Ui.ConsoleApp
                         continue;
                     }
 
-                    Buy(currentPlayerId, itemId.Value);
+                    await Buy(currentPlayerId, itemId.Value);
                 }
 
                 if (CheckCommand(command, new[] { "bal", "balance", "money", "xp", "level", "statistics", "stats", "stat", "info" }))
@@ -90,7 +91,7 @@ namespace ActionCommandGame.Ui.ConsoleApp
 
                 if (CheckCommand(command, new[] { "leaderboard", "lead", "top", "rank", "ranking" }))
                 {
-                    var players = _playerService.Find().OrderByDescendingAsync(p => p.Experience).ToList();
+                    var players = (await _playerService.Find()).OrderByDescending(p => p.Experience).ToList();
                     ShowLeaderboard(players, currentPlayerId);
                 }
 
@@ -169,9 +170,9 @@ namespace ActionCommandGame.Ui.ConsoleApp
             return matchingCommands.Any(c => command.ToLower().StartsWith(c.ToLower()));
         }
 
-        public void ShowStats(int playerId)
+        public async void ShowStats(int playerId)
         {
-            var player = _playerService.Get(playerId);
+            var player = await _playerService.Get(playerId);
 
             //Check food consumption
             if (player.CurrentFuelPlayerItem != null)
@@ -281,9 +282,9 @@ namespace ActionCommandGame.Ui.ConsoleApp
             ConsoleWriter.WriteText();
         }
 
-        private void PerformAction(int playerId)
+        private async void PerformAction(int playerId)
         {
-            var result = _gameService.PerformAction(playerId);
+            var result = await _gameService.PerformAction(playerId);
 
             var player = result.Data.Player;
             var positiveGameEvent = result.Data.PositiveGameEvent;
@@ -320,9 +321,9 @@ namespace ActionCommandGame.Ui.ConsoleApp
             ConsoleWriter.WriteText();
         }
 
-        private void Buy(int playerId, int itemId)
+        private async Task Buy(int playerId, int itemId)
         {
-            var result = _gameService.Buy(playerId, itemId);
+            var result = await _gameService.Buy(playerId, itemId);
 
             if (result.IsSuccess)
             {

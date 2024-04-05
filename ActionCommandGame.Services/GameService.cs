@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ActionCommandGame.Model;
 using ActionCommandGame.Repository;
 using ActionCommandGame.Services.Abstractions;
@@ -39,10 +40,10 @@ namespace ActionCommandGame.Services
             _playerItemService = playerItemService;
         }
 
-        public ServiceResult<GameResult> PerformAction(int playerId)
+        public async Task<ServiceResult<GameResult>> PerformAction(int playerId)
         {
             //Check Cooldown
-            var player = _playerService.Get(playerId);
+            var player = await _playerService.Get(playerId);
             var elapsedSeconds = DateTime.UtcNow.Subtract(player.LastActionExecutedDateTime).TotalSeconds;
             var cooldownSeconds = _appSettings.DefaultCooldown;
             if (player.CurrentFuelPlayerItem != null)
@@ -153,9 +154,9 @@ namespace ActionCommandGame.Services
             return serviceResult;
         }
 
-        public ServiceResult<BuyResult> Buy(int playerId, int itemId)
+        public async Task<ServiceResult<BuyResult>> Buy(int playerId, int itemId)
         {
-            var player = _playerService.Get(playerId);
+            var player = await _playerService.Get(playerId);
             if (player == null)
             {
                 return new ServiceResult<BuyResult>().PlayerNotFound();

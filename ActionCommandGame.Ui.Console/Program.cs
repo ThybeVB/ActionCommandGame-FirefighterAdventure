@@ -35,7 +35,7 @@ namespace ActionCommandGame.Ui.ConsoleApp
             database.Initialize();
 
             var game = ServiceProvider.GetRequiredService<Game>();
-            game.Start();
+            await game.Start();
         }
 
         public static void ConfigureServices(IServiceCollection services)
