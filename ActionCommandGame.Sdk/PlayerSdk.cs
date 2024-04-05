@@ -28,5 +28,17 @@ namespace ActionCommandGame.Sdk
 
             return players;
         }
+
+        public async Task<Player?> Get(int id)
+        {
+            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
+            var route = $"/api/Player/{id}";
+            var response = await httpClient.GetAsync(route);
+
+            response.EnsureSuccessStatusCode();
+
+            var player = await response.Content.ReadFromJsonAsync<Player>();
+            return player;
+        }
     }
 }

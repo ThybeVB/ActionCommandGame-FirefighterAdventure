@@ -43,7 +43,7 @@ namespace ActionCommandGame.Services
         public async Task<ServiceResult<GameResult>> PerformAction(int playerId)
         {
             //Check Cooldown
-            var player = await _playerService.Get(playerId);
+            var player = await _playerService.Get(playerId); //todo replace with sdk
             var elapsedSeconds = DateTime.UtcNow.Subtract(player.LastActionExecutedDateTime).TotalSeconds;
             var cooldownSeconds = _appSettings.DefaultCooldown;
             if (player.CurrentFuelPlayerItem != null)
@@ -156,7 +156,7 @@ namespace ActionCommandGame.Services
 
         public async Task<ServiceResult<BuyResult>> Buy(int playerId, int itemId)
         {
-            var player = await _playerService.Get(playerId);
+            var player = await _playerService.Get(playerId); //todo replace with sdk
             if (player == null)
             {
                 return new ServiceResult<BuyResult>().PlayerNotFound();

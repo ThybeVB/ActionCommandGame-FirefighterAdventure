@@ -178,7 +178,7 @@ namespace ActionCommandGame.Ui.ConsoleApp
 
         public async void ShowStats(int playerId)
         {
-            var player = await _playerService.Get(playerId);
+            var player = await _playerSdk.Get(playerId);
 
             //Check food consumption
             if (player.CurrentFuelPlayerItem != null)
