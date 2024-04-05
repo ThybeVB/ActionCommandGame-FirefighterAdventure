@@ -90,7 +90,7 @@ namespace ActionCommandGame.Ui.ConsoleApp
 
                 if (CheckCommand(command, new[] { "leaderboard", "lead", "top", "rank", "ranking" }))
                 {
-                    var players = _playerService.Find().OrderByDescending(p => p.Experience).ToList();
+                    var players = _playerService.Find().OrderByDescendingAsync(p => p.Experience).ToList();
                     ShowLeaderboard(players, currentPlayerId);
                 }
 

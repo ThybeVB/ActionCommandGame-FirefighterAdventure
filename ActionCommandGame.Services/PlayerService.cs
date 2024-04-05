@@ -17,13 +17,13 @@ namespace ActionCommandGame.Services
             _database = database;
         }
 
-        public Player Get(int id)
+        public async Task<Player> Get(int id)
         {
-            return _database.Players
+            return await _database.Players
                 .Include(p => p.CurrentFuelPlayerItem.Item)
                 .Include(p => p.CurrentAttackPlayerItem.Item)
                 .Include(p => p.CurrentDefensePlayerItem.Item)
-                .SingleOrDefault(p => p.Id == id);
+                .SingleOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<IList<Player>> Find()

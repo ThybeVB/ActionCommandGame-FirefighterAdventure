@@ -3,10 +3,8 @@ using ActionCommandGame.Services;
 using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Settings;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

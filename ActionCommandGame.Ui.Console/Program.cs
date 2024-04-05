@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using ActionCommandGame.Repository;
 using ActionCommandGame.Services;
 using ActionCommandGame.Services.Abstractions;
@@ -15,7 +16,10 @@ namespace ActionCommandGame.Ui.ConsoleApp
         private static IServiceProvider ServiceProvider { get; set; }
         private static IConfiguration Configuration { get; set; }
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
+            => MainAsync(args).GetAwaiter().GetResult();
+
+        public static async Task MainAsync(string[] args)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -29,7 +33,7 @@ namespace ActionCommandGame.Ui.ConsoleApp
 
             var database = ServiceProvider.GetRequiredService<ActionButtonGameDbContext>();
             database.Initialize();
-            
+
             var game = ServiceProvider.GetRequiredService<Game>();
             game.Start();
         }

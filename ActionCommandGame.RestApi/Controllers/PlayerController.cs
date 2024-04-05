@@ -15,6 +15,13 @@ namespace ActionCommandGame.RestApi.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Get(int id)
+        {
+            var result = await _playerService.Get(id);
+            return Ok(result);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Find()
         {
             var result = await _playerService.Find();
