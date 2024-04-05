@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActionCommandGame.Services.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActionCommandGame.Settings", "ActionCommandGame.Settings\ActionCommandGame.Settings.csproj", "{AF0610A8-1F84-4E5C-B3CF-3AEF3B4C00C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActionCommandGame.Ui.Mvc", "ActionCommandGame.Ui.Mvc\ActionCommandGame.Ui.Mvc.csproj", "{8CC61E64-70FE-44A4-8F5C-2BA05F0AE05A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActionCommandGame.Ui.Mvc", "ActionCommandGame.Ui.Mvc\ActionCommandGame.Ui.Mvc.csproj", "{8CC61E64-70FE-44A4-8F5C-2BA05F0AE05A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActionCommandGame.RestApi", "ActionCommandGame.RestApi\ActionCommandGame.RestApi.csproj", "{A6D7BFF0-1D7A-4534-AD4A-C563CF15B1EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{8CC61E64-70FE-44A4-8F5C-2BA05F0AE05A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CC61E64-70FE-44A4-8F5C-2BA05F0AE05A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8CC61E64-70FE-44A4-8F5C-2BA05F0AE05A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6D7BFF0-1D7A-4534-AD4A-C563CF15B1EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6D7BFF0-1D7A-4534-AD4A-C563CF15B1EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6D7BFF0-1D7A-4534-AD4A-C563CF15B1EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6D7BFF0-1D7A-4534-AD4A-C563CF15B1EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
