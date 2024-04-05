@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ActionCommandGame.Model;
 using ActionCommandGame.Repository;
 using ActionCommandGame.Services.Abstractions;
@@ -25,13 +26,13 @@ namespace ActionCommandGame.Services
                 .SingleOrDefault(p => p.Id == id);
         }
 
-        public IList<Player> Find()
+        public async Task<IList<Player>> Find()
         {
-            return _database.Players
+            return await _database.Players
                 .Include(p => p.CurrentFuelPlayerItem.Item)
                 .Include(p => p.CurrentAttackPlayerItem.Item)
                 .Include(p => p.CurrentDefensePlayerItem.Item)
-                .ToList();
+                .ToListAsync();
         }
 
         public Player Create(Player player)
