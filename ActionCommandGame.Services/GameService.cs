@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ActionCommandGame.Model;
 using ActionCommandGame.Repository;
+using ActionCommandGame.Sdk;
 using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Services.Extensions;
 using ActionCommandGame.Services.Model.Core;
@@ -21,6 +22,7 @@ namespace ActionCommandGame.Services
         private readonly INegativeGameEventService _negativeGameEventService;
         private readonly IItemService _itemService;
         private readonly IPlayerItemService _playerItemService;
+        private readonly PlayerSdk _playerSdk;
 
         public GameService(
             AppSettings appSettings,
@@ -29,7 +31,8 @@ namespace ActionCommandGame.Services
             IPositiveGameEventService positiveGameEventService,
             INegativeGameEventService negativeGameEventService,
             IItemService itemService,
-            IPlayerItemService playerItemService)
+            IPlayerItemService playerItemService,
+            PlayerSdk playerSdk)
         {
             _appSettings = appSettings;
             _database = database;
@@ -38,12 +41,15 @@ namespace ActionCommandGame.Services
             _negativeGameEventService = negativeGameEventService;
             _itemService = itemService;
             _playerItemService = playerItemService;
+            _playerSdk = playerSdk;
         }
 
         public async Task<ServiceResult<GameResult>> PerformAction(int playerId)
         {
             //Check Cooldown
-            var player = await _playerService.Get(playerId); //todo replace with sdk
+            //var player = await _playerService.Get(playerId); //todo replace with sdk
+            var player = await _playerSdk.Get(playerId);
+
             var elapsedSeconds = DateTime.UtcNow.Subtract(player.LastActionExecutedDateTime).TotalSeconds;
             var cooldownSeconds = _appSettings.DefaultCooldown;
             if (player.CurrentFuelPlayerItem != null)

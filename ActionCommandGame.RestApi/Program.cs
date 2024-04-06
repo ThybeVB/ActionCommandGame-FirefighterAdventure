@@ -1,4 +1,5 @@
 using ActionCommandGame.Repository;
+using ActionCommandGame.Sdk;
 using ActionCommandGame.Services;
 using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Settings;
@@ -26,12 +27,13 @@ builder.Services.AddDbContext<ActionButtonGameDbContext>(options =>
     //options.UseSqlServer("Server=.\\SqlExpress;Database=ActionCommandGame;Trusted_Connection=True;TrustServerCertificate=true"); TODO
 });
 
-builder.Services.AddTransient<IGameService, GameService>();
-builder.Services.AddTransient<IPositiveGameEventService, PositiveGameEventService>();
-builder.Services.AddTransient<INegativeGameEventService, NegativeGameEventService>();
-builder.Services.AddTransient<IItemService, ItemService>();
-builder.Services.AddTransient<IPlayerItemService, PlayerItemService>();
+//builder.Services.AddTransient<IGameService, GameService>();
+//builder.Services.AddTransient<IPositiveGameEventService, PositiveGameEventService>();
+//builder.Services.AddTransient<INegativeGameEventService, NegativeGameEventService>();
+//builder.Services.AddTransient<IItemService, ItemService>();
+//builder.Services.AddTransient<IPlayerItemService, PlayerItemService>();
 builder.Services.AddTransient<IPlayerService, PlayerService>();
+//builder.Services.AddScoped<PlayerSdk>();
 
 var app = builder.Build();
 

@@ -25,7 +25,6 @@ namespace ActionCommandGame.Sdk
             {
                 return new List<Player>();
             }
-
             return players;
         }
 
@@ -39,6 +38,39 @@ namespace ActionCommandGame.Sdk
 
             var player = await response.Content.ReadFromJsonAsync<Player>();
             return player;
+        }
+
+        public async Task<Player?> Create(Player player)
+        {
+            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
+            var route = $"api/Player";
+            var response = await httpClient.PostAsJsonAsync(route, player);
+
+            response.EnsureSuccessStatusCode();
+
+            var newPlayer = await response.Content.ReadFromJsonAsync<Player>();
+            return newPlayer;
+        }
+
+        public async Task<Player?> Update(int id, Player player)
+        {
+            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
+            var route = $"api/Player/{id}";
+            var response = await httpClient.PostAsJsonAsync(route, player);
+
+            response.EnsureSuccessStatusCode();
+
+            var updatedPlayer = await response.Content.ReadFromJsonAsync<Player>();
+            return updatedPlayer;
+        }
+
+        public async Task Delete(int id)
+        {
+            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
+            var route = $"/api/Player/{id}";
+            var response = await httpClient.DeleteAsync(route);
+
+            response.EnsureSuccessStatusCode();
         }
     }
 }

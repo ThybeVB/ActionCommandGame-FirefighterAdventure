@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using ActionCommandGame.Model;
+using ActionCommandGame.Services.Model.Requests;
+using ActionCommandGame.Services.Model.Results;
 
 namespace ActionCommandGame.Services.Abstractions
 {
     public interface IPlayerService
     {
-        Task<Player> Get(int id);
-        Task<IList<Player>> Find();
-        Player Create(Player player);
-        Player Update(int id, Player player);
-        bool Delete(int id);
+        Task<PlayerResult> Get(int id);
+        Task<IList<PlayerResult>> Find();
+        Task<PlayerResult?> Create(PlayerRequest player);
+        Task<PlayerResult?> Update(int id, PlayerRequest player);
+        Task Delete(int id);
     }
 }

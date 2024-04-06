@@ -1,5 +1,7 @@
-﻿using ActionCommandGame.Model;
+﻿using System.Diagnostics.CodeAnalysis;
+using ActionCommandGame.Model;
 using ActionCommandGame.Services.Abstractions;
+using ActionCommandGame.Services.Model.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ActionCommandGame.RestApi.Controllers
@@ -38,19 +40,26 @@ namespace ActionCommandGame.RestApi.Controllers
             return Ok(result);
         }
 
-        /*
-        public Player Create(Player player)
+        [HttpPost]
+        public async Task<IActionResult> Create(PlayerRequest player)
         {
-            throw new System.NotImplementedException();
-        }
-        public Player Update(int id, Player player)
-        {
-            throw new System.NotImplementedException();
+            var result = await _playerService.Create(player);
+            return Ok(result);
         }
 
-        public bool Delete(int id)
+
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> Update(int id, PlayerRequest player)
         {
-            throw new System.NotImplementedException();
-        }*/
+            var result = await _playerService.Update(id, player);
+            return Ok(result);
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _playerService.Delete(id);
+            return Ok();
+        }
     }
 }
