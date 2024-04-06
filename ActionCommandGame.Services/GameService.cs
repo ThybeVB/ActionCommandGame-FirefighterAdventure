@@ -17,37 +17,39 @@ namespace ActionCommandGame.Services
     {
         private readonly AppSettings _appSettings;
         private readonly ActionButtonGameDbContext _database;
-        private readonly IPlayerService _playerService;
+        //private readonly IPlayerService _playerService;
         private readonly IPositiveGameEventService _positiveGameEventService;
         private readonly INegativeGameEventService _negativeGameEventService;
-        private readonly IItemService _itemService;
+        //private readonly IItemService _itemService;
         private readonly IPlayerItemService _playerItemService;
         private readonly PlayerSdk _playerSdk;
+        private readonly ItemSdk _itemSdk;
 
         public GameService(
             AppSettings appSettings,
             ActionButtonGameDbContext database,
-            IPlayerService playerService,
+            /*IPlayerService playerService*/
             IPositiveGameEventService positiveGameEventService,
-            INegativeGameEventService negativeGameEventService,
-            IItemService itemService,
+            INegativeGameEventService negativeGameEventService
+            /*IItemService itemService*/,
             IPlayerItemService playerItemService,
-            PlayerSdk playerSdk)
+            PlayerSdk playerSdk,
+            ItemSdk itemSdk)
         {
             _appSettings = appSettings;
             _database = database;
-            _playerService = playerService;
+            //_playerService = playerService;
             _positiveGameEventService = positiveGameEventService;
             _negativeGameEventService = negativeGameEventService;
-            _itemService = itemService;
+            //_itemService = itemService;
             _playerItemService = playerItemService;
             _playerSdk = playerSdk;
+            _itemSdk = itemSdk;
         }
 
         public async Task<ServiceResult<GameResult>> PerformAction(int playerId)
         {
             //Check Cooldown
-            //var player = await _playerService.Get(playerId); //todo replace with sdk
             var player = await _playerSdk.Get(playerId);
 
             var elapsedSeconds = DateTime.UtcNow.Subtract(player.LastActionExecutedDateTime).TotalSeconds;
@@ -135,7 +137,7 @@ namespace ActionCommandGame.Services
             player.LastActionExecutedDateTime = DateTime.UtcNow;
 
             //Save Player
-            _database.SaveChanges();
+            await _database.SaveChangesAsync();
 
             var gameResult = new GameResult
             {
@@ -162,13 +164,14 @@ namespace ActionCommandGame.Services
 
         public async Task<ServiceResult<BuyResult>> Buy(int playerId, int itemId)
         {
-            var player = await _playerService.Get(playerId); //todo replace with sdk
+            var player = await _playerSdk.Get(playerId);
+
             if (player == null)
             {
                 return new ServiceResult<BuyResult>().PlayerNotFound();
             }
 
-            var item = _itemService.Get(itemId);
+            var item = await _itemSdk.Get(itemId);
             if (item == null)
             {
                 return new ServiceResult<BuyResult>().ItemNotFound();
@@ -184,7 +187,7 @@ namespace ActionCommandGame.Services
             player.Money -= item.Price;
 
             //SaveChanges
-            _database.SaveChanges();
+            await _database.SaveChangesAsync();
 
             var buyResult = new BuyResult
             {

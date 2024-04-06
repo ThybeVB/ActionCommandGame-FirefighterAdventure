@@ -62,6 +62,7 @@ namespace ActionCommandGame.Ui.ConsoleApp
             });
 
             services.AddScoped<PlayerSdk>();
+            services.AddScoped<ItemSdk>();
 
             services.AddTransient<Game>();
 

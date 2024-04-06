@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ActionCommandGame.Model;
 using ActionCommandGame.Repository;
 using ActionCommandGame.Services.Abstractions;
+using ActionCommandGame.Services.Model.Requests;
+using ActionCommandGame.Services.Model.Results;
+using Microsoft.EntityFrameworkCore;
 
 namespace ActionCommandGame.Services
 {
@@ -16,29 +20,92 @@ namespace ActionCommandGame.Services
             _database = database;
         }
 
-        public Item Get(int id)
+        public async Task<ItemResult> Get(int id)
         {
-            return _database.Items.SingleOrDefault(i => i.Id == id);
+            return await _database.Items.
+                Select(p => new ItemResult
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    ActionCooldownSeconds = p.ActionCooldownSeconds,
+                    Attack = p.Attack,
+                    Defense = p.Defense,
+                    Description = p.Description,
+                    Fuel = p.Fuel,
+                    PlayerItems = p.PlayerItems,
+                    Price = p.Price
+                }).
+                SingleOrDefaultAsync(i => i.Id == id);
         }
 
-        public IList<Item> Find()
+        public async Task<IList<ItemResult>> Find()
         {
-            return _database.Items.ToList();
+            return await _database.Items
+                .Select(p => new ItemResult
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    ActionCooldownSeconds = p.ActionCooldownSeconds,
+                    Attack = p.Attack,
+                    Defense = p.Defense,
+                    Description = p.Description,
+                    Fuel = p.Fuel,
+                    PlayerItems = p.PlayerItems,
+                    Price = p.Price
+                }).ToListAsync();
         }
 
-        public Item Create(Item item)
+        public async Task<ItemResult> Create(ItemRequest request)
         {
-            throw new NotImplementedException();
+            var item = new Item()
+            {
+                Name = request.Name,
+                ActionCooldownSeconds = request.ActionCooldownSeconds,
+                Attack = request.Attack,
+                Defense = request.Defense,
+                Description = request.Description,
+                Fuel = request.Fuel,
+                //PlayerItems = p.PlayerItems,
+                Price = request.Price
+            };
+
+            _database.Items.Add(item);
+            await _database.SaveChangesAsync();
+
+            return await Get(item.Id);
         }
 
-        public Item Update(int id, Item item)
+        public async Task<ItemResult> Update(int id, ItemRequest request)
         {
-            throw new NotImplementedException();
+            var item = await _database.Items.FirstOrDefaultAsync(p => p.Id == id);
+            if (item is null)
+            {
+                return null;
+            }
+
+            item.Name = request.Name;
+            item.Description = request.Description;
+            item.Attack = request.Attack;
+            item.Defense = request.Defense;
+            item.ActionCooldownSeconds = request.ActionCooldownSeconds;
+            item.Price = request.Price;
+            item.Fuel = request.Fuel;
+            //item.PlayerItems = request.PlayerItems; todo
+
+            await _database.SaveChangesAsync();
+            return await Get(item.Id);
         }
 
-        public bool Delete(int id)
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            var item = await _database.Items.FirstOrDefaultAsync(p => p.Id == id);
+            if (item is null)
+            {
+                return;
+            }
+
+            _database.Items.Remove(item);
+            await _database.SaveChangesAsync();
         }
     }
 }

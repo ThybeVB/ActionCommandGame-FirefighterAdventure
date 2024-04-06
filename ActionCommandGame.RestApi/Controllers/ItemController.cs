@@ -6,13 +6,13 @@ namespace ActionCommandGame.RestApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PlayerController : ControllerBase
+    public class ItemController : ControllerBase
     {
-        private readonly IPlayerService _playerService;
+        private readonly IItemService _itemService;
 
-        public PlayerController(IPlayerService playerService)
+        public ItemController(IItemService itemService)
         {
-            _playerService = playerService;
+            _itemService = itemService;
         }
 
         /// <summary>
@@ -23,56 +23,56 @@ namespace ActionCommandGame.RestApi.Controllers
         [HttpGet("{id:int}")]
         public async Task<IActionResult> Get(int id)
         {
-            var result = await _playerService.Get(id);
+            var result = await _itemService.Get(id);
             return Ok(result);
         }
 
         /// <summary>
-        /// Returns all players
+        /// Returns all items
         /// </summary>
-        /// <returns>All players</returns>
+        /// <returns>All items</returns>
         [HttpGet]
         public async Task<IActionResult> Find()
         {
-            var result = await _playerService.Find();
+            var result = await _itemService.Find();
             return Ok(result);
         }
 
         /// <summary>
-        /// Creates a player
+        /// Creates an item
         /// </summary>
-        /// <param name="player"></param>
+        /// <param name="item"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Create(PlayerRequest player)
+        public async Task<IActionResult> Create(ItemRequest item)
         {
-            var result = await _playerService.Create(player);
+            var result = await _itemService.Create(item);
             return Ok(result);
         }
 
 
         /// <summary>
-        /// Updates a player
+        /// Updates an item
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="player"></param>
+        /// <param name="item"></param>
         /// <returns></returns>
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> Update(int id, PlayerRequest player)
+        public async Task<IActionResult> Update(int id, ItemRequest item)
         {
-            var result = await _playerService.Update(id, player);
+            var result = await _itemService.Update(id, item);
             return Ok(result);
         }
 
         /// <summary>
-        /// Deletes a player
+        /// Deletes a item
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await _playerService.Delete(id);
+            await _itemService.Delete(id);
             return Ok();
         }
     }

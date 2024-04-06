@@ -1,14 +1,16 @@
 ﻿using System.Collections.Generic;
-using ActionCommandGame.Model;
+using System.Threading.Tasks;
+using ActionCommandGame.Services.Model.Requests;
+using ActionCommandGame.Services.Model.Results;
 
 namespace ActionCommandGame.Services.Abstractions
 {
     public interface IItemService
     {
-        Item Get(int id);
-        IList<Item> Find();
-        Item Create(Item item);
-        Item Update(int id, Item item);
-        bool Delete(int id);
+        Task<ItemResult> Get(int id);
+        Task<IList<ItemResult>> Find();
+        Task<ItemResult> Create(ItemRequest item);
+        Task<ItemResult> Update(int id, ItemRequest item);
+        Task Delete(int id);
     }
 }

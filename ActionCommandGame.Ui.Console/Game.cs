@@ -17,26 +17,29 @@ namespace ActionCommandGame.Ui.ConsoleApp
     {
         private readonly AppSettings _settings;
         private readonly IGameService _gameService;
-        private readonly IPlayerService _playerService;
-        private readonly IItemService _itemService;
+        //private readonly IPlayerService _playerService;
+        //private readonly IItemService _itemService;
         private readonly IPlayerItemService _playerItemService;
 
         private readonly PlayerSdk _playerSdk;
+        private readonly ItemSdk _itemSdk;
 
         public Game(
             AppSettings settings,
             IGameService gameService,
-            IPlayerService playerService,
-            IItemService itemService,
+            //IPlayerService playerService,
+            //IItemService itemService,
             IPlayerItemService playerItemService,
-            PlayerSdk playerSdk)
+            PlayerSdk playerSdk,
+            ItemSdk itemSdk)
         {
             _settings = settings;
             _gameService = gameService;
-            _playerService = playerService;
-            _itemService = itemService;
+            //_playerService = playerService;
+            //_itemService = itemService;
             _playerItemService = playerItemService;
             _playerSdk = playerSdk;
+            _itemSdk = itemSdk;
         }
 
         public async Task Start()
@@ -277,10 +280,10 @@ namespace ActionCommandGame.Ui.ConsoleApp
 
         }
 
-        private void ShowShop()
+        private async Task ShowShop()
         {
             ConsoleWriter.WriteText("Available Shop Items", ConsoleColor.Green);
-            var shopItems = _itemService.Find();
+            var shopItems = await _itemSdk.Find();
             foreach (var item in shopItems)
             {
                 ShowItem(item);
