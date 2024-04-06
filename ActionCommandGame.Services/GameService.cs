@@ -71,7 +71,7 @@ namespace ActionCommandGame.Services
             }
 
             var hasAttackItem = player.CurrentAttackPlayerItem != null;
-            var positiveGameEvent = _positiveGameEventService.GetRandomPositiveGameEvent(hasAttackItem);
+            var positiveGameEvent = await _positiveGameEventService.GetRandomPositiveGameEvent(hasAttackItem);
             if (positiveGameEvent == null)
             {
                 return new ServiceResult<GameResult>{Messages = 

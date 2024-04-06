@@ -1,10 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ActionCommandGame.Model;
 using ActionCommandGame.Repository;
 using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Services.Helpers;
+using ActionCommandGame.Services.Model.Requests;
+using ActionCommandGame.Services.Model.Results;
+using Microsoft.EntityFrameworkCore;
 
 namespace ActionCommandGame.Services
 {
@@ -17,12 +20,20 @@ namespace ActionCommandGame.Services
             _database = database;
         }
 
-        public PositiveGameEvent Get(int id)
+        public async Task<PositiveGameEventResult> Get(int id)
         {
-            throw new NotImplementedException();
+            return await _database.PositiveGameEvents.Select(p => new PositiveGameEventResult
+            {
+                Id = p.Id,
+                Description = p.Description,
+                Experience = p.Experience,
+                Money = p.Money,
+                Name = p.Name,
+                Probability = p.Probability,
+            }).FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public PositiveGameEvent GetRandomPositiveGameEvent(bool hasAttackItem)
+        public async Task<PositiveGameEvent> GetRandomPositiveGameEvent(bool hasAttackItem)
         {
             var query = _database.PositiveGameEvents.AsQueryable();
 
@@ -32,29 +43,72 @@ namespace ActionCommandGame.Services
                 query = query.Where(p => p.Money < 50);
             }
 
-            var gameEvents = query.ToList();
+            var gameEvents = await query.ToListAsync();
 
             return GameEventHelper.GetRandomPositiveGameEvent(gameEvents);
         }
 
-        public IList<PositiveGameEvent> Find()
+        public async Task<IList<PositiveGameEventResult>> Find()
         {
-            return _database.PositiveGameEvents.ToList();
+            var events = await _database.PositiveGameEvents
+                .Select(p => new PositiveGameEventResult
+                {
+                    Id = p.Id,
+                    Description = p.Description,
+                    Experience = p.Experience,
+                    Money = p.Money,
+                    Name = p.Name,
+                    Probability = p.Probability,
+                }).ToListAsync();
+
+            return events;
         }
 
-        public PositiveGameEvent Create(PositiveGameEvent gameEvent)
+        public async Task<PositiveGameEventResult> Create(PositiveGameEventRequest gameEvent)
         {
-            throw new NotImplementedException();
+            var events = new PositiveGameEvent()
+            {
+                Description = gameEvent.Description,
+                Experience = gameEvent.Experience,
+                Money = gameEvent.Money,
+                Name = gameEvent.Name,
+                Probability = gameEvent.Probability,
+            };
+
+            _database.PositiveGameEvents.Add(events);
+            await _database.SaveChangesAsync();
+
+            return await Get(events.Id);
         }
 
-        public PositiveGameEvent Update(int id, PositiveGameEvent gameEvent)
+        public async Task<PositiveGameEventResult> Update(int id, PositiveGameEventRequest gameEvent)
         {
-            throw new NotImplementedException();
+            var positiveGameEvent = await _database.PositiveGameEvents.FirstOrDefaultAsync(e => e.Id == id);
+            if (positiveGameEvent is null)
+            {
+                return null;
+            }
+
+            positiveGameEvent.Description = gameEvent.Description;
+            positiveGameEvent.Experience = gameEvent.Experience;
+            positiveGameEvent.Money = gameEvent.Money;
+            positiveGameEvent.Name = gameEvent.Name;
+            positiveGameEvent.Probability = gameEvent.Probability;
+
+            await _database.SaveChangesAsync();
+            return await Get(positiveGameEvent.Id);
         }
 
-        public bool Delete(int id)
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            var positiveGameEvent = await _database.PositiveGameEvents.FirstOrDefaultAsync(e => e.Id == id);
+            if (positiveGameEvent is null)
+            {
+                return;
+            }
+
+            _database.PositiveGameEvents.Remove(positiveGameEvent);
+            await _database.SaveChangesAsync();
         }
     }
 }
