@@ -21,24 +21,38 @@ namespace ActionCommandGame.Services
 
         public async Task<PlayerResult> Get(int id)
         {
-            return await _database.Players
+            var player = await _database.Players
                 .Select(p => new PlayerResult
                 {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Money = p.Money,
+                    Experience = p.Experience,
+                    Inventory = p.Inventory,
                     CurrentFuelPlayerItem = p.CurrentFuelPlayerItem,
                     CurrentAttackPlayerItem = p.CurrentAttackPlayerItem,
                     CurrentDefensePlayerItem = p.CurrentDefensePlayerItem,
                 }).FirstOrDefaultAsync(p => p.Id == id);
+
+            return player;
         }
 
         public async Task<IList<PlayerResult>> Find()
         {
-            return await _database.Players
+            var players = await _database.Players
                 .Select(p => new PlayerResult
                 {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Money = p.Money,
+                    Experience = p.Experience,
+                    Inventory = p.Inventory,
                     CurrentFuelPlayerItem = p.CurrentFuelPlayerItem,
                     CurrentAttackPlayerItem = p.CurrentAttackPlayerItem,
                     CurrentDefensePlayerItem = p.CurrentDefensePlayerItem
                 }).ToListAsync();
+
+            return players;
         }
 
         public async Task<PlayerResult> Create(PlayerRequest request)
