@@ -16,7 +16,7 @@ namespace ActionCommandGame.RestApi.Controllers
         }
 
         /// <summary>
-        /// Finds a player
+        /// Finds an item
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
