@@ -8,6 +8,7 @@ using ActionCommandGame.Sdk;
 using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Services.Extensions;
 using ActionCommandGame.Services.Model.Core;
+using ActionCommandGame.Services.Model.Requests;
 using ActionCommandGame.Services.Model.Results;
 using ActionCommandGame.Settings;
 
@@ -86,7 +87,7 @@ namespace ActionCommandGame.Services
                     }};
             }
 
-            var negativeGameEvent = _negativeGameEventService.GetRandomNegativeGameEvent();
+            var negativeGameEvent = await _negativeGameEventService.GetRandomNegativeGameEvent();
 
             var oldLevel = player.GetLevel();
 
@@ -182,7 +183,12 @@ namespace ActionCommandGame.Services
                 return new ServiceResult<BuyResult>().NotEnoughMoney();
             }
 
-            _playerItemService.Create(playerId, itemId);
+            var req = new PlayerItemRequest()
+            {
+                PlayerId = playerId,
+                ItemId = itemId,
+            };
+            await _playerItemService.Create(req);
 
             player.Money -= item.Price;
 

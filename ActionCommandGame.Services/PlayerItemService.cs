@@ -6,6 +6,7 @@ using ActionCommandGame.Repository;
 using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Services.Extensions;
 using ActionCommandGame.Services.Model.Core;
+using ActionCommandGame.Services.Model.Requests;
 using ActionCommandGame.Services.Model.Results;
 using Microsoft.EntityFrameworkCore;
 
@@ -47,15 +48,15 @@ namespace ActionCommandGame.Services
             return await query.ToListAsync();
         }
 
-        public async Task<ServiceResult<PlayerItem>> Create(int playerId, int itemId) //todo
+        public async Task<ServiceResult<PlayerItem>> Create(PlayerItemRequest request)
         {
-            var player = _database.Players.SingleOrDefault(p => p.Id == playerId);
+            var player = _database.Players.SingleOrDefault(p => p.Id == request.PlayerId);
             if (player == null)
             {
                 return new ServiceResult<PlayerItem>().PlayerNotFound();
             }
 
-            var item = _database.Items.SingleOrDefault(i => i.Id == itemId);
+            var item = _database.Items.SingleOrDefault(i => i.Id == request.ItemId);
             if (item == null)
             {
                 return new ServiceResult<PlayerItem>().ItemNotFound();
@@ -63,9 +64,9 @@ namespace ActionCommandGame.Services
 
             var playerItem = new PlayerItem
             {
-                ItemId = itemId,
+                ItemId = request.ItemId,
                 Item = item,
-                PlayerId = playerId,
+                PlayerId = request.PlayerId,
                 Player = player
             };
             _database.PlayerItems.Add(playerItem);
@@ -97,7 +98,7 @@ namespace ActionCommandGame.Services
             return new ServiceResult<PlayerItem>(playerItem);
         }
 
-        public async Task<PlayerItemResult> Update(int id, PlayerItem playerItem)
+        public async Task<PlayerItemResult> Update(int id, PlayerItemRequest playerItem)
         {
             var i = await _database.PlayerItems.FirstOrDefaultAsync(pi => pi.Id == id);
 

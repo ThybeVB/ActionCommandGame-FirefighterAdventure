@@ -106,7 +106,7 @@ namespace ActionCommandGame.Ui.ConsoleApp
 
                 if (CheckCommand(command, new[] { "inventory", "inv", "bag", "backpack" }))
                 {
-                    var inventory = _playerItemService.Find(currentPlayerId);
+                    var inventory = await _playerItemService.Find(currentPlayerId);
                     ShowInventory(inventory);
                 }
 

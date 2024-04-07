@@ -36,11 +36,11 @@ builder.Services.AddDbContext<ActionButtonGameDbContext>(options =>
 });
 
 //builder.Services.AddTransient<IGameService, GameService>();
-//builder.Services.AddTransient<IPlayerItemService, PlayerItemService>();
 builder.Services.AddTransient<IPlayerService, PlayerService>();
 builder.Services.AddTransient<IItemService, ItemService>();
 builder.Services.AddTransient<IPositiveGameEventService, PositiveGameEventService>();
 builder.Services.AddTransient<INegativeGameEventService, NegativeGameEventService>();
+builder.Services.AddTransient<IPlayerItemService, PlayerItemService>();
 
 var app = builder.Build();
 
