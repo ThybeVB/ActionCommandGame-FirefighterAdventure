@@ -19,10 +19,11 @@ namespace ActionCommandGame.Ui.ConsoleApp
         private readonly IGameService _gameService;
         //private readonly IPlayerService _playerService;
         //private readonly IItemService _itemService;
-        private readonly IPlayerItemService _playerItemService;
+        //private readonly IPlayerItemService _playerItemService;
 
         private readonly PlayerSdk _playerSdk;
         private readonly ItemSdk _itemSdk;
+        private readonly PlayerItemSdk _playerItemSdk;
 
         public Game(
             AppSettings settings,
@@ -31,15 +32,17 @@ namespace ActionCommandGame.Ui.ConsoleApp
             //IItemService itemService,
             IPlayerItemService playerItemService,
             PlayerSdk playerSdk,
-            ItemSdk itemSdk)
+            ItemSdk itemSdk,
+            PlayerItemSdk playerItemSdk)
         {
             _settings = settings;
             _gameService = gameService;
             //_playerService = playerService;
             //_itemService = itemService;
-            _playerItemService = playerItemService;
+            //_playerItemService = playerItemService;
             _playerSdk = playerSdk;
             _itemSdk = itemSdk;
+            _playerItemSdk = playerItemSdk;
         }
 
         public async Task Start()
@@ -106,7 +109,7 @@ namespace ActionCommandGame.Ui.ConsoleApp
 
                 if (CheckCommand(command, new[] { "inventory", "inv", "bag", "backpack" }))
                 {
-                    var inventory = await _playerItemService.Find(currentPlayerId);
+                    var inventory = await _playerItemSdk.Find(currentPlayerId);
                     ShowInventory(inventory);
                 }
 

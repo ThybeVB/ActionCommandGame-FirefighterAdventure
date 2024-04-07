@@ -29,13 +29,14 @@ namespace ActionCommandGame.RestApi.Controllers
         }
 
         /// <summary>
-        /// Returns all playeritems
+        /// Return all items for player
         /// </summary>
-        /// <returns>All playeritems</returns>
+        /// <param name="playerId"></param>
+        /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Find()
+        public async Task<IActionResult> Find(int? playerId)
         {
-            var result = await _playerItemService.Find();
+            var result = await _playerItemService.Find(playerId);
             return Ok(result);
         }
 
