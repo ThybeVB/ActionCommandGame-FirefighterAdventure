@@ -1,4 +1,8 @@
-﻿namespace ActionCommandGame.Services.Model.Requests
+﻿using ActionCommandGame.Model;
+using System.Collections.Generic;
+using System;
+
+namespace ActionCommandGame.Services.Model.Requests
 {
     public class PlayerRequest
     {
@@ -9,5 +13,9 @@
 
         public int Money { get; set; }
         public int Experience { get; set; }
+
+        public DateTime LastActionExecutedDateTime { get; set; }
+
+        public IList<PlayerItem> Inventory { get; set; }
     }
 }

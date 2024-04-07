@@ -11,7 +11,7 @@ namespace ActionCommandGame.Services.Abstractions
     {
         Task<PlayerItemResult> Get(int id);
         Task<IList<PlayerItem>> Find(int? playerId = null);
-        Task<ServiceResult<PlayerItem>> Create(PlayerItemRequest playerItem);
+        Task<ServiceResult<PlayerItem>> Create(int playerId, int itemId);
         Task<PlayerItemResult> Update(int id, PlayerItemRequest playerItem);
         Task<ServiceResult> Delete(int id);
     }

@@ -43,20 +43,18 @@ namespace ActionCommandGame.Services
 
             }
 
-
-
             return await query.ToListAsync();
         }
 
-        public async Task<ServiceResult<PlayerItem>> Create(PlayerItemRequest request)
+        public async Task<ServiceResult<PlayerItem>> Create(int playerId, int itemId)
         {
-            var player = _database.Players.SingleOrDefault(p => p.Id == request.PlayerId);
+            var player = _database.Players.SingleOrDefault(p => p.Id == playerId);
             if (player == null)
             {
                 return new ServiceResult<PlayerItem>().PlayerNotFound();
             }
 
-            var item = _database.Items.SingleOrDefault(i => i.Id == request.ItemId);
+            var item = _database.Items.SingleOrDefault(i => i.Id == itemId);
             if (item == null)
             {
                 return new ServiceResult<PlayerItem>().ItemNotFound();
@@ -64,9 +62,9 @@ namespace ActionCommandGame.Services
 
             var playerItem = new PlayerItem
             {
-                ItemId = request.ItemId,
+                ItemId = itemId,
                 Item = item,
-                PlayerId = request.PlayerId,
+                PlayerId = playerId,
                 Player = player
             };
             _database.PlayerItems.Add(playerItem);
@@ -108,9 +106,9 @@ namespace ActionCommandGame.Services
             }
 
             i.ItemId = playerItem.ItemId;
-            i.Item = playerItem.Item;
+            //i.Item = playerItem.Item;
             i.PlayerId = playerItem.PlayerId;
-            i.Player = playerItem.Player;
+            //i.Player = playerItem.Player;
 
             await _database.SaveChangesAsync();
 

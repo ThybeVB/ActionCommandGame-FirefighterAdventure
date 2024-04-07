@@ -33,7 +33,7 @@ namespace ActionCommandGame.RestApi.Controllers
         /// </summary>
         /// <param name="playerId"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("find/{id:int?}")]
         public async Task<IActionResult> Find(int? playerId)
         {
             var result = await _playerItemService.Find(playerId);
@@ -48,7 +48,7 @@ namespace ActionCommandGame.RestApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(PlayerItemRequest playerItemRequest)
         {
-            var result = await _playerItemService.Create(playerItemRequest);
+            var result = await _playerItemService.Create(playerItemRequest.PlayerId, playerItemRequest.ItemId);
             return Ok(result);
         }
 

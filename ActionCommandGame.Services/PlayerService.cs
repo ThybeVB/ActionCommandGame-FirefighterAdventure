@@ -84,12 +84,8 @@ namespace ActionCommandGame.Services
             player.CurrentFuelPlayerItemId = playerRequest.CurrentFuelPlayerItemId;
             player.Experience = playerRequest.Experience;
             player.Money = playerRequest.Money;
-            //player.Inventory = playerRequest. ook die andere
-            
-            //var attackItem = await _playerItemService.Get(playerRequest.CurrentAttackPlayerItemId.Value).Result;
-            //player.CurrentAttackPlayerItem = await _playerItemService.Get(playerRequest.CurrentAttackPlayerItemId.Value);
-            //player.CurrentDefensePlayerItem = await _playerItemService.Get(playerRequest.CurrentDefensePlayerItemId.Value);
-            //player.CurrentFuelPlayerItem = await _playerItemService.Get(playerRequest.CurrentFuelPlayerItemId.Value);
+            player.Inventory = playerRequest.Inventory;
+            player.LastActionExecutedDateTime = playerRequest.LastActionExecutedDateTime;
 
             await _database.SaveChangesAsync();
             return await Get(player.Id);

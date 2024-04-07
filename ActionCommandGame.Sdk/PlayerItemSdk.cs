@@ -15,7 +15,12 @@ namespace ActionCommandGame.Sdk
         public async Task<IList<PlayerItem>> Find(int? currentPlayerId)
         {
             var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
-            var route = $"/api/PlayerItem/{currentPlayerId}";
+            var route = $"/api/PlayerItem/find";
+            if (currentPlayerId.HasValue)
+            {
+                route = $"/api/PlayerItem/find/{currentPlayerId}";
+            }
+            
             var response = await httpClient.GetAsync(route);
 
             response.EnsureSuccessStatusCode();

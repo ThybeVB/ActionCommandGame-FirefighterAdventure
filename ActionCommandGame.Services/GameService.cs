@@ -25,6 +25,7 @@ namespace ActionCommandGame.Services
         private readonly IPlayerItemService _playerItemService;
         private readonly PlayerSdk _playerSdk;
         private readonly ItemSdk _itemSdk;
+        private readonly PlayerItemSdk _playerItemSdk;
 
         public GameService(
             AppSettings appSettings,
@@ -35,7 +36,8 @@ namespace ActionCommandGame.Services
             /*IItemService itemService*/,
             IPlayerItemService playerItemService,
             PlayerSdk playerSdk,
-            ItemSdk itemSdk)
+            ItemSdk itemSdk,
+            PlayerItemSdk playerItemSdk)
         {
             _appSettings = appSettings;
             _database = database;
@@ -46,6 +48,7 @@ namespace ActionCommandGame.Services
             _playerItemService = playerItemService;
             _playerSdk = playerSdk;
             _itemSdk = itemSdk;
+            _playerItemSdk = playerItemSdk;
         }
 
         public async Task<ServiceResult<GameResult>> PerformAction(int playerId)
@@ -184,12 +187,14 @@ namespace ActionCommandGame.Services
                 return new ServiceResult<BuyResult>().NotEnoughMoney();
             }
 
-            var req = new PlayerItemRequest()
+            /*var alsditwerktgaakvanavondbickyburgerkopen = new PlayerItem()
             {
                 PlayerId = playerId,
-                ItemId = itemId,
+                ItemId = itemId
             };
-            await _playerItemService.Create(req);
+            await _playerItemSdk.Create(alsditwerktgaakvanavondbickyburgerkopen);*/
+
+            await _playerItemService.Create(playerId, itemId);
 
             player.Money -= item.Price;
 
