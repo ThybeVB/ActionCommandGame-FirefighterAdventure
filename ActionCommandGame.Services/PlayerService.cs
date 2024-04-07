@@ -13,10 +13,12 @@ namespace ActionCommandGame.Services
     public class PlayerService : IPlayerService
     {
         private readonly ActionButtonGameDbContext _database;
+        private readonly IPlayerItemService _playerItemService;
 
-        public PlayerService(ActionButtonGameDbContext database)
+        public PlayerService(ActionButtonGameDbContext database, IPlayerItemService playerItemService)
         {
             _database = database;
+            _playerItemService = playerItemService;
         }
 
         public async Task<PlayerResult> Get(int id)
@@ -77,7 +79,17 @@ namespace ActionCommandGame.Services
             }
 
             player.Name = playerRequest.Name;
-            //eventueel meer dingen TODO
+            player.CurrentAttackPlayerItemId = playerRequest.CurrentAttackPlayerItemId;
+            player.CurrentDefensePlayerItemId = playerRequest.CurrentDefensePlayerItemId;
+            player.CurrentFuelPlayerItemId = playerRequest.CurrentFuelPlayerItemId;
+            player.Experience = playerRequest.Experience;
+            player.Money = playerRequest.Money;
+            //player.Inventory = playerRequest. ook die andere
+            
+            //var attackItem = await _playerItemService.Get(playerRequest.CurrentAttackPlayerItemId.Value).Result;
+            //player.CurrentAttackPlayerItem = await _playerItemService.Get(playerRequest.CurrentAttackPlayerItemId.Value);
+            //player.CurrentDefensePlayerItem = await _playerItemService.Get(playerRequest.CurrentDefensePlayerItemId.Value);
+            //player.CurrentFuelPlayerItem = await _playerItemService.Get(playerRequest.CurrentFuelPlayerItemId.Value);
 
             await _database.SaveChangesAsync();
             return await Get(player.Id);

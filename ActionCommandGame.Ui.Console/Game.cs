@@ -79,7 +79,7 @@ namespace ActionCommandGame.Ui.ConsoleApp
 
                 if (CheckCommand(command, new[] { "shop", "store" }))
                 {
-                    ShowShop();
+                    await ShowShop();
                 }
 
                 if (CheckCommand(command, new[] { "buy", "purchase", "get" }))
@@ -102,7 +102,6 @@ namespace ActionCommandGame.Ui.ConsoleApp
 
                 if (CheckCommand(command, new[] { "leaderboard", "lead", "top", "rank", "ranking" }))
                 {
-                    //var players = (await _playerService.Find()).OrderByDescending(p => p.Experience).ToList(); //todo replace with sdk test
                     var players = (await _playerSdk.Find()).OrderByDescending(p => p.Experience).ToList();
                     ShowLeaderboard(players, currentPlayerId);
                 }

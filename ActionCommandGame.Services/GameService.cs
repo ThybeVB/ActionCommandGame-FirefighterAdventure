@@ -138,7 +138,8 @@ namespace ActionCommandGame.Services
             player.LastActionExecutedDateTime = DateTime.UtcNow;
 
             //Save Player
-            await _database.SaveChangesAsync();
+            await _playerSdk.Update(playerId, player);
+            //await _database.SaveChangesAsync();
 
             var gameResult = new GameResult
             {

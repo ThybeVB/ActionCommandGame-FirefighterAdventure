@@ -63,6 +63,9 @@ namespace ActionCommandGame.Ui.ConsoleApp
 
             services.AddScoped<PlayerSdk>();
             services.AddScoped<ItemSdk>();
+            services.AddScoped<PositiveGameEventSdk>();
+            //services.AddScoped<NegativeGameEventSdk>(); todo
+            services.AddScoped<PlayerItemSdk>();
 
             services.AddTransient<Game>();
 

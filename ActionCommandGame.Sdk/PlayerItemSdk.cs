@@ -56,7 +56,7 @@ namespace ActionCommandGame.Sdk
         {
             var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
             var route = $"api/PlayerItem/{id}";
-            var response = await httpClient.PostAsJsonAsync(route, playerItem);
+            var response = await httpClient.PutAsJsonAsync(route, playerItem);
 
             response.EnsureSuccessStatusCode();
 
