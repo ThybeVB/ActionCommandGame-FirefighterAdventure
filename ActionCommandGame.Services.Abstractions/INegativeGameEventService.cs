@@ -1,15 +1,18 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using ActionCommandGame.Model;
+using ActionCommandGame.Services.Model.Requests;
+using ActionCommandGame.Services.Model.Results;
 
 namespace ActionCommandGame.Services.Abstractions
 {
     public interface INegativeGameEventService
     {
-        NegativeGameEvent Get(int id);
-        NegativeGameEvent GetRandomNegativeGameEvent();
-        IList<NegativeGameEvent> Find();
-        NegativeGameEvent Create(NegativeGameEvent gameEvent);
-        NegativeGameEvent Update(int id, NegativeGameEvent gameEvent);
-        bool Delete(int id);
+        Task<NegativeGameEventResult> Get(int id);
+        Task<NegativeGameEvent> GetRandomNegativeGameEvent();
+        Task<IList<NegativeGameEventResult>> Find();
+        Task<NegativeGameEventResult> Create(NegativeGameEventRequest gameEvent);
+        Task<NegativeGameEventResult> Update(int id, NegativeGameEventRequest gameEvent);
+        Task Delete(int id);
     }
 }

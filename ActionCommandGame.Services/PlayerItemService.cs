@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ActionCommandGame.Model;
 using ActionCommandGame.Repository;
 using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Services.Extensions;
 using ActionCommandGame.Services.Model.Core;
+using ActionCommandGame.Services.Model.Results;
+using Microsoft.EntityFrameworkCore;
 
 namespace ActionCommandGame.Services
 {
@@ -18,12 +20,18 @@ namespace ActionCommandGame.Services
             _database = database;
         }
 
-        public PlayerItem Get(int id)
+        public async Task<PlayerItemResult> Get(int id)
         {
-            throw new NotImplementedException();
+            return await _database.PlayerItems.Select(p => new PlayerItemResult()
+            {
+                ItemId = p.ItemId,
+                Item = p.Item,
+                PlayerId = p.PlayerId,
+                Player = p.Player,
+            }).FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public IList<PlayerItem> Find(int? playerId = null)
+        public async Task<IList<PlayerItem>> Find(int? playerId = null) //todo
         {
             var query = _database.PlayerItems.AsQueryable();
 
@@ -36,10 +44,10 @@ namespace ActionCommandGame.Services
 
 
 
-            return query.ToList();
+            return await query.ToListAsync();
         }
 
-        public ServiceResult<PlayerItem> Create(int playerId, int itemId)
+        public async Task<ServiceResult<PlayerItem>> Create(int playerId, int itemId) //todo
         {
             var player = _database.Players.SingleOrDefault(p => p.Id == playerId);
             if (player == null)
@@ -84,19 +92,33 @@ namespace ActionCommandGame.Services
                 player.CurrentDefensePlayerItem = playerItem;
             }
 
-            _database.SaveChanges();
+            await _database.SaveChangesAsync();
 
             return new ServiceResult<PlayerItem>(playerItem);
         }
 
-        public PlayerItem Update(int id, PlayerItem playerItem)
+        public async Task<PlayerItemResult> Update(int id, PlayerItem playerItem)
         {
-            throw new NotImplementedException();
+            var i = await _database.PlayerItems.FirstOrDefaultAsync(pi => pi.Id == id);
+
+            if (i is null)
+            {
+                return null;
+            }
+
+            i.ItemId = playerItem.ItemId;
+            i.Item = playerItem.Item;
+            i.PlayerId = playerItem.PlayerId;
+            i.Player = playerItem.Player;
+
+            await _database.SaveChangesAsync();
+
+            return await Get(id);
         }
 
-        public ServiceResult Delete(int id)
+        public async Task<ServiceResult> Delete(int id)
         {
-            var playerItem = _database.PlayerItems.SingleOrDefault(pi => pi.Id == id);
+            var playerItem = await _database.PlayerItems.SingleOrDefaultAsync(pi => pi.Id == id);
 
             if (playerItem == null)
             {
@@ -128,8 +150,7 @@ namespace ActionCommandGame.Services
 
             _database.PlayerItems.Remove(playerItem);
 
-            //Save Changes
-            _database.SaveChanges();
+            await _database.SaveChangesAsync();
 
             return new ServiceResult();
         }

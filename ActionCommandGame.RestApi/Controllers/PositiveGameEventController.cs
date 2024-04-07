@@ -6,11 +6,11 @@ namespace ActionCommandGame.RestApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PositiveGameEvent : ControllerBase
+    public class PositiveGameEventController : ControllerBase
     {
         private readonly IPositiveGameEventService _positiveGameEventService;
 
-        public PositiveGameEvent(IPositiveGameEventService positiveGameEventService)
+        public PositiveGameEventController(IPositiveGameEventService positiveGameEventService)
         {
             _positiveGameEventService = positiveGameEventService;
         }
