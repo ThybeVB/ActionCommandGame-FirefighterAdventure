@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using ActionCommandGame.Repository;
 using ActionCommandGame.Sdk;
 using ActionCommandGame.Services;
@@ -8,14 +9,17 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles; // wtf man
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.EnableAnnotations();
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Action Command Game API", Version = "v1" });
 
-    var filePath = Path.Combine(System.AppContext.BaseDirectory, "ActionCommandGame.RestApi.xml");
+    var filePath = Path.Combine(AppContext.BaseDirectory, "ActionCommandGame.RestApi.xml");
     c.IncludeXmlComments(filePath);
 });
 
