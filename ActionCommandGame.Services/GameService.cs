@@ -107,13 +107,13 @@ namespace ActionCommandGame.Services
             }
 
             //Consume fuel
-            var fuelMessages = ConsumeFuel(player);
+            var fuelMessages = await ConsumeFuel(player);
 
             var attackMessages = new List<ServiceMessage>();
             //Consume attack when we got some loot
             if (positiveGameEvent.Money > 0)
             {
-                attackMessages.AddRange(ConsumeAttack(player));
+                attackMessages.AddRange(await ConsumeAttack(player));
             }
 
             var defenseMessages = new List<ServiceMessage>();
@@ -124,15 +124,15 @@ namespace ActionCommandGame.Services
                 if (player.CurrentDefensePlayerItem != null)
                 {
                     negativeGameEventMessages.Add(new ServiceMessage { Code = "DefenseWithGear", Message = negativeGameEvent.DefenseWithGearDescription });
-                    defenseMessages.AddRange(ConsumeDefense(player, negativeGameEvent.DefenseLoss));
+                    defenseMessages.AddRange(await ConsumeDefense(player, negativeGameEvent.DefenseLoss));
                 }
                 else
                 {
                     negativeGameEventMessages.Add(new ServiceMessage { Code = "DefenseWithoutGear", Message = negativeGameEvent.DefenseWithoutGearDescription });
 
                     //If we have no defense item, consume the defense loss from Fuel and Attack
-                    defenseMessages.AddRange(ConsumeFuel(player, negativeGameEvent.DefenseLoss));
-                    defenseMessages.AddRange(ConsumeAttack(player, negativeGameEvent.DefenseLoss));
+                    defenseMessages.AddRange(await ConsumeFuel(player, negativeGameEvent.DefenseLoss));
+                    defenseMessages.AddRange(await ConsumeAttack(player, negativeGameEvent.DefenseLoss));
                 }
             }
 
@@ -187,14 +187,14 @@ namespace ActionCommandGame.Services
                 return new ServiceResult<BuyResult>().NotEnoughMoney();
             }
 
-            /*var alsditwerktgaakvanavondbickyburgerkopen = new PlayerItem()
+            //await _playerItemService.Create(playerId, itemId);
+            await _playerItemSdk.Create(new PlayerItem
             {
                 PlayerId = playerId,
-                ItemId = itemId
-            };
-            await _playerItemSdk.Create(alsditwerktgaakvanavondbickyburgerkopen);*/
-
-            await _playerItemService.Create(playerId, itemId);
+                //Player = player,
+                ItemId = itemId,
+                //Item = item
+            });
 
             player.Money -= item.Price;
 
@@ -209,14 +209,15 @@ namespace ActionCommandGame.Services
             return new ServiceResult<BuyResult> { Data = buyResult };
         }
 
-        private IList<ServiceMessage> ConsumeFuel(Player player, int fuelLoss = 1)
+        private async Task<IList<ServiceMessage>> ConsumeFuel(Player player, int fuelLoss = 1)
         {
             if (player.CurrentFuelPlayerItem != null && player.CurrentFuelPlayerItemId.HasValue)
             {
                 player.CurrentFuelPlayerItem.RemainingFuel -= fuelLoss;
                 if (player.CurrentFuelPlayerItem.RemainingFuel <= 0)
                 {
-                    _playerItemService.Delete(player.CurrentFuelPlayerItemId.Value);
+                    //_playerItemService.Delete(player.CurrentFuelPlayerItemId.Value);
+                    await _playerItemSdk.Delete(player.CurrentFuelPlayerItemId.Value);
 
                     //Load a new Fuel Item from inventory
                     var newFuelItem = player.Inventory
@@ -246,7 +247,7 @@ namespace ActionCommandGame.Services
             return new List<ServiceMessage>();
         }
 
-        private IList<ServiceMessage> ConsumeAttack(Player player, int attackLoss = 1)
+        private async Task<IList<ServiceMessage>> ConsumeAttack(Player player, int attackLoss = 1)
         {
             if (player.CurrentAttackPlayerItem != null && player.CurrentAttackPlayerItemId.HasValue)
             {
@@ -254,7 +255,8 @@ namespace ActionCommandGame.Services
                 player.CurrentAttackPlayerItem.RemainingAttack -= attackLoss;
                 if (player.CurrentAttackPlayerItem.RemainingAttack <= 0)
                 {
-                    _playerItemService.Delete(player.CurrentAttackPlayerItemId.Value);
+                    //_playerItemService.Delete(player.CurrentAttackPlayerItemId.Value);
+                    await _playerItemSdk.Delete(player.CurrentAttackPlayerItemId.Value);
 
                     //Load a new Attack Item from inventory
                     var newAttackItem = player.Inventory
@@ -283,13 +285,13 @@ namespace ActionCommandGame.Services
             else
             {
                 //If we don't have any attack tools, just consume more fuel in stead
-                ConsumeFuel(player);
+                await ConsumeFuel(player);
             }
 
             return new List<ServiceMessage>();
         }
 
-        private IList<ServiceMessage> ConsumeDefense(Player player, int defenseLoss = 1)
+        private async Task<IList<ServiceMessage>> ConsumeDefense(Player player, int defenseLoss = 1)
         {
             if (player.CurrentDefensePlayerItem != null && player.CurrentDefensePlayerItemId.HasValue)
             {
@@ -297,7 +299,8 @@ namespace ActionCommandGame.Services
                 player.CurrentDefensePlayerItem.RemainingDefense -= defenseLoss;
                 if (player.CurrentDefensePlayerItem.RemainingDefense <= 0)
                 {
-                    _playerItemService.Delete(player.CurrentDefensePlayerItemId.Value);
+                    //_playerItemService.Delete(player.CurrentDefensePlayerItemId.Value);
+                    await _playerItemSdk.Delete(player.CurrentDefensePlayerItemId.Value);
 
                     //Load a new Defense Item from inventory
                     var newDefenseItem = player.Inventory
@@ -327,7 +330,7 @@ namespace ActionCommandGame.Services
             else
             {
                 //If we don't have defensive gear, just consume more fuel in stead.
-                ConsumeFuel(player);
+                await ConsumeFuel(player);
             }
 
             return new List<ServiceMessage>();

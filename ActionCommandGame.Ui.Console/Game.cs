@@ -246,11 +246,12 @@ namespace ActionCommandGame.Ui.ConsoleApp
             }
         }
 
-        private void ShowInventory(IList<PlayerItem> playerItems)
+        private async Task ShowInventory(IList<PlayerItem> playerItems)
         {
             foreach (var playerItem in playerItems)
             {
                 ShowPlayerItem(playerItem);
+                //ShowPlayerItem(await _playerItemSdk.Get(playerItem.Id));
             }
         }
 

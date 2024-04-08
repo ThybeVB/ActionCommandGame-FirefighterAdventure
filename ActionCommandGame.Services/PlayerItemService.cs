@@ -43,6 +43,8 @@ namespace ActionCommandGame.Services
 
             }
 
+            //enkel de item en player id worden gemapt,niet de obj zelf TODO
+
             return await query.ToListAsync();
         }
 
