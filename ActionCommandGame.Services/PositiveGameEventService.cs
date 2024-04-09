@@ -33,7 +33,7 @@ namespace ActionCommandGame.Services
             }).FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task<PositiveGameEvent> GetRandomPositiveGameEvent(bool hasAttackItem)
+        public async Task<PositiveGameEventResult> GetRandomPositiveGameEvent(bool hasAttackItem)
         {
             var query = _database.PositiveGameEvents.AsQueryable();
 
@@ -44,8 +44,19 @@ namespace ActionCommandGame.Services
             }
 
             var gameEvents = await query.ToListAsync();
+            var randomEvent = GameEventHelper.GetRandomPositiveGameEvent(gameEvents);
 
-            return GameEventHelper.GetRandomPositiveGameEvent(gameEvents);
+            var mappedEvent = new PositiveGameEventResult()
+            {
+                Id = randomEvent.Id,
+                Description = randomEvent.Description,
+                Experience = randomEvent.Experience,
+                Money = randomEvent.Money,
+                Name = randomEvent.Name,
+                Probability = randomEvent.Probability,
+            };
+
+            return mappedEvent;
         }
 
         public async Task<IList<PositiveGameEventResult>> Find()

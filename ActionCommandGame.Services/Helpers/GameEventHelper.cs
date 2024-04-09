@@ -2,6 +2,7 @@
 using System.Linq;
 using ActionCommandGame.Model;
 using ActionCommandGame.Model.Abstractions;
+using ActionCommandGame.Services.Model.Results;
 
 namespace ActionCommandGame.Services.Helpers
 {
@@ -25,7 +26,7 @@ namespace ActionCommandGame.Services.Helpers
             return cumulativeGameEvent?.GameEvent;
         }
 
-        public static NegativeGameEvent GetRandomNegativeGameEvent(IList<NegativeGameEvent> gameEvents)
+        public static NegativeGameEventResult GetRandomNegativeGameEvent(IList<NegativeGameEventResult> gameEvents)
         {
             var dice = new Dice();
             //~10% chance on a negative game event

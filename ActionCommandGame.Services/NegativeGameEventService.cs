@@ -24,7 +24,6 @@ namespace ActionCommandGame.Services
         {
             return await _database.NegativeGameEvents.Select(p => new NegativeGameEventResult
             {
-                Id = p.Id,
                 Description = p.Description,
                 DefenseLoss = p.DefenseLoss,
                 DefenseWithGearDescription = p.DefenseWithGearDescription,
@@ -34,11 +33,10 @@ namespace ActionCommandGame.Services
             }).FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task<NegativeGameEvent> GetRandomNegativeGameEvent()
+        public async Task<NegativeGameEventResult> GetRandomNegativeGameEvent()
         {
             var gameEvents = await Find();
-            //return GameEventHelper.GetRandomNegativeGameEvent(gameEvents); //todo aaaa
-            return null;
+            return GameEventHelper.GetRandomNegativeGameEvent(gameEvents);
         }
 
         public async Task<IList<NegativeGameEventResult>> Find()

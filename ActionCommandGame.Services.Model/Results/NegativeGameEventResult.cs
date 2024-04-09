@@ -1,6 +1,8 @@
-﻿namespace ActionCommandGame.Services.Model.Results
+﻿using ActionCommandGame.Model.Abstractions;
+
+namespace ActionCommandGame.Services.Model.Results
 {
-    public class NegativeGameEventResult
+    public class NegativeGameEventResult : IHasProbability
     {
         public int Id { get; set; }
         public string Name { get; set; }

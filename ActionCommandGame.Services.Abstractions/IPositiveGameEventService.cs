@@ -9,7 +9,7 @@ namespace ActionCommandGame.Services.Abstractions
     public interface IPositiveGameEventService
     {
         Task<PositiveGameEventResult> Get(int id);
-        Task<PositiveGameEvent> GetRandomPositiveGameEvent(bool hasAttackItem);
+        Task<PositiveGameEventResult> GetRandomPositiveGameEvent(bool hasAttackItem);
         Task<IList<PositiveGameEventResult>> Find();
         Task<PositiveGameEventResult> Create(PositiveGameEventRequest request);
         Task<PositiveGameEventResult> Update(int id, PositiveGameEventRequest request);
