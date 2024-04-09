@@ -86,7 +86,7 @@ namespace ActionCommandGame.Services
             return await Get(player.Id);
         }
 
-        public async Task<PlayerResult> Update(int id, PlayerRequest playerRequest)
+        public async Task<PlayerResult> Update(int id, PlayerResult playerRequest)
         {
             var player = await _database.Players.FirstOrDefaultAsync(p => p.Id == id);
             if (player is null)

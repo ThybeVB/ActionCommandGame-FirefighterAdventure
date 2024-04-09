@@ -10,7 +10,7 @@ namespace ActionCommandGame.Services.Abstractions
         Task<PlayerResult> Get(int id);
         Task<IList<PlayerResult>> Find();
         Task<PlayerResult?> Create(PlayerRequest player);
-        Task<PlayerResult?> Update(int id, PlayerRequest player);
+        Task<PlayerResult?> Update(int id, PlayerResult player);
         Task Delete(int id);
     }
 }

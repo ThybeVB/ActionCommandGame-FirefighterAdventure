@@ -21,11 +21,11 @@ namespace ActionCommandGame.Services
         private readonly IPlayerService _playerService;
         private readonly IPositiveGameEventService _positiveGameEventService;
         private readonly INegativeGameEventService _negativeGameEventService;
-        //private readonly IItemService _itemService;
+        private readonly IItemService _itemService;
         private readonly IPlayerItemService _playerItemService;
-        private readonly PlayerSdk _playerSdk;
-        private readonly ItemSdk _itemSdk;
-        private readonly PlayerItemSdk _playerItemSdk;
+        //private readonly PlayerSdk _playerSdk;
+        //private readonly ItemSdk _itemSdk;
+        //private readonly PlayerItemSdk _playerItemSdk;
 
         public GameService(
             AppSettings appSettings,
@@ -34,10 +34,10 @@ namespace ActionCommandGame.Services
             IPositiveGameEventService positiveGameEventService,
             INegativeGameEventService negativeGameEventService
             /*IItemService itemService*/,
-            IPlayerItemService playerItemService,
-            PlayerSdk playerSdk,
-            ItemSdk itemSdk,
-            PlayerItemSdk playerItemSdk)
+            IPlayerItemService playerItemService
+            //PlayerSdk playerSdk,
+            //ItemSdk itemSdk,
+            /*PlayerItemSdk playerItemSdk*/)
         {
             _appSettings = appSettings;
             _database = database;
@@ -46,16 +46,16 @@ namespace ActionCommandGame.Services
             _negativeGameEventService = negativeGameEventService;
             //_itemService = itemService;
             _playerItemService = playerItemService;
-            _playerSdk = playerSdk;
-            _itemSdk = itemSdk;
-            _playerItemSdk = playerItemSdk;
+            //_playerSdk = playerSdk;
+            //_itemSdk = itemSdk;
+            //_playerItemSdk = playerItemSdk;
         }
 
         public async Task<ServiceResult<GameResult>> PerformAction(int playerId)
         {
             //Check Cooldown
-            //var player = await _playerService.Get(playerId);
-            var player = await _playerSdk.Get(playerId);
+            var player = await _playerService.Get(playerId);
+            //var player = await _playerSdk.Get(playerId);
 
             var elapsedSeconds = DateTime.UtcNow.Subtract(player.LastActionExecutedDateTime).TotalSeconds;
             var cooldownSeconds = _appSettings.DefaultCooldown;
@@ -142,8 +142,9 @@ namespace ActionCommandGame.Services
             player.LastActionExecutedDateTime = DateTime.UtcNow;
 
             //Save Player
-            await _playerSdk.Update(playerId, player);
-            //await _database.SaveChangesAsync();
+            //await _playerSdk.Update(playerId, player);
+            await _playerService.Update(playerId, player);
+            await _database.SaveChangesAsync();
 
             var gameResult = new GameResult
             {
@@ -170,14 +171,16 @@ namespace ActionCommandGame.Services
 
         public async Task<ServiceResult<BuyResult>> Buy(int playerId, int itemId)
         {
-            var player = await _playerSdk.Get(playerId);
+            //var player = await _playerSdk.Get(playerId);
+            var player = await _playerService.Get(playerId);
 
             if (player == null)
             {
                 return new ServiceResult<BuyResult>().PlayerNotFound();
             }
 
-            var item = await _itemSdk.Get(itemId);
+            //var item = await _itemSdk.Get(itemId);
+            var item = await _itemService.Get(itemId);
             if (item == null)
             {
                 return new ServiceResult<BuyResult>().ItemNotFound();
@@ -187,15 +190,15 @@ namespace ActionCommandGame.Services
             {
                 return new ServiceResult<BuyResult>().NotEnoughMoney();
             }
-
-            //await _playerItemService.Create(playerId, itemId);
-            await _playerItemSdk.Create(new PlayerItem
-            {
-                PlayerId = playerId,
-                //Player = player,
-                ItemId = itemId,
-                //Item = item
-            });
+            
+            await _playerItemService.Create(playerId, itemId);
+            //await _playerItemSdk.Create(new PlayerItem
+            //{
+            //    PlayerId = playerId,
+            //    //Player = player,
+            //    ItemId = itemId,
+            //    //Item = item
+            //});
 
             player.Money -= item.Price;
 
@@ -210,15 +213,15 @@ namespace ActionCommandGame.Services
             return new ServiceResult<BuyResult> { Data = buyResult };
         }
 
-        private async Task<IList<ServiceMessage>> ConsumeFuel(Player player, int fuelLoss = 1)
+        private async Task<IList<ServiceMessage>> ConsumeFuel(PlayerResult player, int fuelLoss = 1)
         {
             if (player.CurrentFuelPlayerItem != null && player.CurrentFuelPlayerItemId.HasValue)
             {
                 player.CurrentFuelPlayerItem.RemainingFuel -= fuelLoss;
                 if (player.CurrentFuelPlayerItem.RemainingFuel <= 0)
                 {
-                    //_playerItemService.Delete(player.CurrentFuelPlayerItemId.Value);
-                    await _playerItemSdk.Delete(player.CurrentFuelPlayerItemId.Value);
+                    await _playerItemService.Delete(player.CurrentFuelPlayerItemId.Value);
+                    //await _playerItemSdk.Delete(player.CurrentFuelPlayerItemId.Value);
 
                     //Load a new Fuel Item from inventory
                     var newFuelItem = player.Inventory
@@ -248,7 +251,7 @@ namespace ActionCommandGame.Services
             return new List<ServiceMessage>();
         }
 
-        private async Task<IList<ServiceMessage>> ConsumeAttack(Player player, int attackLoss = 1)
+        private async Task<IList<ServiceMessage>> ConsumeAttack(PlayerResult player, int attackLoss = 1)
         {
             if (player.CurrentAttackPlayerItem != null && player.CurrentAttackPlayerItemId.HasValue)
             {
@@ -256,8 +259,8 @@ namespace ActionCommandGame.Services
                 player.CurrentAttackPlayerItem.RemainingAttack -= attackLoss;
                 if (player.CurrentAttackPlayerItem.RemainingAttack <= 0)
                 {
-                    //_playerItemService.Delete(player.CurrentAttackPlayerItemId.Value);
-                    await _playerItemSdk.Delete(player.CurrentAttackPlayerItemId.Value);
+                    await _playerItemService.Delete(player.CurrentAttackPlayerItemId.Value);
+                    //await _playerItemSdk.Delete(player.CurrentAttackPlayerItemId.Value);
 
                     //Load a new Attack Item from inventory
                     var newAttackItem = player.Inventory
@@ -292,7 +295,7 @@ namespace ActionCommandGame.Services
             return new List<ServiceMessage>();
         }
 
-        private async Task<IList<ServiceMessage>> ConsumeDefense(Player player, int defenseLoss = 1)
+        private async Task<IList<ServiceMessage>> ConsumeDefense(PlayerResult player, int defenseLoss = 1)
         {
             if (player.CurrentDefensePlayerItem != null && player.CurrentDefensePlayerItemId.HasValue)
             {
@@ -300,8 +303,8 @@ namespace ActionCommandGame.Services
                 player.CurrentDefensePlayerItem.RemainingDefense -= defenseLoss;
                 if (player.CurrentDefensePlayerItem.RemainingDefense <= 0)
                 {
-                    //_playerItemService.Delete(player.CurrentDefensePlayerItemId.Value);
-                    await _playerItemSdk.Delete(player.CurrentDefensePlayerItemId.Value);
+                    await _playerItemService.Delete(player.CurrentDefensePlayerItemId.Value);
+                    //await _playerItemSdk.Delete(player.CurrentDefensePlayerItemId.Value);
 
                     //Load a new Defense Item from inventory
                     var newDefenseItem = player.Inventory
@@ -337,7 +340,7 @@ namespace ActionCommandGame.Services
             return new List<ServiceMessage>();
         }
 
-        private IList<ServiceMessage> GetWarningMessages(Player player)
+        private IList<ServiceMessage> GetWarningMessages(PlayerResult player)
         {
             var serviceMessages = new List<ServiceMessage>();
 

@@ -8,6 +8,7 @@ using ActionCommandGame.Sdk;
 using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Services.Extensions;
 using ActionCommandGame.Services.Model.Core;
+using ActionCommandGame.Services.Model.Results;
 using ActionCommandGame.Settings;
 using ActionCommandGame.Ui.ConsoleApp.ConsoleWriters;
 
@@ -17,19 +18,19 @@ namespace ActionCommandGame.Ui.ConsoleApp
     {
         private readonly AppSettings _settings;
         private readonly IGameService _gameService;
-        //private readonly IPlayerService _playerService;
-        //private readonly IItemService _itemService;
-        //private readonly IPlayerItemService _playerItemService;
+        private readonly IPlayerService _playerService;
+        private readonly IItemService _itemService;
+        private readonly IPlayerItemService _playerItemService;
 
-        private readonly PlayerSdk _playerSdk;
-        private readonly ItemSdk _itemSdk;
-        private readonly PlayerItemSdk _playerItemSdk;
+        //private readonly PlayerSdk _playerSdk;
+        //private readonly ItemSdk _itemSdk;
+        //private readonly PlayerItemSdk _playerItemSdk;
 
         public Game(
             AppSettings settings,
             IGameService gameService,
-            //IPlayerService playerService,
-            //IItemService itemService,
+            IPlayerService playerService,
+            IItemService itemService,
             IPlayerItemService playerItemService,
             PlayerSdk playerSdk,
             ItemSdk itemSdk,
@@ -37,12 +38,12 @@ namespace ActionCommandGame.Ui.ConsoleApp
         {
             _settings = settings;
             _gameService = gameService;
-            //_playerService = playerService;
-            //_itemService = itemService;
-            //_playerItemService = playerItemService;
-            _playerSdk = playerSdk;
-            _itemSdk = itemSdk;
-            _playerItemSdk = playerItemSdk;
+            _playerService = playerService;
+            _itemService = itemService;
+            _playerItemService = playerItemService;
+            //_playerSdk = playerSdk;
+            //_itemSdk = itemSdk;
+            //_playerItemSdk = playerItemSdk;
         }
 
         public async Task Start()
@@ -102,13 +103,13 @@ namespace ActionCommandGame.Ui.ConsoleApp
 
                 if (CheckCommand(command, new[] { "leaderboard", "lead", "top", "rank", "ranking" }))
                 {
-                    var players = (await _playerSdk.Find()).OrderByDescending(p => p.Experience).ToList();
+                    var players = (await _playerService.Find()).OrderByDescending(p => p.Experience).ToList();
                     ShowLeaderboard(players, currentPlayerId);
                 }
 
                 if (CheckCommand(command, new[] { "inventory", "inv", "bag", "backpack" }))
                 {
-                    var inventory = await _playerItemSdk.Find(currentPlayerId);
+                    var inventory = await _playerItemService.Find(currentPlayerId);
                     await ShowInventory(inventory);
                 }
 
@@ -122,7 +123,7 @@ namespace ActionCommandGame.Ui.ConsoleApp
             Console.ReadLine();
         }
 
-        private static void ShowItem(Item item)
+        private static void ShowItem(ItemResult item)
         {
             ConsoleWriter.WriteText($"\t[{item.Id}] {item.Name} €{item.Price}", ConsoleColor.White);
             if (!string.IsNullOrWhiteSpace(item.Description))
@@ -183,7 +184,8 @@ namespace ActionCommandGame.Ui.ConsoleApp
 
         public async void ShowStats(int playerId)
         {
-            var player = await _playerSdk.Get(playerId);
+            //var player = await _playerSdk.Get(playerId);
+            var player = await _playerService.Get(playerId);
 
             //Check food consumption
             if (player.CurrentFuelPlayerItem != null)
@@ -230,7 +232,7 @@ namespace ActionCommandGame.Ui.ConsoleApp
             ConsoleWriter.WriteText();
         }
 
-        private void ShowLeaderboard(IList<Player> players, int currentPlayerId)
+        private void ShowLeaderboard(IList<PlayerResult> players, int currentPlayerId)
         {
             foreach (var player in players)
             {
@@ -286,7 +288,9 @@ namespace ActionCommandGame.Ui.ConsoleApp
         private async Task ShowShop()
         {
             ConsoleWriter.WriteText("Available Shop Items", ConsoleColor.Green);
-            var shopItems = await _itemSdk.Find();
+            //var shopItems = await _itemSdk.Find();
+            var shopItems = await _itemService.Find();
+            
             foreach (var item in shopItems)
             {
                 ShowItem(item);

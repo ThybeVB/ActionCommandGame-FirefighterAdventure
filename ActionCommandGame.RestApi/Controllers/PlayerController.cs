@@ -1,5 +1,6 @@
 ﻿using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Services.Model.Requests;
+using ActionCommandGame.Services.Model.Results;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ActionCommandGame.RestApi.Controllers
@@ -58,7 +59,7 @@ namespace ActionCommandGame.RestApi.Controllers
         /// <param name="player"></param>
         /// <returns></returns>
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> Update(int id, PlayerRequest player)
+        public async Task<IActionResult> Update(int id, PlayerResult player)
         {
             var result = await _playerService.Update(id, player);
             return Ok(result);

@@ -1,26 +1,26 @@
-﻿using ActionCommandGame.Model;
-using ActionCommandGame.Services.Helpers;
+﻿using ActionCommandGame.Services.Helpers;
+using ActionCommandGame.Services.Model.Results;
 
 namespace ActionCommandGame.Services.Extensions
 {
     public static class PlayerExtensions
     {
-        public static int GetLevel(this Player player)
+        public static int GetLevel(this PlayerResult player)
         {
             return PlayerLevelHelper.GetLevelFromExperience(player.Experience);
         }
 
-        public static int GetExperienceForNextLevel(this Player player)
+        public static int GetExperienceForNextLevel(this PlayerResult player)
         {
             return PlayerLevelHelper.GetExperienceForNextLevel(player.Experience);
         }
 
-        public static int GetLevelFromExperience(this Player player)
+        public static int GetLevelFromExperience(this PlayerResult player)
         {
             return PlayerLevelHelper.GetLevelFromExperience(player.Experience);
         }
 
-        public static int GetRemainingExperienceUntilNextLevel(this Player player)
+        public static int GetRemainingExperienceUntilNextLevel(this PlayerResult player)
         {
             return PlayerLevelHelper.GetRemainingExperienceUntilNextLevel(player.Experience);
         }

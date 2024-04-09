@@ -4,7 +4,7 @@ namespace ActionCommandGame.Services.Model.Results
 {
     public class BuyResult
     {
-        public Player Player { get; set; }
-        public Item Item { get; set; }
+        public PlayerResult Player { get; set; }
+        public ItemResult Item { get; set; }
     }
 }
