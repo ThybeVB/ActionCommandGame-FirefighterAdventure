@@ -13,12 +13,10 @@ namespace ActionCommandGame.Services
     public class PlayerService : IPlayerService
     {
         private readonly ActionButtonGameDbContext _database;
-        private readonly IPlayerItemService _playerItemService;
 
         public PlayerService(ActionButtonGameDbContext database, IPlayerItemService playerItemService)
         {
             _database = database;
-            _playerItemService = playerItemService;
         }
 
         public async Task<PlayerResult> Get(int id)
@@ -31,9 +29,13 @@ namespace ActionCommandGame.Services
                     Money = p.Money,
                     Experience = p.Experience,
                     Inventory = p.Inventory,
+                    LastActionExecutedDateTime = p.LastActionExecutedDateTime,
                     CurrentFuelPlayerItem = p.CurrentFuelPlayerItem,
                     CurrentAttackPlayerItem = p.CurrentAttackPlayerItem,
                     CurrentDefensePlayerItem = p.CurrentDefensePlayerItem,
+                    CurrentAttackPlayerItemId = p.CurrentAttackPlayerItemId,
+                    CurrentDefensePlayerItemId = p.CurrentDefensePlayerItemId,
+                    CurrentFuelPlayerItemId = p.CurrentFuelPlayerItemId
                 }).FirstOrDefaultAsync(p => p.Id == id);
 
             return player;
@@ -42,6 +44,9 @@ namespace ActionCommandGame.Services
         public async Task<IList<PlayerResult>> Find()
         {
             var players = await _database.Players
+                .Include(p => p.CurrentAttackPlayerItem.Item)
+                .Include(p => p.CurrentDefensePlayerItem.Item)
+                .Include(p => p.CurrentFuelPlayerItem.Item)
                 .Select(p => new PlayerResult
                 {
                     Id = p.Id,
@@ -49,9 +54,13 @@ namespace ActionCommandGame.Services
                     Money = p.Money,
                     Experience = p.Experience,
                     Inventory = p.Inventory,
+                    LastActionExecutedDateTime = p.LastActionExecutedDateTime,
                     CurrentFuelPlayerItem = p.CurrentFuelPlayerItem,
                     CurrentAttackPlayerItem = p.CurrentAttackPlayerItem,
-                    CurrentDefensePlayerItem = p.CurrentDefensePlayerItem
+                    CurrentDefensePlayerItem = p.CurrentDefensePlayerItem,
+                    CurrentAttackPlayerItemId = p.CurrentAttackPlayerItemId,
+                    CurrentDefensePlayerItemId = p.CurrentDefensePlayerItemId,
+                    CurrentFuelPlayerItemId = p.CurrentFuelPlayerItemId
                 }).ToListAsync();
 
             return players;
@@ -61,7 +70,14 @@ namespace ActionCommandGame.Services
         {
             var player = new Player()
             {
-                Name = request.Name
+                Name = request.Name,
+                Money = request.Money,
+                Experience = request.Experience,
+                Inventory = request.Inventory,
+                LastActionExecutedDateTime = request.LastActionExecutedDateTime,
+                CurrentAttackPlayerItemId = request.CurrentAttackPlayerItemId,
+                CurrentDefensePlayerItemId = request.CurrentDefensePlayerItemId,
+                CurrentFuelPlayerItemId = request.CurrentFuelPlayerItemId
             };
 
             _database.Players.Add(player);
@@ -70,7 +86,7 @@ namespace ActionCommandGame.Services
             return await Get(player.Id);
         }
 
-        public async Task<PlayerResult?> Update(int id, PlayerRequest playerRequest)
+        public async Task<PlayerResult> Update(int id, PlayerRequest playerRequest)
         {
             var player = await _database.Players.FirstOrDefaultAsync(p => p.Id == id);
             if (player is null)
