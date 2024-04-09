@@ -32,8 +32,8 @@ namespace ActionCommandGame.Services
             ActionButtonGameDbContext database,
             IPlayerService playerService,
             IPositiveGameEventService positiveGameEventService,
-            INegativeGameEventService negativeGameEventService
-            /*IItemService itemService*/,
+            INegativeGameEventService negativeGameEventService,
+            IItemService itemService,
             IPlayerItemService playerItemService
             //PlayerSdk playerSdk,
             //ItemSdk itemSdk,
@@ -44,7 +44,7 @@ namespace ActionCommandGame.Services
             _playerService = playerService;
             _positiveGameEventService = positiveGameEventService;
             _negativeGameEventService = negativeGameEventService;
-            //_itemService = itemService;
+            _itemService = itemService;
             _playerItemService = playerItemService;
             //_playerSdk = playerSdk;
             //_itemSdk = itemSdk;
