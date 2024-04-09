@@ -32,7 +32,6 @@ namespace ActionCommandGame.Services
                     Defense = p.Defense,
                     Description = p.Description,
                     Fuel = p.Fuel,
-                    PlayerItems = p.PlayerItems,
                     Price = p.Price
                 }).
                 SingleOrDefaultAsync(i => i.Id == id);
@@ -50,7 +49,6 @@ namespace ActionCommandGame.Services
                     Defense = p.Defense,
                     Description = p.Description,
                     Fuel = p.Fuel,
-                    PlayerItems = p.PlayerItems,
                     Price = p.Price
                 }).ToListAsync();
         }
@@ -90,7 +88,6 @@ namespace ActionCommandGame.Services
             item.ActionCooldownSeconds = request.ActionCooldownSeconds;
             item.Price = request.Price;
             item.Fuel = request.Fuel;
-            //item.PlayerItems = request.PlayerItems; todo
 
             await _database.SaveChangesAsync();
             return await Get(item.Id);

@@ -109,7 +109,7 @@ namespace ActionCommandGame.Ui.ConsoleApp
                 if (CheckCommand(command, new[] { "inventory", "inv", "bag", "backpack" }))
                 {
                     var inventory = await _playerItemSdk.Find(currentPlayerId);
-                    ShowInventory(inventory);
+                    await ShowInventory(inventory);
                 }
 
                 if (CheckCommand(command, new[] { "?", "help", "h", "commands" }))

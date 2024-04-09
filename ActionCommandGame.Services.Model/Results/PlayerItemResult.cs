@@ -23,5 +23,9 @@ namespace ActionCommandGame.Services.Model.Results
         public IList<Player> FuelPlayers { get; set; }
         public IList<Player> AttackPlayers { get; set; }
         public IList<Player> DefensePlayers { get; set; }
+        public int Fuel { get; set; }
+        public int Attack { get; set; }
+        public int Defense { get; set; }
+        public int ActionCooldownSeconds { get; set; }
     }
 }

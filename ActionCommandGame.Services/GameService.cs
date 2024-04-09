@@ -18,7 +18,7 @@ namespace ActionCommandGame.Services
     {
         private readonly AppSettings _appSettings;
         private readonly ActionButtonGameDbContext _database;
-        //private readonly IPlayerService _playerService;
+        private readonly IPlayerService _playerService;
         private readonly IPositiveGameEventService _positiveGameEventService;
         private readonly INegativeGameEventService _negativeGameEventService;
         //private readonly IItemService _itemService;
@@ -30,7 +30,7 @@ namespace ActionCommandGame.Services
         public GameService(
             AppSettings appSettings,
             ActionButtonGameDbContext database,
-            /*IPlayerService playerService*/
+            IPlayerService playerService,
             IPositiveGameEventService positiveGameEventService,
             INegativeGameEventService negativeGameEventService
             /*IItemService itemService*/,
@@ -41,7 +41,7 @@ namespace ActionCommandGame.Services
         {
             _appSettings = appSettings;
             _database = database;
-            //_playerService = playerService;
+            _playerService = playerService;
             _positiveGameEventService = positiveGameEventService;
             _negativeGameEventService = negativeGameEventService;
             //_itemService = itemService;
@@ -54,6 +54,7 @@ namespace ActionCommandGame.Services
         public async Task<ServiceResult<GameResult>> PerformAction(int playerId)
         {
             //Check Cooldown
+            //var player = await _playerService.Get(playerId);
             var player = await _playerSdk.Get(playerId);
 
             var elapsedSeconds = DateTime.UtcNow.Subtract(player.LastActionExecutedDateTime).TotalSeconds;

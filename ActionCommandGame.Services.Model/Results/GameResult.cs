@@ -7,8 +7,8 @@ namespace ActionCommandGame.Services.Model.Results
     public class GameResult
     {
         public Player Player { get; set; }
-        public PositiveGameEvent PositiveGameEvent { get; set; }
-        public NegativeGameEvent NegativeGameEvent { get; set; }
+        public PositiveGameEventResult PositiveGameEvent { get; set; }
+        public NegativeGameEventResult NegativeGameEvent { get; set; }
         public IList<ServiceMessage> NegativeGameEventMessages { get; set; }
     }
 }

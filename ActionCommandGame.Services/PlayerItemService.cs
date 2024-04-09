@@ -100,17 +100,15 @@ namespace ActionCommandGame.Services
 
         public async Task<PlayerItemResult> Update(int id, PlayerItemRequest playerItem)
         {
-            var i = await _database.PlayerItems.FirstOrDefaultAsync(pi => pi.Id == id);
+            var item = await _database.PlayerItems.FirstOrDefaultAsync(pi => pi.Id == id);
 
-            if (i is null)
+            if (item is null)
             {
                 return null;
             }
 
-            i.ItemId = playerItem.ItemId;
-            //i.Item = playerItem.Item;
-            i.PlayerId = playerItem.PlayerId;
-            //i.Player = playerItem.Player;
+            item.ItemId = playerItem.ItemId;
+            item.PlayerId = playerItem.PlayerId;
 
             await _database.SaveChangesAsync();
 
