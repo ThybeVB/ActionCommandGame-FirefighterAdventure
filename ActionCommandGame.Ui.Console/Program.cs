@@ -20,7 +20,7 @@ namespace ActionCommandGame.Ui.ConsoleApp
         public static void Main(string[] args)
             => MainAsync(args).GetAwaiter().GetResult();
 
-        public static async Task MainAsync(string[] args)
+        private static async Task MainAsync(string[] args)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -73,9 +73,7 @@ namespace ActionCommandGame.Ui.ConsoleApp
             services.AddTransient<IPositiveGameEventService, PositiveGameEventService>();
             services.AddTransient<INegativeGameEventService, NegativeGameEventService>();
             services.AddTransient<IItemService, ItemService>();
-            
-            services.AddTransient<IPlayerService, PlayerService>(); //first oen to phase out
-
+            services.AddTransient<IPlayerService, PlayerService>();
             services.AddTransient<IPlayerItemService, PlayerItemService>();
         }
     }
