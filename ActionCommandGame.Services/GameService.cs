@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ActionCommandGame.Model;
 using ActionCommandGame.Repository;
 using ActionCommandGame.Sdk;
 using ActionCommandGame.Services.Abstractions;
@@ -23,7 +22,7 @@ namespace ActionCommandGame.Services
         private readonly INegativeGameEventService _negativeGameEventService;
         private readonly IItemService _itemService;
         private readonly IPlayerItemService _playerItemService;
-        private readonly PlayerSdk _playerSdk;
+        //private readonly PlayerSdk _playerSdk;
         //private readonly ItemSdk _itemSdk;
         //private readonly PlayerItemSdk _playerItemSdk;
 
@@ -34,8 +33,8 @@ namespace ActionCommandGame.Services
             IPositiveGameEventService positiveGameEventService,
             INegativeGameEventService negativeGameEventService,
             IItemService itemService,
-            IPlayerItemService playerItemService,
-            PlayerSdk playerSdk
+            IPlayerItemService playerItemService
+            //PlayerSdk playerSdk
             //ItemSdk itemSdk,
             /*PlayerItemSdk playerItemSdk*/)
         {
@@ -46,7 +45,7 @@ namespace ActionCommandGame.Services
             _negativeGameEventService = negativeGameEventService;
             _itemService = itemService;
             _playerItemService = playerItemService;
-            _playerSdk = playerSdk;
+            //_playerSdk = playerSdk;
             //_itemSdk = itemSdk;
             //_playerItemSdk = playerItemSdk;
         }
@@ -55,7 +54,7 @@ namespace ActionCommandGame.Services
         {
             //Check Cooldown
             var player = await _playerService.Get(playerId);
-            var sdkPlayer = await _playerSdk.Get(playerId);
+            //var sdkPlayer = await _playerSdk.Get(playerId);
 
             var elapsedSeconds = DateTime.UtcNow.Subtract(player.LastActionExecutedDateTime).TotalSeconds;
             var cooldownSeconds = _appSettings.DefaultCooldown;
@@ -171,7 +170,6 @@ namespace ActionCommandGame.Services
 
         public async Task<ServiceResult<BuyResult>> Buy(int playerId, int itemId)
         {
-            //var player = await _playerSdk.Get(playerId);
             var player = await _playerService.Get(playerId);
 
             if (player == null)

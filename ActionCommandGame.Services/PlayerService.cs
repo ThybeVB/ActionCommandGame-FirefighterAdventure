@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿    using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ActionCommandGame.Model;
@@ -14,7 +14,7 @@ namespace ActionCommandGame.Services
     {
         private readonly ActionButtonGameDbContext _database;
 
-        public PlayerService(ActionButtonGameDbContext database, IPlayerItemService playerItemService)
+        public PlayerService(ActionButtonGameDbContext database)
         {
             _database = database;
         }

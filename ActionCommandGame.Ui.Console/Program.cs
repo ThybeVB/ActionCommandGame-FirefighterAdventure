@@ -50,7 +50,7 @@ namespace ActionCommandGame.Ui.ConsoleApp
             //Register the EntityFramework database In Memory as a Singleton
             services.AddDbContext<ActionButtonGameDbContext>(options =>
             {
-                options.UseInMemoryDatabase("InMemoryDb");
+                options.UseInMemoryDatabase(nameof(ActionButtonGameDbContext));
             }, ServiceLifetime.Singleton, ServiceLifetime.Singleton);
 
             services.AddHttpClient("ActionCommandGameApi", options =>
@@ -61,12 +61,12 @@ namespace ActionCommandGame.Ui.ConsoleApp
                 }
             });
 
-            services.AddScoped<PlayerSdk>();
-            services.AddScoped<ItemSdk>();
-            services.AddScoped<PositiveGameEventSdk>();
-            services.AddScoped<NegativeGameEventSdk>();
-            services.AddScoped<PlayerItemSdk>();
-
+            //services.AddScoped<PlayerSdk>();
+            //services.AddScoped<ItemSdk>();
+            //services.AddScoped<PositiveGameEventSdk>();
+            //services.AddScoped<NegativeGameEventSdk>();
+            //services.AddScoped<PlayerItemSdk>();
+            //
             services.AddTransient<Game>();
 
             services.AddTransient<IGameService, GameService>();
