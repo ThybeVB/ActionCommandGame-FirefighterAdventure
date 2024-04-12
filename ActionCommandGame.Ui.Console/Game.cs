@@ -22,19 +22,19 @@ namespace ActionCommandGame.Ui.ConsoleApp
         private readonly IItemService _itemService;
         private readonly IPlayerItemService _playerItemService;
 
-        //private readonly PlayerSdk _playerSdk;
-        //private readonly ItemSdk _itemSdk;
-        //private readonly PlayerItemSdk _playerItemSdk;
+        private readonly PlayerSdk _playerSdk;
+        private readonly ItemSdk _itemSdk;
+        private readonly PlayerItemSdk _playerItemSdk;
 
         public Game(
             AppSettings settings,
             IGameService gameService,
             IPlayerService playerService,
             IItemService itemService,
-            IPlayerItemService playerItemService
-            //PlayerSdk playerSdk,
-            //ItemSdk itemSdk,
-            //PlayerItemSdk playerItemSdk
+            IPlayerItemService playerItemService,
+            PlayerSdk playerSdk,
+            ItemSdk itemSdk,
+            PlayerItemSdk playerItemSdk
             )
         {
             _settings = settings;
@@ -42,9 +42,9 @@ namespace ActionCommandGame.Ui.ConsoleApp
             _playerService = playerService;
             _itemService = itemService;
             _playerItemService = playerItemService;
-            //_playerSdk = playerSdk;
-            //_itemSdk = itemSdk;
-            //_playerItemSdk = playerItemSdk;
+            _playerSdk = playerSdk;
+            _itemSdk = itemSdk;
+            _playerItemSdk = playerItemSdk;
         }
 
         public async Task Start()
@@ -104,13 +104,15 @@ namespace ActionCommandGame.Ui.ConsoleApp
 
                 if (CheckCommand(command, new[] { "leaderboard", "lead", "top", "rank", "ranking" }))
                 {
-                    var players = (await _playerService.Find()).OrderByDescending(p => p.Experience).ToList();
+                    //var players = (await _playerService.Find()).OrderByDescending(p => p.Experience).ToList();
+                    var players = (await _playerSdk.Find()).OrderByDescending(p => p.Experience).ToList();
                     ShowLeaderboard(players, currentPlayerId);
                 }
 
                 if (CheckCommand(command, new[] { "inventory", "inv", "bag", "backpack" }))
                 {
-                    var inventory = await _playerItemService.Find(currentPlayerId);
+                    //var inventory = await _playerItemService.Find(currentPlayerId);
+                    var inventory = await _playerItemSdk.Find(currentPlayerId);
                     await ShowInventory(inventory);
                 }
 
@@ -124,7 +126,7 @@ namespace ActionCommandGame.Ui.ConsoleApp
             Console.ReadLine();
         }
 
-        private static void ShowItem(ItemResult item)
+        private static void ShowItem(Item item)
         {
             ConsoleWriter.WriteText($"\t[{item.Id}] {item.Name} €{item.Price}", ConsoleColor.White);
             if (!string.IsNullOrWhiteSpace(item.Description))
@@ -185,8 +187,8 @@ namespace ActionCommandGame.Ui.ConsoleApp
 
         public async void ShowStats(int playerId)
         {
-            //var player = await _playerSdk.Get(playerId);
-            var player = await _playerService.Get(playerId);
+            var player = await _playerSdk.Get(playerId);
+            //var player = await _playerService.Get(playerId);
 
             //Check food consumption
             if (player.CurrentFuelPlayerItem != null)
@@ -233,7 +235,7 @@ namespace ActionCommandGame.Ui.ConsoleApp
             ConsoleWriter.WriteText();
         }
 
-        private void ShowLeaderboard(IList<PlayerResult> players, int currentPlayerId)
+        private void ShowLeaderboard(IList<Player> players, int currentPlayerId)
         {
             foreach (var player in players)
             {
@@ -289,8 +291,9 @@ namespace ActionCommandGame.Ui.ConsoleApp
         private async Task ShowShop()
         {
             ConsoleWriter.WriteText("Available Shop Items", ConsoleColor.Green);
-            //var shopItems = await _itemSdk.Find();
-            var shopItems = await _itemService.Find();
+            
+            var shopItems = await _itemSdk.Find();
+            //var shopItems = await _itemService.Find();
             
             foreach (var item in shopItems)
             {

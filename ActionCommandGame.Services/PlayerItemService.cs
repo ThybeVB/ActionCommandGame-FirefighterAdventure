@@ -65,9 +65,9 @@ namespace ActionCommandGame.Services
             var playerItem = new PlayerItem
             {
                 ItemId = itemId,
-                Item = item,
+                //Item = item,
                 PlayerId = playerId,
-                Player = player
+                //Player = player
             };
             _database.PlayerItems.Add(playerItem);
             player.Inventory.Add(playerItem);

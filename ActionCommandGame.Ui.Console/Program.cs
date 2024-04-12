@@ -61,12 +61,12 @@ namespace ActionCommandGame.Ui.ConsoleApp
                 }
             });
 
-            //services.AddScoped<PlayerSdk>();
-            //services.AddScoped<ItemSdk>();
-            //services.AddScoped<PositiveGameEventSdk>();
-            //services.AddScoped<NegativeGameEventSdk>();
-            //services.AddScoped<PlayerItemSdk>();
-            //
+            services.AddScoped<PlayerSdk>();
+            services.AddScoped<ItemSdk>();
+            services.AddScoped<PositiveGameEventSdk>();
+            services.AddScoped<NegativeGameEventSdk>();
+            services.AddScoped<PlayerItemSdk>();
+            
             services.AddTransient<Game>();
 
             services.AddTransient<IGameService, GameService>();

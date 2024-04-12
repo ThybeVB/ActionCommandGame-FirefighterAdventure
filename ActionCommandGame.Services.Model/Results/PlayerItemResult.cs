@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ActionCommandGame.Model.Abstractions;
 
 namespace ActionCommandGame.Services.Model.Results
 {
-    public class PlayerItemResult
+    public class PlayerItemResult : IIdentifiable
     {
         public int Id { get; set; }
         public int PlayerId { get; set; }
