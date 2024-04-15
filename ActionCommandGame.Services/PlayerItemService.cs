@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 using ActionCommandGame.Model;
 using ActionCommandGame.Repository;
@@ -23,47 +24,54 @@ namespace ActionCommandGame.Services
 
         public async Task<PlayerItemResult> Get(int id)
         {
-            return await _database.PlayerItems.Select(p => new PlayerItemResult()
-            {
-                ItemId = p.ItemId,
-                Item = p.Item,
-                PlayerId = p.PlayerId,
-                Player = p.Player,
-            }).FirstOrDefaultAsync(p => p.Id == id);
+            return await _database.PlayerItems
+                .Include(p => p.Item)
+                .Include(p => p.Player)
+                .Select(p => new PlayerItemResult()
+                {
+                    ItemId = p.ItemId,
+                    PlayerId = p.PlayerId,
+                })
+            .FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task<IList<PlayerItem>> Find(int? playerId = null) //todo
+        public async Task<IList<PlayerItemResult>> Find(int? playerId = null)
         {
-            var query = _database.PlayerItems.AsQueryable();
+            var query = _database.PlayerItems
+                .Include(pi => pi.Item)
+                .Include(pi => pi.Player)
+                .Where(pi => pi.PlayerId == playerId.Value)
+                .Select(pi => new PlayerItemResult
+                {
+                    Id = pi.Id,
+                    ItemId = pi.ItemId,
+                    Item = pi.Item,
+                    PlayerId = pi.PlayerId,
+                    Player = pi.Player,
 
-            if (playerId.HasValue)
-            {
-                query = query
-                    .Where(pi => pi.PlayerId == playerId.Value);
-
-            }
-
-            //enkel de item en player id worden gemapt,niet de obj zelf TODO
+                    RemainingFuel = pi.RemainingFuel,
+                    RemainingAttack = pi.RemainingAttack,
+                    RemainingDefense = pi.RemainingDefense
+                });
 
             return await query.ToListAsync();
         }
 
-        public async Task<ServiceResult<PlayerItem>> Create(int playerId, int itemId)
+        public async Task<ServiceResult<PlayerItemResult>> Create(int playerId, int itemId)
         {
             var player = _database.Players.SingleOrDefault(p => p.Id == playerId);
             if (player == null)
             {
-                return new ServiceResult<PlayerItem>().PlayerNotFound();
+                return new ServiceResult<PlayerItemResult>().PlayerNotFound();
             }
 
             var item = _database.Items.SingleOrDefault(i => i.Id == itemId);
             if (item == null)
             {
-                return new ServiceResult<PlayerItem>().ItemNotFound();
+                return new ServiceResult<PlayerItemResult>().ItemNotFound();
             }
 
-            var playerItem = new PlayerItem
-            {
+            var playerItem = new PlayerItem {
                 ItemId = itemId,
                 //Item = item,
                 PlayerId = playerId,
@@ -95,7 +103,7 @@ namespace ActionCommandGame.Services
 
             await _database.SaveChangesAsync();
 
-            return new ServiceResult<PlayerItem>(playerItem);
+            return new ServiceResult<PlayerItemResult>(await Get(playerItem.Id));
         }
 
         public async Task<PlayerItemResult> Update(int id, PlayerItemRequest playerItem)

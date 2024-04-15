@@ -4,12 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using ActionCommandGame.Model;
 using ActionCommandGame.Repository;
-using ActionCommandGame.Sdk;
 using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Services.Extensions;
 using ActionCommandGame.Services.Model.Core;
 using ActionCommandGame.Services.Model.Results;
 using ActionCommandGame.Settings;
+using Microsoft.EntityFrameworkCore;
 
 namespace ActionCommandGame.Services
 {
@@ -20,14 +20,7 @@ namespace ActionCommandGame.Services
         private readonly IPlayerService _playerService;
         private readonly IPositiveGameEventService _positiveGameEventService;
         private readonly INegativeGameEventService _negativeGameEventService;
-        private readonly IItemService _itemService;
         private readonly IPlayerItemService _playerItemService;
-
-        private readonly PlayerSdk _playerSdk;
-        private readonly ItemSdk _itemSdk;
-        private readonly PlayerItemSdk _playerItemSdk;
-        private readonly PositiveGameEventSdk _positiveGameEventSdk;
-        private readonly NegativeGameEventSdk _negativeGameEventSdk;
 
         public GameService(
             AppSettings appSettings,
@@ -36,32 +29,29 @@ namespace ActionCommandGame.Services
             IPositiveGameEventService positiveGameEventService,
             INegativeGameEventService negativeGameEventService,
             IItemService itemService,
-            IPlayerItemService playerItemService,
-            PlayerSdk playerSdk,
-            ItemSdk itemSdk,
-            PlayerItemSdk playerItemSdk,
-            PositiveGameEventSdk positiveGameEventSdk,
-            NegativeGameEventSdk negativeGameEventSdk)
+            IPlayerItemService playerItemService)
         {
             _appSettings = appSettings;
             _database = database;
             _playerService = playerService;
             _positiveGameEventService = positiveGameEventService;
             _negativeGameEventService = negativeGameEventService;
-            _itemService = itemService;
             _playerItemService = playerItemService;
-            _playerSdk = playerSdk;
-            _itemSdk = itemSdk;
-            _playerItemSdk = playerItemSdk;
-            _positiveGameEventSdk = positiveGameEventSdk;
-            _negativeGameEventSdk = negativeGameEventSdk;
         }
 
         public async Task<ServiceResult<GameResult>> PerformAction(int playerId)
         {
             //Check Cooldown
-            //var player = await _playerService.Get(playerId);
-            var player = await _playerSdk.Get(playerId);
+            var player = _database.Players
+                .Include(p => p.CurrentFuelPlayerItem.Item)
+                .Include(p => p.CurrentAttackPlayerItem.Item)
+                .Include(p => p.CurrentDefensePlayerItem.Item)
+                .SingleOrDefault(p => p.Id == playerId);
+
+            if (player is null)
+            {
+                return new ServiceResult<GameResult>().PlayerNotFound();
+            }
 
             var elapsedSeconds = DateTime.UtcNow.Subtract(player.LastActionExecutedDateTime).TotalSeconds;
             var cooldownSeconds = _appSettings.DefaultCooldown;
@@ -148,8 +138,7 @@ namespace ActionCommandGame.Services
             player.LastActionExecutedDateTime = DateTime.UtcNow;
 
             //Save Player
-            await _playerSdk.Update(playerId, player);
-            //await _playerService.Update(playerId, player);
+            await _playerService.Update(playerId, player);
             await _database.SaveChangesAsync();
 
             var gameResult = new GameResult
@@ -178,14 +167,18 @@ namespace ActionCommandGame.Services
         public async Task<ServiceResult<BuyResult>> Buy(int playerId, int itemId)
         {
             //var player = await _playerService.Get(playerId);
-            var player = await _playerSdk.Get(playerId);
+            var player = _database.Players
+                .Include(p => p.CurrentFuelPlayerItem.Item)
+                .Include(p => p.CurrentAttackPlayerItem.Item)
+                .Include(p => p.CurrentDefensePlayerItem.Item)
+                .SingleOrDefault(p => p.Id == playerId);
 
             if (player == null)
             {
                 return new ServiceResult<BuyResult>().PlayerNotFound();
             }
 
-            var item = await _itemSdk.Get(itemId);
+            var item = await _database.Items.FirstOrDefaultAsync(p => p.Id == itemId);
             //var item = await _itemService.Get(itemId);
             if (item == null)
             {
@@ -197,14 +190,7 @@ namespace ActionCommandGame.Services
                 return new ServiceResult<BuyResult>().NotEnoughMoney();
             }
             
-            //await _playerItemService.Create(playerId, itemId);
-            await _playerItemSdk.Create(new PlayerItem //dit zorgt mogelijk voor binding probleem(?)
-            {
-                PlayerId = playerId,
-                //Player = player,
-                ItemId = itemId,
-                //Item = item
-            });
+            await _playerItemService.Create(playerId, itemId);
 
             player.Money -= item.Price;
 
@@ -226,8 +212,7 @@ namespace ActionCommandGame.Services
                 player.CurrentFuelPlayerItem.RemainingFuel -= fuelLoss;
                 if (player.CurrentFuelPlayerItem.RemainingFuel <= 0)
                 {
-                    //await _playerItemService.Delete(player.CurrentFuelPlayerItemId.Value);
-                    await _playerItemSdk.Delete(player.CurrentFuelPlayerItemId.Value);
+                    await _playerItemService.Delete(player.CurrentFuelPlayerItemId.Value);
 
                     //Load a new Fuel Item from inventory
                     var newFuelItem = player.Inventory
@@ -265,8 +250,7 @@ namespace ActionCommandGame.Services
                 player.CurrentAttackPlayerItem.RemainingAttack -= attackLoss;
                 if (player.CurrentAttackPlayerItem.RemainingAttack <= 0)
                 {
-                    //await _playerItemService.Delete(player.CurrentAttackPlayerItemId.Value);
-                    await _playerItemSdk.Delete(player.CurrentAttackPlayerItemId.Value);
+                    await _playerItemService.Delete(player.CurrentAttackPlayerItemId.Value);
 
                     //Load a new Attack Item from inventory
                     var newAttackItem = player.Inventory
@@ -309,8 +293,7 @@ namespace ActionCommandGame.Services
                 player.CurrentDefensePlayerItem.RemainingDefense -= defenseLoss;
                 if (player.CurrentDefensePlayerItem.RemainingDefense <= 0)
                 {
-                    //await _playerItemService.Delete(player.CurrentDefensePlayerItemId.Value);
-                    await _playerItemSdk.Delete(player.CurrentDefensePlayerItemId.Value);
+                    await _playerItemService.Delete(player.CurrentDefensePlayerItemId.Value);
 
                     //Load a new Defense Item from inventory
                     var newDefenseItem = player.Inventory

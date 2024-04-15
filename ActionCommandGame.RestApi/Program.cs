@@ -1,11 +1,9 @@
 using System.Text.Json.Serialization;
 using ActionCommandGame.Repository;
-using ActionCommandGame.Sdk;
 using ActionCommandGame.Services;
 using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Settings;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);

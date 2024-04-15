@@ -1,11 +1,9 @@
-﻿    using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ActionCommandGame.Model;
 using ActionCommandGame.Repository;
 using ActionCommandGame.Services.Abstractions;
-using ActionCommandGame.Services.Model.Requests;
-using ActionCommandGame.Services.Model.Results;
 using Microsoft.EntityFrameworkCore;
 
 namespace ActionCommandGame.Services
@@ -19,35 +17,24 @@ namespace ActionCommandGame.Services
             _database = database;
         }
 
-        public async Task<PlayerResult> Get(int id)
+        public async Task<Player> Get(int id)
         {
             var player = await _database.Players
-                .Select(p => new PlayerResult
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Money = p.Money,
-                    Experience = p.Experience,
-                    Inventory = p.Inventory,
-                    LastActionExecutedDateTime = p.LastActionExecutedDateTime,
-                    CurrentFuelPlayerItem = p.CurrentFuelPlayerItem,
-                    CurrentAttackPlayerItem = p.CurrentAttackPlayerItem,
-                    CurrentDefensePlayerItem = p.CurrentDefensePlayerItem,
-                    CurrentAttackPlayerItemId = p.CurrentAttackPlayerItemId,
-                    CurrentDefensePlayerItemId = p.CurrentDefensePlayerItemId,
-                    CurrentFuelPlayerItemId = p.CurrentFuelPlayerItemId
-                }).FirstOrDefaultAsync(p => p.Id == id);
+                .Include(p => p.CurrentFuelPlayerItem.Item)
+                .Include(p => p.CurrentAttackPlayerItem.Item)
+                .Include(p => p.CurrentDefensePlayerItem.Item)
+                .SingleOrDefaultAsync(p => p.Id == id);
 
             return player;
         }
 
-        public async Task<IList<PlayerResult>> Find()
+        public async Task<IList<Player>> Find()
         {
             var players = await _database.Players
                 .Include(p => p.CurrentAttackPlayerItem.Item)
                 .Include(p => p.CurrentDefensePlayerItem.Item)
                 .Include(p => p.CurrentFuelPlayerItem.Item)
-                .Select(p => new PlayerResult
+                .Select(p => new Player
                 {
                     Id = p.Id,
                     Name = p.Name,
@@ -66,7 +53,7 @@ namespace ActionCommandGame.Services
             return players;
         }
 
-        public async Task<PlayerResult> Create(PlayerRequest request)
+        public async Task<Player> Create(Player request)
         {
             var player = new Player()
             {
@@ -86,7 +73,7 @@ namespace ActionCommandGame.Services
             return await Get(player.Id);
         }
 
-        public async Task<PlayerResult> Update(int id, PlayerResult playerRequest)
+        public async Task<Player> Update(int id, Player playerRequest)
         {
             var player = await _database.Players.FirstOrDefaultAsync(p => p.Id == id);
             if (player is null)

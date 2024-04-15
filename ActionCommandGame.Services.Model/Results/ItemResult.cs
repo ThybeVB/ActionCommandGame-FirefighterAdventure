@@ -14,7 +14,5 @@ namespace ActionCommandGame.Services.Model.Results
         public int Attack { get; set; }
         public int Defense { get; set; }
         public int ActionCooldownSeconds { get; set; }
-
-        public IList<PlayerItem> PlayerItems { get; set; }
     }
 }

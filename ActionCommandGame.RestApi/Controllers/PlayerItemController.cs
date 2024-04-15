@@ -9,7 +9,7 @@ namespace ActionCommandGame.RestApi.Controllers
     [ApiController]
     public class PlayerItemController : ControllerBase
     {
-        private IPlayerItemService _playerItemService;
+        private readonly IPlayerItemService _playerItemService;
 
         public PlayerItemController(IPlayerItemService playerItemService)
         {
