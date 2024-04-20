@@ -24,6 +24,7 @@ namespace ActionCommandGame.Services
         {
             return await _database.NegativeGameEvents.Select(p => new NegativeGameEventResult
             {
+                Id = p.Id,
                 Description = p.Description,
                 DefenseLoss = p.DefenseLoss,
                 DefenseWithGearDescription = p.DefenseWithGearDescription,

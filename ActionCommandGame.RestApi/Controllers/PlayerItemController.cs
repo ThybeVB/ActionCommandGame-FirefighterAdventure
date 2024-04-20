@@ -41,7 +41,7 @@ namespace ActionCommandGame.RestApi.Controllers
         }
 
         /// <summary>
-        /// Creates a playeritem
+        /// Creates a new PlayerItem object
         /// </summary>
         /// <param name="playerItemRequest"></param>
         /// <returns></returns>
