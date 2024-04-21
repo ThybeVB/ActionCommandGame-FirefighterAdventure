@@ -1,7 +1,5 @@
 ﻿using ActionCommandGame.Model;
 using ActionCommandGame.Services.Abstractions;
-using ActionCommandGame.Services.Model.Requests;
-using ActionCommandGame.Services.Model.Results;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ActionCommandGame.RestApi.Controllers
