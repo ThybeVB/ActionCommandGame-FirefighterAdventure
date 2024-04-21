@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net.Sockets;
 using System.Threading.Tasks;
 using ActionCommandGame.Model;
 using ActionCommandGame.Repository;
@@ -57,18 +56,18 @@ namespace ActionCommandGame.Services
             return await query.ToListAsync();
         }
 
-        public async Task<ServiceResult<PlayerItemResult>> Create(int playerId, int itemId)
+        public async Task<ServiceResult<PlayerItem>> Create(int playerId, int itemId)
         {
             var player = _database.Players.SingleOrDefault(p => p.Id == playerId);
             if (player == null)
             {
-                return new ServiceResult<PlayerItemResult>().PlayerNotFound();
+                return new ServiceResult<PlayerItem>().PlayerNotFound();
             }
 
             var item = _database.Items.SingleOrDefault(i => i.Id == itemId);
             if (item == null)
             {
-                return new ServiceResult<PlayerItemResult>().ItemNotFound();
+                return new ServiceResult<PlayerItem>().ItemNotFound();
             }
 
             var playerItem = new PlayerItem {
@@ -103,7 +102,7 @@ namespace ActionCommandGame.Services
 
             await _database.SaveChangesAsync();
 
-            return new ServiceResult<PlayerItemResult>(await Get(playerItem.Id));
+            return new ServiceResult<PlayerItem>(playerItem);
         }
 
         public async Task<PlayerItemResult> Update(int id, PlayerItemRequest playerItem)
@@ -133,10 +132,10 @@ namespace ActionCommandGame.Services
             }
             
             var player = playerItem.Player;
-            player.Inventory.Remove(playerItem);
-            
+            player?.Inventory.Remove(playerItem);
+
             var item = playerItem.Item;
-            item.PlayerItems.Remove(playerItem);
+            item?.PlayerItems.Remove(playerItem);
 
             //Clear up equipment
             if (player.CurrentFuelPlayerItemId == id)
