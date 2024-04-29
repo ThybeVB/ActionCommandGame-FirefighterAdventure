@@ -4,11 +4,11 @@ using System.Diagnostics;
 
 namespace ActionCommandGame.Ui.Mvc.Controllers
 {
-    public class HomeController : Controller
+    public class IndexController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<Index> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public IndexController(ILogger<Index> logger)
         {
             _logger = logger;
         }
