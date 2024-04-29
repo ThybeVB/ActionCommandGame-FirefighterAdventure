@@ -1,9 +1,14 @@
+using System.Text;
 using System.Text.Json.Serialization;
 using ActionCommandGame.Repository;
+using ActionCommandGame.RestApi.Settings;
 using ActionCommandGame.Services;
 using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Settings;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,6 +43,41 @@ builder.Services.AddDbContext<ActionButtonGameDbContext>(options =>
     //options.UseSqlServer("Server=.\\SqlExpress;Database=ActionCommandGame;Trusted_Connection=True;TrustServerCertificate=true"); TODO
 });
 
+var jwtSettings = new JwtSettings();
+builder.Configuration.GetSection(nameof(JwtSettings)).Bind(jwtSettings);
+builder.Services.AddSingleton(jwtSettings);
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(jwt =>
+    {
+        if (!string.IsNullOrWhiteSpace(jwtSettings.Secret))
+        {
+            var key = Encoding.ASCII.GetBytes(jwtSettings.Secret);
+            jwt.SaveToken = true;
+            jwt.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                RequireExpirationTime = false,
+                ValidateLifetime = true
+            };
+        }
+    });
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+    {
+        options.SignIn.RequireConfirmedAccount = true;
+    })
+    .AddEntityFrameworkStores<ActionButtonGameDbContext>();
+
+//todo: identityservice
 //builder.Services.AddTransient<IGameService, GameService>();
 builder.Services.AddTransient<IPlayerService, PlayerService>();
 builder.Services.AddTransient<IItemService, ItemService>();
