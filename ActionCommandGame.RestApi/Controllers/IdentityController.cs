@@ -7,7 +7,7 @@ namespace ActionCommandGame.RestApi.Controllers
     [ApiController]
     public class IdentityController : ControllerBase
     {
-        [HttpPost]
+        /*[HttpPost]
         public IActionResult SignIn(UserSignInRequest request)
         {
             //todo
@@ -19,6 +19,6 @@ namespace ActionCommandGame.RestApi.Controllers
         {
             //todo
             return Ok();
-        }
+        }*/
     }
 }
