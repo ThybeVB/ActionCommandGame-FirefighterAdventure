@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.Json.Serialization;
 using ActionCommandGame.Repository;
+using ActionCommandGame.RestApi.Services;
 using ActionCommandGame.RestApi.Settings;
 using ActionCommandGame.Services;
 using ActionCommandGame.Services.Abstractions;
@@ -77,7 +78,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
     })
     .AddEntityFrameworkStores<ActionButtonGameDbContext>();
 
-//todo: identityservice
+builder.Services.AddScoped<IdentityService>();
 //builder.Services.AddTransient<IGameService, GameService>();
 builder.Services.AddTransient<IPlayerService, PlayerService>();
 builder.Services.AddTransient<IItemService, ItemService>();
