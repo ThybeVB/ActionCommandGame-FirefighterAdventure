@@ -11,4 +11,10 @@
     <ProjectReference Include="..\ActionCommandGame.Services\ActionCommandGame.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

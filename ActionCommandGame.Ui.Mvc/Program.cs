@@ -1,14 +1,24 @@
 using ActionCommandGame.Sdk;
+using ActionCommandGame.Settings;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration
+	.SetBasePath(Directory.GetCurrentDirectory())
+	.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
 builder.Services.AddControllersWithViews();
+
+var appSettings = new AppSettings();
+builder.Configuration.Bind(nameof(AppSettings), appSettings);
+builder.Services.AddSingleton(appSettings);
 
 builder.Services.AddHttpClient("ActionCommandGameApi", options =>
 {
-	if (!string.IsNullOrWhiteSpace("https://localhost:7065")) //todo add appconnfig later
+	if (!string.IsNullOrWhiteSpace(appSettings.BaseAddress))
 	{
-		options.BaseAddress = new Uri("https://localhost:7065");
+		options.BaseAddress = new Uri(appSettings.BaseAddress);
 	}
 });
 
