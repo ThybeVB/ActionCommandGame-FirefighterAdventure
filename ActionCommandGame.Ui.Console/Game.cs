@@ -27,10 +27,7 @@ namespace ActionCommandGame.Ui.ConsoleApp
             IGameService gameService,
             IPlayerService playerService,
             IItemService itemService,
-            IPlayerItemService playerItemService,
-            PlayerSdk playerSdk,
-            ItemSdk itemSdk,
-            PlayerItemSdk playerItemSdk
+            IPlayerItemService playerItemService
             )
         {
             _settings = settings;
