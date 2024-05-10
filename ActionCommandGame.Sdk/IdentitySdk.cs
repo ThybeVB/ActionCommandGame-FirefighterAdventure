@@ -1,6 +1,7 @@
 ﻿using ActionCommandGame.Services.Model.Requests.Identity;
 using System.Net.Http.Json;
 using ActionCommandGame.Services.Model.Results.Identity;
+using ActionCommandGame.Services.Model.Core;
 
 namespace ActionCommandGame.Sdk
 {
@@ -21,7 +22,20 @@ namespace ActionCommandGame.Sdk
 
             response.EnsureSuccessStatusCode();
 
-            return await response.Content.ReadFromJsonAsync<JwtAuthenticationResult>();
+            var result = await response.Content.ReadFromJsonAsync<JwtAuthenticationResult>();
+
+            if (result is null)
+            {
+                return new JwtAuthenticationResult()
+                {
+                    Messages = new List<ServiceMessage>
+                    {
+                        new ServiceMessage { Code = "ApiError", Message = "An API error occurred." }
+                    }
+                };
+            }
+
+            return result;
         }
 
         public async Task<JwtAuthenticationResult?> Register(UserRegisterRequest request)
@@ -32,7 +46,19 @@ namespace ActionCommandGame.Sdk
 
             response.EnsureSuccessStatusCode();
 
-            return await response.Content.ReadFromJsonAsync<JwtAuthenticationResult>();
+            var result = await response.Content.ReadFromJsonAsync<JwtAuthenticationResult>();
+            if (result is null)
+            {
+                return new JwtAuthenticationResult()
+                {
+                    Messages = new List<ServiceMessage>
+                    {
+                        new ServiceMessage { Code = "ApiError", Message = "An API error occurred." }
+                    }
+                };
+            }
+
+            return result;
         }
     }
 }

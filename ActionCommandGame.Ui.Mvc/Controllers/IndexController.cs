@@ -2,8 +2,12 @@ using ActionCommandGame.Ui.Mvc.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using ActionCommandGame.Sdk;
+using ActionCommandGame.Services.Model.Requests.Identity;
 using ActionCommandGame.Ui.Mvc.Stores;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace ActionCommandGame.Ui.Mvc.Controllers
 {
@@ -34,6 +38,117 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
             await HttpContext.SignOutAsync();
             ViewBag.ReturnUrl = returnUrl ?? "/";
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginModel model, string? returnUrl)
+        {
+            if (string.IsNullOrWhiteSpace(returnUrl))
+            {
+                returnUrl = "/";
+            }
+
+            if (!ModelState.IsValid)
+            {
+                ViewBag.ReturnUrl = returnUrl;
+                return View();
+            }
+
+            var loginRequest = new UserSignInRequest
+            {
+                Username = model.Username,
+                Password = model.Password
+            };
+            
+            var loginResult = await _identitySdk.SignIn(loginRequest);
+            if (!loginResult.IsSuccess)
+            {
+                ModelState.AddModelError("", "User/Password combination is wrong.");
+                ViewBag.ReturnUrl = returnUrl;
+                return View();
+            }
+
+            _tokenStore.SaveToken(loginResult.Token);
+            var principal = CreatePrincipalFromToken(loginResult.Token);
+            await HttpContext.SignInAsync(principal);
+
+            return LocalRedirect(returnUrl);
+        }
+
+        //todo: logout
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterModel model, string? returnUrl)
+        {
+            if (string.IsNullOrWhiteSpace(returnUrl))
+            {
+                returnUrl = "/";
+            }
+
+            if (!ModelState.IsValid)
+            {
+                ViewBag.ReturnUrl = returnUrl;
+                return View(model);
+            }
+
+            var request = new UserRegisterRequest
+            {
+                Username = model.Username,
+                Password = model.Password
+            };
+
+            var result = await _identitySdk.Register(request);
+
+            if (!result.IsSuccess)
+            {
+                foreach (var error in result.Messages)
+                {
+                    ModelState.AddModelError("", error.Message);
+                }
+                ViewBag.ReturnUrl = returnUrl;
+                return View(model);
+            }
+
+            _tokenStore.SaveToken(result.Token);
+            var principal = CreatePrincipalFromToken(result.Token);
+            await HttpContext.SignInAsync(principal);
+
+            return LocalRedirect(returnUrl);
+        }
+
+        private ClaimsPrincipal CreatePrincipalFromToken(string? bearerToken)
+        {
+            var identity = CreateIdentityFromToken(bearerToken);
+
+            return new ClaimsPrincipal(identity);
+        }
+
+        private ClaimsIdentity CreateIdentityFromToken(string? bearerToken)
+        {
+            if (string.IsNullOrWhiteSpace(bearerToken))
+            {
+                return new ClaimsIdentity();
+            }
+
+            var handler = new JwtSecurityTokenHandler();
+            var token = handler.ReadJwtToken(bearerToken);
+
+            var claims = new List<Claim>();
+            foreach (var claim in token.Claims)
+            {
+                claims.Add(claim);
+            }
+
+            //HttpContext required a "Name" claim to display a User Name
+            var usernameClaim = token.Claims.SingleOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub);
+            if (usernameClaim is not null)
+            {
+                claims.Add(new Claim(ClaimTypes.Name, usernameClaim.Value));
+            }
+
+            return new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
         }
 
         [HttpGet]
