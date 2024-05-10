@@ -1,6 +1,5 @@
 using ActionCommandGame.Sdk;
 using ActionCommandGame.Settings;
-using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +22,9 @@ builder.Services.AddHttpClient("ActionCommandGameApi", options =>
 });
 
 builder.Services.AddScoped<PlayerSdk>();
+builder.Services.AddScoped<ItemSdk>();
+
+builder.Services.AddScoped<IdentitySdk>();
 
 var app = builder.Build();
 

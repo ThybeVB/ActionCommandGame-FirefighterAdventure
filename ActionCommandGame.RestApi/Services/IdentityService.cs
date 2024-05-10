@@ -1,5 +1,4 @@
 ﻿using ActionCommandGame.RestApi.Models;
-using ActionCommandGame.RestApi.Models.Enums;
 using ActionCommandGame.RestApi.Settings;
 using ActionCommandGame.Services.Model.Requests.Identity;
 using Microsoft.AspNetCore.Identity;
@@ -7,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using ActionCommandGame.RestApi.Services.Helpers;
 
 namespace ActionCommandGame.RestApi.Services
 {
@@ -23,21 +23,21 @@ namespace ActionCommandGame.RestApi.Services
 
         public async Task<JwtAuthenticationResult> SignIn(UserSignInRequest request)
         {
+            if (string.IsNullOrWhiteSpace(_jwtSettings.Secret) || !_jwtSettings.Expiry.HasValue)
+            {
+                return JwtAuthenticationHelpers.JwtConfigurationError();
+            }
+
             var user = await _userManager.FindByNameAsync(request.Username);
             if (user == null)
             {
-                return LoginFailed();
+                return JwtAuthenticationHelpers.LoginFailed();
             }
 
             var isPassValid = await _userManager.CheckPasswordAsync(user, request.Password);
             if (!isPassValid)
             {
-                return LoginFailed();
-            }
-
-            if (string.IsNullOrWhiteSpace(_jwtSettings.Secret) || !_jwtSettings.Expiry.HasValue)
-            {
-                return JwtConfigurationError();
+                return JwtAuthenticationHelpers.LoginFailed();
             }
 
             var token = GenerateJwtToken(user, _jwtSettings.Secret, _jwtSettings.Expiry.Value);
@@ -47,42 +47,34 @@ namespace ActionCommandGame.RestApi.Services
             };
         }
 
-        private JwtAuthenticationResult LoginFailed()
-        {
-            return new JwtAuthenticationResult()
-            {
-                Messages = new List<ServiceMessage>()
-                {
-                    new ServiceMessage()
-                    {
-                        Code = "LoginFailed",
-                        Message = "User/Password combination is incorrect.",
-                        Type = ServiceMessageType.Error
-                    }
-                }
-            };
-        }
-
-        private JwtAuthenticationResult JwtConfigurationError()
-        {
-            return new JwtAuthenticationResult()
-            {
-                Messages = new List<ServiceMessage>()
-                {
-                    new ServiceMessage()
-                    {
-                        Code = "JwtConfigurationError",
-                        Message = "JWT Settings are not configured correctly",
-                        Type = ServiceMessageType.Error
-                    }
-                }
-            };
-        }
-
         public async Task<JwtAuthenticationResult> Register(UserRegisterRequest request)
         {
-            //todo
-            return null;
+            if (string.IsNullOrWhiteSpace(_jwtSettings.Secret)
+                || !_jwtSettings.Expiry.HasValue)
+            {
+                return JwtAuthenticationHelpers.JwtConfigurationError();
+            }
+
+            var existingUser = await _userManager.FindByNameAsync(request.Username);
+            if (existingUser is not null)
+            {
+                return JwtAuthenticationHelpers.UserExists();
+            }
+
+            var user = new IdentityUser(request.Username);
+            var result = await _userManager.CreateAsync(user, request.Password);
+
+            if (!result.Succeeded)
+            {
+                return JwtAuthenticationHelpers.RegisterError(result.Errors);
+            }
+
+            var token = GenerateJwtToken(user, _jwtSettings.Secret, _jwtSettings.Expiry.Value);
+
+            return new JwtAuthenticationResult()
+            {
+                Token = token
+            };
         }
 
         private string GenerateJwtToken(IdentityUser user, string secret, TimeSpan expiry)

@@ -3,8 +3,10 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col sidebar">
-			<h3 class="ml-auto">Hello @Model.Player.Name</h3>
-		</div>
+            <h3 class="ml-auto">Hello @Model.Player.Name</h3>
+			
+            <button type="button" class="btn btn-primary mr-2">Logout</button>
+        </div>
 		<div class="col main-content">
 			<h1>Main Content</h1>
 			<p>@Model.Player.Name</p>
@@ -17,12 +19,3 @@
 		</div>
 	</div>
 </div>
-
-<!--
-<a asp-controller="" asp-action="">Mine</a>
-<a asp-controller="" asp-action="">Shop</a>
-<a asp-controller="" asp-action="">Buy</a>
-<a asp-controller="" asp-action="">Stats</a>
-<a asp-controller="" asp-action="">Ranking</a>
-<a asp-controller="" asp-action="">Inventory</a>
-<a asp-controller="" asp-action="">Help</a> -->
