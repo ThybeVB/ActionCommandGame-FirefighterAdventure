@@ -17,7 +17,7 @@ namespace ActionCommandGame.Sdk
         public async Task<JwtAuthenticationResult?> SignIn(UserSignInRequest request)
         {
             var httpClient = _httpClientFactory.CreateClient("PeopleManagerApi");
-            var route = "/api/Identity/sign-in";
+            var route = "/api/Identity/signin";
             var response = await httpClient.PostAsJsonAsync(route, request);
 
             response.EnsureSuccessStatusCode();
