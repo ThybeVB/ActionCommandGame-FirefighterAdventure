@@ -36,7 +36,7 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
         public async Task<IActionResult> Login(string? returnUrl)
         {
             await HttpContext.SignOutAsync();
-            ViewBag.ReturnUrl = returnUrl ?? "/";
+            ViewBag.ReturnUrl = returnUrl ?? "/Game/";
             return View();
         }
 
@@ -46,7 +46,7 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
         {
             if (string.IsNullOrWhiteSpace(returnUrl))
             {
-                returnUrl = "/";
+                returnUrl = "/Game/";
             }
 
             if (!ModelState.IsValid)
@@ -84,7 +84,7 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
         {
             if (string.IsNullOrWhiteSpace(returnUrl))
             {
-                returnUrl = "/";
+                returnUrl = "/Game/";
             }
 
             if (!ModelState.IsValid)
@@ -154,7 +154,7 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
         [HttpGet]
         public IActionResult Register(string? returnUrl)
         {
-            ViewBag.ReturnUrl = returnUrl ?? "/";
+            ViewBag.ReturnUrl = returnUrl ?? "/Game/";
             return View();
         }
 
