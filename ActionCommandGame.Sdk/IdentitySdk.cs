@@ -17,7 +17,7 @@ namespace ActionCommandGame.Sdk
         public async Task<JwtAuthenticationResult?> SignIn(UserSignInRequest request)
         {
             var httpClient = _httpClientFactory.CreateClient("PeopleManagerApi");
-            var route = "/api/Identity/signin";
+            var route = "https://localhost:7065/api/Identity/signin"; //todo wrm??
             var response = await httpClient.PostAsJsonAsync(route, request);
 
             response.EnsureSuccessStatusCode();
@@ -41,7 +41,7 @@ namespace ActionCommandGame.Sdk
         public async Task<JwtAuthenticationResult?> Register(UserRegisterRequest request)
         {
             var httpClient = _httpClientFactory.CreateClient("PeopleManagerApi");
-            var route = "/api/Identity/register";
+            var route = "https://localhost:7065/api/Identity/register"; //todo wrm????
             var response = await httpClient.PostAsJsonAsync(route, request);
 
             response.EnsureSuccessStatusCode();
