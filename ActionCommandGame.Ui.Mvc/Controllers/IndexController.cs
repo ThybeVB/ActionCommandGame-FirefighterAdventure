@@ -11,9 +11,6 @@ using System.IdentityModel.Tokens.Jwt;
 
 namespace ActionCommandGame.Ui.Mvc.Controllers
 {
-    /// <summary>
-    /// Dit zou de account login pagina moeten worden, die nu nog niet bestaat. Er wordt geredirect naar de game met playerid 1
-    /// </summary>
     public class IndexController : Controller
     {
         private readonly ILogger<Index> _logger;
@@ -29,7 +26,7 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
 
         public IActionResult Index()
         {
-            return View("Index");
+            return View();
         }
 
         [HttpGet]
@@ -76,7 +73,12 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
             return LocalRedirect(returnUrl);
         }
 
-        //todo: logout
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Index");
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]

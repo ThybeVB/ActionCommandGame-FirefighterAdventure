@@ -79,7 +79,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
     .AddEntityFrameworkStores<ActionButtonGameDbContext>();
 
 builder.Services.AddScoped<IdentityService>();
-//builder.Services.AddTransient<IGameService, GameService>();
+builder.Services.AddTransient<IGameService, GameService>();
 builder.Services.AddTransient<IPlayerService, PlayerService>();
 builder.Services.AddTransient<IItemService, ItemService>();
 builder.Services.AddTransient<IPositiveGameEventService, PositiveGameEventService>();

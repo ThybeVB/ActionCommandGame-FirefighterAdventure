@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using ActionCommandGame.Sdk;
+﻿using ActionCommandGame.Sdk;
 using ActionCommandGame.Ui.Mvc.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,22 +23,34 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
         {
             //_playerId = int.Parse(User.FindFirstValue("Id"));
 
-	        var player = await _playerSdk.Get(_playerId);
-            var items = await _itemSdk.Find();
+	        //var player = await _playerSdk.Get(_playerId);
+            //var items = await _itemSdk.Find();
+            //
+            //_view = new GameView
+	        //{
+		    //    Player = player,
+            //    Items = items
+	        //};
 
-            _view = new GameView
-	        {
-		        Player = player,
-                Items = items
-	        };
 
+	        return View();
+        }
 
-	        return View("Index", _view);
+        public async Task<IActionResult> PerformAction()
+        {
+            return View();
         }
 
         public async Task<IActionResult> ShowShop()
         {
-            return View("Index", _view);
+            var allItems = await _itemSdk.Find();
+            return PartialView("_ShopPartial", allItems);
+        }
+
+        public async Task<IActionResult> ShowStats()
+        {
+            var result = await _playerSdk.Get(_playerId);
+            return PartialView("_StatsPartial", result);
         }
     }
 }

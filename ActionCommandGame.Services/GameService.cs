@@ -28,7 +28,6 @@ namespace ActionCommandGame.Services
             IPlayerService playerService,
             IPositiveGameEventService positiveGameEventService,
             INegativeGameEventService negativeGameEventService,
-            IItemService itemService,
             IPlayerItemService playerItemService)
         {
             _appSettings = appSettings;
