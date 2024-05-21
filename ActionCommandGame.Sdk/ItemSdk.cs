@@ -1,21 +1,27 @@
 ﻿using ActionCommandGame.Model;
 using System.Net.Http.Json;
+using ActionCommandGame.Services.Abstractions;
+using ActionCommandGame.Sdk.Extensions;
 
 namespace ActionCommandGame.Sdk
 {
     public class ItemSdk
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly ITokenStore _tokenStore;
 
-        public ItemSdk(IHttpClientFactory httpClientFactory)
+        public ItemSdk(IHttpClientFactory httpClientFactory, ITokenStore tokenStore)
         {
             _httpClientFactory = httpClientFactory;
+            _tokenStore = tokenStore;
         }
 
         public async Task<IList<Item>> Find()
         {
             var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
             var route = "/api/Item";
+            var token = _tokenStore.GetToken();
+            httpClient.AddAuthorization(token);
             var response = await httpClient.GetAsync(route);
 
             response.EnsureSuccessStatusCode();
@@ -32,6 +38,8 @@ namespace ActionCommandGame.Sdk
         {
             var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
             var route = $"/api/Item/{id}";
+            var token = _tokenStore.GetToken();
+            httpClient.AddAuthorization(token);
             var response = await httpClient.GetAsync(route);
 
             response.EnsureSuccessStatusCode();
@@ -44,6 +52,8 @@ namespace ActionCommandGame.Sdk
         {
             var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
             var route = $"api/Item";
+            var token = _tokenStore.GetToken();
+            httpClient.AddAuthorization(token);
             var response = await httpClient.PostAsJsonAsync(route, item);
 
             response.EnsureSuccessStatusCode();
@@ -56,6 +66,8 @@ namespace ActionCommandGame.Sdk
         {
             var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
             var route = $"api/Item/{id}";
+            var token = _tokenStore.GetToken();
+            httpClient.AddAuthorization(token);
             var response = await httpClient.PutAsJsonAsync(route, item);
 
             response.EnsureSuccessStatusCode();
@@ -68,6 +80,8 @@ namespace ActionCommandGame.Sdk
         {
             var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
             var route = $"/api/Item/{id}";
+            var token = _tokenStore.GetToken();
+            httpClient.AddAuthorization(token);
             var response = await httpClient.DeleteAsync(route);
 
             response.EnsureSuccessStatusCode();

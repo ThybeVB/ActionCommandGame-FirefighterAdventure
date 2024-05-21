@@ -1,5 +1,6 @@
 ﻿using ActionCommandGame.Services.Model.Requests.Identity;
 using System.Net.Http.Json;
+using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Services.Model.Results.Identity;
 using ActionCommandGame.Services.Model.Core;
 
@@ -9,7 +10,7 @@ namespace ActionCommandGame.Sdk
     {
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public IdentitySdk(IHttpClientFactory httpClientFactory)
+        public IdentitySdk(IHttpClientFactory httpClientFactory, ITokenStore tokenStore)
         {
             _httpClientFactory = httpClientFactory;
         }

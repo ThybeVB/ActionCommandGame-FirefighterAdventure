@@ -1,21 +1,27 @@
 ﻿using ActionCommandGame.Model;
 using System.Net.Http.Json;
+using ActionCommandGame.Services.Abstractions;
+using ActionCommandGame.Sdk.Extensions;
 
 namespace ActionCommandGame.Sdk
 {
     public class NegativeGameEventSdk
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly ITokenStore _tokenStore;
 
-        public NegativeGameEventSdk(IHttpClientFactory httpClientFactory)
+        public NegativeGameEventSdk(IHttpClientFactory httpClientFactory, ITokenStore tokenStore)
         {
             _httpClientFactory = httpClientFactory;
+            _tokenStore = tokenStore;
         }
 
         public async Task<IList<NegativeGameEvent>> Find()
         {
             var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
             var route = "/api/NegativeGameEvent";
+            var token = _tokenStore.GetToken();
+            httpClient.AddAuthorization(token);
             var response = await httpClient.GetAsync(route);
 
             response.EnsureSuccessStatusCode();
@@ -32,6 +38,8 @@ namespace ActionCommandGame.Sdk
         {
             var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
             var route = $"/api/NegativeGameEvent/{id}";
+            var token = _tokenStore.GetToken();
+            httpClient.AddAuthorization(token);
             var response = await httpClient.GetAsync(route);
 
             response.EnsureSuccessStatusCode();
@@ -44,6 +52,8 @@ namespace ActionCommandGame.Sdk
         {
             var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
             var route = $"api/NegativeGameEvent";
+            var token = _tokenStore.GetToken();
+            httpClient.AddAuthorization(token);
             var response = await httpClient.PostAsJsonAsync(route, request);
 
             response.EnsureSuccessStatusCode();
@@ -56,6 +66,8 @@ namespace ActionCommandGame.Sdk
         {
             var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
             var route = $"api/NegativeGameEvent/{id}";
+            var token = _tokenStore.GetToken();
+            httpClient.AddAuthorization(token);
             var response = await httpClient.PutAsJsonAsync(route, request);
 
             response.EnsureSuccessStatusCode();
@@ -68,6 +80,8 @@ namespace ActionCommandGame.Sdk
         {
             var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
             var route = $"/api/NegativeGameEvent/{id}";
+            var token = _tokenStore.GetToken();
+            httpClient.AddAuthorization(token);
             var response = await httpClient.DeleteAsync(route);
 
             response.EnsureSuccessStatusCode();

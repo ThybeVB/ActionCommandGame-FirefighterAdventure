@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using ActionCommandGame.Sdk;
 using ActionCommandGame.Services.Model.Requests.Identity;
-using ActionCommandGame.Ui.Mvc.Stores;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
+using ActionCommandGame.Services.Abstractions;
 
 namespace ActionCommandGame.Ui.Mvc.Controllers
 {
@@ -15,9 +15,9 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
     {
         private readonly ILogger<Index> _logger;
         private IdentitySdk _identitySdk;
-        private TokenStore _tokenStore;
+        private ITokenStore _tokenStore;
 
-        public IndexController(ILogger<Index> logger, IdentitySdk identitySdk, TokenStore tokenStore)
+        public IndexController(ILogger<Index> logger, IdentitySdk identitySdk, ITokenStore tokenStore)
         {
             _logger = logger;
             _identitySdk = identitySdk;

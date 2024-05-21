@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using ActionCommandGame.Sdk.Extensions;
 using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Services.Model.Core;
 using ActionCommandGame.Services.Model.Results;
@@ -21,8 +22,8 @@ namespace ActionCommandGame.Sdk
         {
             var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
             var route = $"api/Game/PerformAction/{pId}";
-            var bearer = _tokenStore.GetToken();
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer);
+            var token = _tokenStore.GetToken();
+            httpClient.AddAuthorization(token);
 
             var response = await httpClient.GetAsync(route);
             response.EnsureSuccessStatusCode();
@@ -49,8 +50,8 @@ namespace ActionCommandGame.Sdk
         {
             var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
             var route = $"api/Game/Buy/{pId}/{iId}";
-            var bearer = _tokenStore.GetToken();
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearer);
+            var token = _tokenStore.GetToken();
+            httpClient.AddAuthorization(token);
 
             var response = await httpClient.GetAsync(route);
             response.EnsureSuccessStatusCode();
