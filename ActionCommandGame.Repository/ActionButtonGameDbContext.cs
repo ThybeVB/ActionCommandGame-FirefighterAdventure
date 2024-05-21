@@ -1,11 +1,12 @@
 ﻿using ActionCommandGame.Model;
 using ActionCommandGame.Repository.Extensions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace ActionCommandGame.Repository
 {
-    public class ActionButtonGameDbContext: IdentityDbContext
+    public class ActionButtonGameDbContext: IdentityDbContext<Player>
     {
         public ActionButtonGameDbContext(DbContextOptions<ActionButtonGameDbContext> options): base(options)
         {
@@ -46,10 +47,10 @@ namespace ActionCommandGame.Repository
                 Price = 10000000
             });
 
-            Players.Add(new Player { Name = "John Doe", Money = 100 });
+            /*Players.Add(new Player { Name = "John Doe", Money = 100 });
             Players.Add(new Player { Name = "John Francks", Money = 100000, Experience = 2000 });
             Players.Add(new Player { Name = "Luc Doleman", Money = 500, Experience = 5 });
-            Players.Add(new Player { Name = "Emilio Fratilleci", Money = 12345, Experience = 200 });
+            Players.Add(new Player { Name = "Emilio Fratilleci", Money = 12345, Experience = 200 });*/
 
             SaveChanges();
         }

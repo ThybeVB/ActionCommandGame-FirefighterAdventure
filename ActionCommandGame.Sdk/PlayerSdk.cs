@@ -34,7 +34,7 @@ namespace ActionCommandGame.Sdk
             return players;
         }
 
-        public async Task<Player?> Get(int id)
+        public async Task<Player?> Get(string id)
         {
             var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
             var route = $"/api/Player/{id}";
@@ -62,7 +62,7 @@ namespace ActionCommandGame.Sdk
             return newPlayer;
         }
 
-        public async Task<Player?> Update(int id, Player player)
+        public async Task<Player?> Update(string id, Player player)
         {
             var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
             var route = $"api/Player/{id}";
@@ -76,7 +76,7 @@ namespace ActionCommandGame.Sdk
             return updatedPlayer;
         }
 
-        public async Task Delete(int id)
+        public async Task Delete(string id)
         {
             var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
             var route = $"/api/Player/{id}";

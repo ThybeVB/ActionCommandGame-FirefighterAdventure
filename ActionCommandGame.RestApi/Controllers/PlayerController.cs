@@ -23,8 +23,8 @@ namespace ActionCommandGame.RestApi.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("{id:int}")]
-        public async Task<IActionResult> Get(int id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(string id)
         {
             var result = await _playerService.Get(id);
             return Ok(result);
@@ -60,8 +60,8 @@ namespace ActionCommandGame.RestApi.Controllers
         /// <param name="id"></param>
         /// <param name="player"></param>
         /// <returns></returns>
-        [HttpPut("{id:int}")]
-        public async Task<IActionResult> Update(int id, Player player)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(string id, Player player)
         {
             var result = await _playerService.Update(id, player);
             return Ok(result);
@@ -72,8 +72,8 @@ namespace ActionCommandGame.RestApi.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete("{id:int}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
         {
             await _playerService.Delete(id);
             return Ok();

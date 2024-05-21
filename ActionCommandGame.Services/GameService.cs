@@ -38,7 +38,7 @@ namespace ActionCommandGame.Services
             _playerItemService = playerItemService;
         }
 
-        public async Task<ServiceResult<GameResult>> PerformAction(int playerId)
+        public async Task<ServiceResult<GameResult>> PerformAction(string playerId)
         {
             //Check Cooldown
             var player = _database.Players
@@ -163,7 +163,7 @@ namespace ActionCommandGame.Services
             return serviceResult;
         }
 
-        public async Task<ServiceResult<BuyResult>> Buy(int playerId, int itemId)
+        public async Task<ServiceResult<BuyResult>> Buy(string playerId, int itemId)
         {
             //var player = await _playerService.Get(playerId);
             var player = _database.Players

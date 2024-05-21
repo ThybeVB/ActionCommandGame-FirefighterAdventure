@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json.Serialization;
+using ActionCommandGame.Model;
 using ActionCommandGame.Repository;
 using ActionCommandGame.RestApi.Services;
 using ActionCommandGame.RestApi.Settings;
@@ -72,20 +73,20 @@ builder.Services.AddAuthentication(options =>
         }
     });
 
-builder.Services.AddIdentityCore<IdentityUser>(options =>
+builder.Services.AddIdentityCore<Player>(options =>
     {
         options.SignIn.RequireConfirmedAccount = true;
     })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ActionButtonGameDbContext>();
 
-builder.Services.AddScoped<IdentityService>();
 builder.Services.AddTransient<IGameService, GameService>();
 builder.Services.AddTransient<IPlayerService, PlayerService>();
 builder.Services.AddTransient<IItemService, ItemService>();
 builder.Services.AddTransient<IPositiveGameEventService, PositiveGameEventService>();
 builder.Services.AddTransient<INegativeGameEventService, NegativeGameEventService>();
 builder.Services.AddTransient<IPlayerItemService, PlayerItemService>();
+builder.Services.AddScoped<IdentityService>();
 
 var app = builder.Build();
 
@@ -104,6 +105,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();

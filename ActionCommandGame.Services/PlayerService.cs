@@ -17,7 +17,7 @@ namespace ActionCommandGame.Services
             _database = database;
         }
 
-        public async Task<Player> Get(int id)
+        public async Task<Player> Get(string id)
         {
             var player = await _database.Players
                 .Include(p => p.CurrentFuelPlayerItem.Item)
@@ -73,7 +73,7 @@ namespace ActionCommandGame.Services
             return await Get(player.Id);
         }
 
-        public async Task<Player> Update(int id, Player playerRequest)
+        public async Task<Player> Update(string id, Player playerRequest)
         {
             var player = await _database.Players.FirstOrDefaultAsync(p => p.Id == id);
             if (player is null)
@@ -94,7 +94,7 @@ namespace ActionCommandGame.Services
             return await Get(player.Id);
         }
 
-        public async Task Delete(int id)
+        public async Task Delete(string id)
         {
             var player = await _database.Players.FirstOrDefaultAsync(p => p.Id == id);
             if (player is null)

@@ -6,7 +6,7 @@ namespace ActionCommandGame.Services.Abstractions
 {
     public interface IGameService
     {
-        Task<ServiceResult<GameResult>> PerformAction(int playerId);
-        Task<ServiceResult<BuyResult>> Buy(int playerId, int itemId);
+        Task<ServiceResult<GameResult>> PerformAction(string playerId);
+        Task<ServiceResult<BuyResult>> Buy(string playerId, int itemId);
     }
 }

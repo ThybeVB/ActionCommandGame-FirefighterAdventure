@@ -35,8 +35,8 @@ namespace ActionCommandGame.RestApi.Controllers
         /// </summary>
         /// <param name="playerId"></param>
         /// <returns></returns>
-        [HttpGet("find/{playerId:int?}")]
-        public async Task<IActionResult> Find(int? playerId)
+        [HttpGet("find/{playerId}")]
+        public async Task<IActionResult> Find(string playerId)
         {
             var result = await _playerItemService.Find(playerId);
             return Ok(result);

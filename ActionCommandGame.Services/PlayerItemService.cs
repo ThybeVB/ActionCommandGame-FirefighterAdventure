@@ -34,12 +34,12 @@ namespace ActionCommandGame.Services
             .FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task<IList<PlayerItemResult>> Find(int? playerId = null)
+        public async Task<IList<PlayerItemResult>> Find(string? playerId = null)
         {
             var query = _database.PlayerItems
                 .Include(pi => pi.Item)
                 .Include(pi => pi.Player)
-                .Where(pi => pi.PlayerId == playerId.Value)
+                .Where(pi => pi.PlayerId == playerId)
                 .Select(pi => new PlayerItemResult
                 {
                     Id = pi.Id,
@@ -56,7 +56,7 @@ namespace ActionCommandGame.Services
             return await query.ToListAsync();
         }
 
-        public async Task<ServiceResult<PlayerItem>> Create(int playerId, int itemId)
+        public async Task<ServiceResult<PlayerItem>> Create(string playerId, int itemId)
         {
             var player = _database.Players.SingleOrDefault(p => p.Id == playerId);
             if (player == null)

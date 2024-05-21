@@ -23,8 +23,8 @@ namespace ActionCommandGame.RestApi.Controllers
         /// </summary>
         /// <param name="playerId"></param>
         /// <returns></returns>
-        [HttpGet("{playerId:int}")]
-        public async Task<IActionResult> PerformAction(int playerId)
+        [HttpGet("{playerId}")]
+        public async Task<IActionResult> PerformAction(string playerId)
         {
             var result = await _gameService.PerformAction(playerId);
             return Ok(result);

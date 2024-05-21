@@ -2,7 +2,7 @@
 {
     public class PlayerItemRequest 
     {
-        public int PlayerId { get; set; }
+        public string PlayerId { get; set; }
 
         public int ItemId { get; set; }
     }

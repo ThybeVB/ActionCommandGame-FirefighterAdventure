@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using ActionCommandGame.Model;
 using ActionCommandGame.RestApi.Services.Helpers;
 
 namespace ActionCommandGame.RestApi.Services
@@ -13,9 +14,9 @@ namespace ActionCommandGame.RestApi.Services
     public class IdentityService
     {
         private readonly JwtSettings _jwtSettings;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<Player> _userManager;
 
-        public IdentityService(JwtSettings jwtSettings, UserManager<IdentityUser> userManager)
+        public IdentityService(JwtSettings jwtSettings, UserManager<Player> userManager)
         {
             _jwtSettings = jwtSettings;
             _userManager = userManager;
@@ -61,7 +62,7 @@ namespace ActionCommandGame.RestApi.Services
                 return JwtAuthenticationHelpers.UserExists();
             }
 
-            var user = new IdentityUser(request.Username);
+            var user = new Player { UserName = request.Username };
             var result = await _userManager.CreateAsync(user, request.Password);
 
             if (!result.Succeeded)
@@ -77,7 +78,7 @@ namespace ActionCommandGame.RestApi.Services
             };
         }
 
-        private string GenerateJwtToken(IdentityUser user, string secret, TimeSpan expiry)
+        private string GenerateJwtToken(Player user, string secret, TimeSpan expiry)
         {
             // Now its ime to define the jwt token which will be responsible for creating our tokens
             var jwtTokenHandler = new JwtSecurityTokenHandler();

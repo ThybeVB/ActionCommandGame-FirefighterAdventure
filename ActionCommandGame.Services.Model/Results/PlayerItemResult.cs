@@ -6,7 +6,7 @@ namespace ActionCommandGame.Services.Model.Results
     public class PlayerItemResult : IIdentifiable
     {
         public int Id { get; set; }
-        public int PlayerId { get; set; }
+        public string PlayerId { get; set; }
         public Player? Player { get; set; }
 
         public int ItemId { get; set; }

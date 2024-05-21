@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using ActionCommandGame.Model.Abstractions;
+using Microsoft.AspNetCore.Identity;
 
 namespace ActionCommandGame.Model
 {
-    public class Player: IIdentifiable
+    public class Player : IdentityUser
     {
         public Player()
         {
             Inventory = new List<PlayerItem>();
         }
 
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public string Name { get; set; }
         public int Money { get; set; }
         public int Experience { get; set; }

@@ -1,4 +1,5 @@
-﻿using ActionCommandGame.Model;
+﻿using System.Security.Claims;
+using ActionCommandGame.Model;
 using ActionCommandGame.Sdk;
 using ActionCommandGame.Ui.Mvc.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -7,8 +8,6 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
 {
     public class GameController : Controller
     {
-        private int _playerId = 1;
-
         private GameView? _view;
 
         private readonly PlayerSdk _playerSdk;
@@ -23,7 +22,7 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
         public async Task<IActionResult> Index()
         {
             //_playerId = int.Parse(User.FindFirstValue("Id"));
-
+            //Console.WriteLine(User.FindFirstValue("Id"));
 	        //var player = await _playerSdk.Get(_playerId);
             //var items = await _itemSdk.Find();
             //
@@ -50,7 +49,8 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
 
         public async Task<IActionResult> ShowStats()
         {
-            var result = await _playerSdk.Get(_playerId);
+            var uId = User.Claims.FirstOrDefault(c => c.Type == "Id");
+            var result = await _playerSdk.Get(uId.Value);
             return PartialView("_StatsPartial", result);
         }
     }

@@ -44,7 +44,7 @@ namespace ActionCommandGame.Ui.ConsoleApp
             ConsoleWriter.WriteText($"Play your game. Try typing \"help\" or \"{_settings.ActionCommand}\"", ConsoleColor.Yellow);
 
             //Get the player from somewhere
-            var currentPlayerId = 1;
+            string currentPlayerId = "1";
 
             while (true)
             {
@@ -175,7 +175,7 @@ namespace ActionCommandGame.Ui.ConsoleApp
             return matchingCommands.Any(c => command.ToLower().StartsWith(c.ToLower()));
         }
 
-        public async void ShowStats(int playerId)
+        public async void ShowStats(string playerId)
         {
             //var player = await _playerSdk.Get(playerId);
             var player = await _playerService.Get(playerId);
@@ -225,7 +225,7 @@ namespace ActionCommandGame.Ui.ConsoleApp
             ConsoleWriter.WriteText();
         }
 
-        private void ShowLeaderboard(IList<Player> players, int currentPlayerId)
+        private void ShowLeaderboard(IList<Player> players, string currentPlayerId)
         {
             foreach (var player in players)
             {
@@ -292,7 +292,7 @@ namespace ActionCommandGame.Ui.ConsoleApp
             ConsoleWriter.WriteText();
         }
 
-        private async void PerformAction(int playerId)
+        private async void PerformAction(string playerId)
         {
             var result = await _gameService.PerformAction(playerId);
 
@@ -331,7 +331,7 @@ namespace ActionCommandGame.Ui.ConsoleApp
             ConsoleWriter.WriteText();
         }
 
-        private async Task Buy(int playerId, int itemId)
+        private async Task Buy(string playerId, int itemId)
         {
             var result = await _gameService.Buy(playerId, itemId);
 
