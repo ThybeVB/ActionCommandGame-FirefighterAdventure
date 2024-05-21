@@ -1,6 +1,8 @@
-﻿namespace ActionCommandGame.Ui.Mvc.Stores
+﻿using ActionCommandGame.Services.Abstractions;
+
+namespace ActionCommandGame.Ui.Mvc.Stores
 {
-    public class TokenStore
+    public class TokenStore : ITokenStore
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 

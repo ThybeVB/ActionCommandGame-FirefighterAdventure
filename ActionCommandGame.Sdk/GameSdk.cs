@@ -1,17 +1,17 @@
 ﻿using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Services.Model.Core;
 using ActionCommandGame.Services.Model.Results;
-using ActionCommandGame.Ui.Mvc.Stores;
 
 namespace ActionCommandGame.Sdk
 {
     public class GameSdk
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly TokenStore _tokenStore;
+        private readonly ITokenStore _tokenStore;
 
-        public GameSdk(IHttpClientFactory httpClientFactory, TokenStore tokenStore)
+        public GameSdk(IHttpClientFactory httpClientFactory, ITokenStore tokenStore)
         {
             _httpClientFactory = httpClientFactory;
             _tokenStore = tokenStore;

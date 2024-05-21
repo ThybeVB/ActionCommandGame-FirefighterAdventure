@@ -1,4 +1,5 @@
 using ActionCommandGame.Sdk;
+using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Settings;
 using ActionCommandGame.Ui.Mvc.Stores;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -27,7 +28,7 @@ builder.Services.AddHttpClient("ActionCommandGameApi", options =>
 builder.Services.AddScoped<PlayerSdk>();
 builder.Services.AddScoped<ItemSdk>();
 
-builder.Services.AddScoped<TokenStore>();
+builder.Services.AddScoped<ITokenStore, TokenStore>();
 builder.Services.AddScoped<IdentitySdk>();
 
 builder.Services.AddHttpContextAccessor();
