@@ -1,6 +1,4 @@
-﻿using System.Security.Claims;
-using ActionCommandGame.Model;
-using ActionCommandGame.Sdk;
+﻿using ActionCommandGame.Sdk;
 using ActionCommandGame.Ui.Mvc.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +10,7 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
 
         private readonly PlayerSdk _playerSdk;
         private readonly ItemSdk _itemSdk;
+
 
         public GameController(PlayerSdk playerSdk, ItemSdk itemSdk)
         {

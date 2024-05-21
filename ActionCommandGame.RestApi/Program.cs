@@ -41,9 +41,10 @@ builder.Services.AddSingleton(appSettings);
 
 builder.Services.AddDbContext<ActionButtonGameDbContext>(options =>
 {
-    options.UseInMemoryDatabase(nameof(ActionButtonGameDbContext));
-    //options.UseSqlServer("Server=.\\SqlExpress;Database=ActionCommandGame;Trusted_Connection=True;TrustServerCertificate=true"); TODO
-});
+    //options.UseInMemoryDatabase(nameof(ActionButtonGameDbContext));
+    //options.UseSqlServer("Server=.\\SQLEXPRESS;Trusted_Connection=True;TrustServerCertificate=True;");
+    options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=FiremanAdventure;Trusted_Connection=True;");
+}, ServiceLifetime.Scoped);
 
 var jwtSettings = new JwtSettings();
 builder.Configuration.GetSection(nameof(JwtSettings)).Bind(jwtSettings);
