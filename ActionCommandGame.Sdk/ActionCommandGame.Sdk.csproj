@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ActionCommandGame.Model\ActionCommandGame.Model.csproj" />
     <ProjectReference Include="..\ActionCommandGame.Services.Model\ActionCommandGame.Services.Model.csproj" />
+    <ProjectReference Include="..\ActionCommandGame.Ui.Mvc\ActionCommandGame.Ui.Mvc.csproj" />
   </ItemGroup>
 
 </Project>

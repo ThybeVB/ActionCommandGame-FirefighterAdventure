@@ -1,4 +1,5 @@
-﻿using ActionCommandGame.Sdk;
+﻿using ActionCommandGame.Model;
+using ActionCommandGame.Sdk;
 using ActionCommandGame.Ui.Mvc.Models;
 using Microsoft.AspNetCore.Mvc;
 
