@@ -5,6 +5,7 @@ namespace ActionCommandGame.Ui.Mvc.Models
     public class LoginModel
     {
         [Required]
+        [EmailAddress]
         public required string Username { get; set; }
 
         [Required]

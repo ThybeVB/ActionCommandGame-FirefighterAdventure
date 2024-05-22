@@ -25,7 +25,7 @@ namespace ActionCommandGame.Ui.Mvc.Stores
             return null;
         }
 
-        public void SaveToken(string bearerToken)
+        public void SaveToken(string? bearerToken)
         {
             if (_httpContextAccessor.HttpContext is null)
             {

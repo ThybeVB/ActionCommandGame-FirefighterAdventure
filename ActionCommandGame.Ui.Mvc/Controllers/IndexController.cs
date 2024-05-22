@@ -57,7 +57,7 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
             };
             
             var loginResult = await _identitySdk.SignIn(loginRequest);
-            if (!loginResult.IsSuccess)
+            if (loginResult.Messages.Count > 0) //todo: rare workaround
             {
                 ModelState.AddModelError("", "User/Password combination is wrong.");
                 ViewBag.ReturnUrl = returnUrl;
@@ -104,12 +104,12 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
             var request = new UserRegisterRequest
             {
                 Username = model.Username,
+                DisplayName = model.DisplayName,
                 Password = model.Password
             };
 
             var result = await _identitySdk.Register(request);
-
-            if (!result.IsSuccess)
+            if (result.Messages.Count > 0) //todo: rare workaround
             {
                 foreach (var error in result.Messages)
                 {

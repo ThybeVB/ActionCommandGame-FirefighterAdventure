@@ -5,7 +5,11 @@ namespace ActionCommandGame.Ui.Mvc.Models
     public class RegisterModel
     {
         [Required]
+        [EmailAddress]
         public required string Username { get; set; }
+
+        [Required]
+        public required string DisplayName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
