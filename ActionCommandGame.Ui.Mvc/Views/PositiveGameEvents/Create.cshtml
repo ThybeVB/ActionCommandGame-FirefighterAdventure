@@ -1,0 +1,22 @@
+﻿@model PositiveGameEvent
+
+@{
+    ViewData["Title"] = "New PositiveGameEvent";
+}
+
+<h1>New PositiveGameEvent</h1>
+
+<h4>PositiveGameEvent</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <partial name="CreateEditPartial" model="Model"/>
+            <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
