@@ -23,7 +23,7 @@ namespace ActionCommandGame.RestApi.Controllers
         /// </summary>
         /// <param name="playerId"></param>
         /// <returns></returns>
-        [HttpGet("{playerId}")]
+        [HttpGet("PerformAction/{playerId}")]
         public async Task<IActionResult> PerformAction(string playerId)
         {
             var result = await _gameService.PerformAction(playerId);
@@ -35,7 +35,7 @@ namespace ActionCommandGame.RestApi.Controllers
         /// </summary>
         /// <param name="buyRequest"></param>
         /// <returns></returns>
-        [HttpPost("{buyRequest}")]
+        [HttpPost("Buy/{buyRequest}")]
         public async Task<IActionResult> Buy(BuyRequest buyRequest)
         {
             var result = await _gameService.Buy(buyRequest.PlayerId, buyRequest.ItemId);

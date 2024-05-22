@@ -33,8 +33,8 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
         public async Task<IActionResult> PerformAction()
         {
             var uId = User.Claims.FirstOrDefault(c => c.Type == "Id");
-            var result = _gameSdk.PerformAction(uId.Value);
-            return PartialView("_ActionResult", result); //todo
+            var result = await _gameSdk.PerformAction(uId.Value);
+            return PartialView("_ActionPartial", result); //todo
         }
 
         public async Task<IActionResult> Shop()

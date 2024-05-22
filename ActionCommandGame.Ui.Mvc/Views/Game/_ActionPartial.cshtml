@@ -1,0 +1,18 @@
+﻿@model ServiceResult<GameResult>
+
+@if (Model.IsSuccess && Model.Data is not null)
+{
+    @if (Model.Data.PositiveGameEvent is not null)
+    {
+        @Model.Data.PositiveGameEvent.Name
+        @Model.Data.PositiveGameEvent.Description
+        @Model.Data.PositiveGameEvent.Experience
+        @Model.Data.PositiveGameEvent.Money
+    }
+    @if (Model.Data.NegativeGameEvent is not null)
+    {
+        @Model.Data.NegativeGameEvent.Name
+        @Model.Data.NegativeGameEvent.Description
+        <!-- ..... -->
+    }
+}
