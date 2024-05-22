@@ -62,7 +62,7 @@ namespace ActionCommandGame.RestApi.Services
                 return JwtAuthenticationHelpers.UserExists();
             }
 
-            var user = new Player { UserName = request.Username };
+            var user = new Player { Name = request.Username, UserName = request.Username/* todo: uhhh? */ };
             var result = await _userManager.CreateAsync(user, request.Password);
 
             if (!result.Succeeded)

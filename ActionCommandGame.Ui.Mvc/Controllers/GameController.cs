@@ -22,17 +22,20 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
         {
             //_playerId = int.Parse(User.FindFirstValue("Id"));
             //Console.WriteLine(User.FindFirstValue("Id"));
-	        //var player = await _playerSdk.Get(_playerId);
+            //var player = await _playerSdk.Get(_playerId);
             //var items = await _itemSdk.Find();
             //
             //_view = new GameView
-	        //{
-		    //    Player = player,
+            //{
+            //    Player = player,
             //    Items = items
-	        //};
+            //};
+            var uId = User.Claims.FirstOrDefault(c => c.Type == "Id");
+            var user = await _playerSdk.Get(uId.Value);
+            ViewData["PlayerName"] = user.Name;
 
 
-	        return View();
+            return View();
         }
 
         public async Task<IActionResult> PerformAction()

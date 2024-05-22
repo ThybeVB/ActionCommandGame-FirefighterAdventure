@@ -42,7 +42,7 @@ namespace ActionCommandGame.Sdk
         public async Task<JwtAuthenticationResult?> Register(UserRegisterRequest request)
         {
             var httpClient = _httpClientFactory.CreateClient("PeopleManagerApi");
-            var route = "https://localhost:7065/api/Identity/register"; //todo wrm????
+            var route = "https://localhost:7065/api/Identity/register"; //todo wrm???? edit: binding config not working, fix later
             var response = await httpClient.PostAsJsonAsync(route, request);
 
             response.EnsureSuccessStatusCode();
