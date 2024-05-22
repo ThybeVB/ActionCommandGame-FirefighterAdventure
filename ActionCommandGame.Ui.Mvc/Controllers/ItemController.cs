@@ -8,7 +8,7 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
     [Authorize]
     public class ItemController : Controller
     {
-        private ItemSdk _itemSdk;
+        private readonly ItemSdk _itemSdk;
 
         public ItemController(ItemSdk itemSdk)
         {
