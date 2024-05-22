@@ -1,3 +1,9 @@
-﻿<h3 class="ml-auto">Hello A</h3>
-			
-<button type="button" class="btn btn-primary mr-2" asp-controller="Index" asp-action="Logout">Logout</button>
+﻿@{
+    var returnUrl = ViewBag.ReturnUrl?.ToString();
+}
+
+<h3 class="ml-auto">Hello A</h3>
+
+<form method="post" class="form-inline">
+    <button type="submit" class="btn btn-primary mr-2" asp-controller="Index" asp-action="Logout" asp-route-returnUrl="@returnUrl">Logout</button>
+</form>

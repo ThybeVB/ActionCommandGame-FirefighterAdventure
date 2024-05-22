@@ -13,13 +13,11 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
 {
     public class IndexController : Controller
     {
-        private readonly ILogger<Index> _logger;
         private IdentitySdk _identitySdk;
         private ITokenStore _tokenStore;
 
-        public IndexController(ILogger<Index> logger, IdentitySdk identitySdk, ITokenStore tokenStore)
+        public IndexController(IdentitySdk identitySdk, ITokenStore tokenStore)
         {
-            _logger = logger;
             _identitySdk = identitySdk;
             _tokenStore = tokenStore;
         }
@@ -73,11 +71,19 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
             return LocalRedirect(returnUrl);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Logout()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout(string? returnUrl)
         {
+            if (string.IsNullOrWhiteSpace(returnUrl))
+            {
+                returnUrl = "/";
+            }
+
+            _tokenStore.SaveToken(string.Empty);
             await HttpContext.SignOutAsync();
-            return RedirectToAction("Index");
+
+            return LocalRedirect(returnUrl);
         }
 
         [HttpPost]
