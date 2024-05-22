@@ -12,12 +12,14 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
 
         private readonly PlayerSdk _playerSdk;
         private readonly ItemSdk _itemSdk;
+        private readonly PlayerItemSdk _playerItemSdk;
 
 
-        public GameController(PlayerSdk playerSdk, ItemSdk itemSdk)
+        public GameController(PlayerSdk playerSdk, ItemSdk itemSdk, PlayerItemSdk playerItemSdk)
         {
             _playerSdk = playerSdk;
             _itemSdk = itemSdk;
+            _playerItemSdk = playerItemSdk;
         }
 
         public async Task<IActionResult> Index()
@@ -45,17 +47,29 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
             return View();
         }
 
-        public async Task<IActionResult> ShowShop()
+        public async Task<IActionResult> Shop()
         {
             var allItems = await _itemSdk.Find();
+
             return PartialView("_ShopPartial", allItems);
         }
 
-        public async Task<IActionResult> ShowStats()
+        public async Task<IActionResult> Inventory()
+        {
+            var uId = User.Claims.FirstOrDefault(c => c.Type == "Id");
+            var ownedItems = await _playerItemSdk.Find(uId.Value);
+            
+            return PartialView("_InventoryPartial", ownedItems);
+
+        }
+
+        public async Task<IActionResult> Stats()
         {
             var uId = User.Claims.FirstOrDefault(c => c.Type == "Id");
             var result = await _playerSdk.Get(uId.Value);
+
             return PartialView("_StatsPartial", result);
         }
+
     }
 }

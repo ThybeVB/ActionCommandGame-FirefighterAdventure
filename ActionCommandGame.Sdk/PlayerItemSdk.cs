@@ -16,11 +16,11 @@ namespace ActionCommandGame.Sdk
             _tokenStore = tokenStore;
         }
 
-        public async Task<IList<PlayerItem>> Find(int? currentPlayerId)
+        public async Task<IList<PlayerItem>> Find(string? currentPlayerId)
         {
             var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
             var route = $"/api/PlayerItem/find";
-            if (currentPlayerId.HasValue)
+            if (!string.IsNullOrWhiteSpace(currentPlayerId))
             {
                 route = $"/api/PlayerItem/find/{currentPlayerId}";
             }

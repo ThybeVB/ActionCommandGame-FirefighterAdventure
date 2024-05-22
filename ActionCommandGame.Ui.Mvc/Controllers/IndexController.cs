@@ -13,8 +13,8 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
 {
     public class IndexController : Controller
     {
-        private IdentitySdk _identitySdk;
-        private ITokenStore _tokenStore;
+        private readonly IdentitySdk _identitySdk;
+        private readonly ITokenStore _tokenStore;
 
         public IndexController(IdentitySdk identitySdk, ITokenStore tokenStore)
         {
