@@ -34,20 +34,13 @@ var configurationBuilder = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 var config = configurationBuilder.Build();
 
-//var restSettings = new RestSettings();
-//builder.Configuration.GetSection(nameof(RestSettings)).Bind(restSettings);
-//builder.Services.AddSingleton(restSettings);
-
 var appSettings = new AppSettings();
 builder.Configuration.GetSection(nameof(AppSettings)).Bind(appSettings);
 builder.Services.AddSingleton(appSettings);
 
 builder.Services.AddDbContext<ActionButtonGameDbContext>(options =>
 {
-    //options.UseInMemoryDatabase(nameof(ActionButtonGameDbContext));
     options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=FiremanAdventure;Trusted_Connection=True;TrustServerCertificate=True;Encrypt=False");
-    //Console.WriteLine(restSettings.ConnectionString);
-    //options.UseSqlServer(restSettings.ConnectionString, b => b.MigrationsAssembly("ActionCommandGame.Repository"));
 }, ServiceLifetime.Singleton);
 
 
