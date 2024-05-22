@@ -29,6 +29,7 @@ builder.Services.AddScoped<ItemSdk>();
 builder.Services.AddScoped<PlayerItemSdk>();
 builder.Services.AddScoped<PositiveGameEventSdk>();
 builder.Services.AddScoped<NegativeGameEventSdk>();
+builder.Services.AddScoped<GameSdk>();
 
 builder.Services.AddScoped<ITokenStore, TokenStore>();
 builder.Services.AddScoped<IdentitySdk>();
