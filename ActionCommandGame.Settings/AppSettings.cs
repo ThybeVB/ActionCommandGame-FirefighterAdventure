@@ -8,5 +8,6 @@
         public string ActionText { get; set; }
         public int DefaultCooldown { get; set; }
         public string BaseAddress { get; set; }
+        public string ConnectionString { get; set; }
     }
 }

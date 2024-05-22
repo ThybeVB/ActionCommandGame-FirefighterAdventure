@@ -14,8 +14,7 @@ builder.Services.AddControllersWithViews();
 
 var appSettings = new AppSettings();
 builder.Configuration.Bind(nameof(AppSettings), appSettings);
-builder.Services.AddSingleton(appSettings);
-Console.WriteLine(appSettings.BaseAddress);
+//builder.Services.AddSingleton(appSettings);
 
 builder.Services.AddHttpClient("ActionCommandGameApi", options =>
 {

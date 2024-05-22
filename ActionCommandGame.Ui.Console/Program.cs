@@ -22,21 +22,21 @@ namespace ActionCommandGame.Ui.ConsoleApp
 
         private static async Task MainAsync(string[] args)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-
-            Configuration = builder.Build();
-
-            var serviceCollection = new ServiceCollection();
-            ConfigureServices(serviceCollection);
-            ServiceProvider = serviceCollection.BuildServiceProvider();
-
-            var database = ServiceProvider.GetRequiredService<ActionButtonGameDbContext>();
-            database.Initialize();
-
-            var game = ServiceProvider.GetRequiredService<Game>();
-            await game.Start();
+           //var builder = new ConfigurationBuilder()
+           //    .SetBasePath(Directory.GetCurrentDirectory())
+           //    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+           //
+           //Configuration = builder.Build();
+           //
+           //var serviceCollection = new ServiceCollection();
+           //ConfigureServices(serviceCollection);
+           //ServiceProvider = serviceCollection.BuildServiceProvider();
+           //
+           //var database = ServiceProvider.GetRequiredService<ActionButtonGameDbContext>();
+           ////database.Initialize();
+           //
+           //var game = ServiceProvider.GetRequiredService<Game>();
+           //await game.Start();
         }
 
         public static void ConfigureServices(IServiceCollection services)
@@ -48,10 +48,10 @@ namespace ActionCommandGame.Ui.ConsoleApp
             services.AddSingleton(appSettings);
 
             //Register the EntityFramework database In Memory as a Singleton
-            services.AddDbContext<ActionButtonGameDbContext>(options =>
-            {
-                options.UseInMemoryDatabase(nameof(ActionButtonGameDbContext));
-            }, ServiceLifetime.Singleton, ServiceLifetime.Singleton);
+           //services.AddDbContext<ActionButtonGameDbContext>(options =>
+           //{
+           //    options.UseInMemoryDatabase(nameof(ActionButtonGameDbContext));
+           //}, ServiceLifetime.Singleton, ServiceLifetime.Singleton);
 
             services.AddHttpClient("ActionCommandGameApi", options =>
             {
