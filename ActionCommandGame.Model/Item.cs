@@ -3,7 +3,7 @@ using ActionCommandGame.Model.Abstractions;
 
 namespace ActionCommandGame.Model
 {
-    public class Item: IIdentifiable
+    public class Item : IIdentifiable
     {
 
         public Item()

@@ -3,6 +3,7 @@ using System.Net.Http.Json;
 using ActionCommandGame.Sdk.Extensions;
 using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Services.Model.Core;
+using ActionCommandGame.Services.Model.Requests;
 using ActionCommandGame.Services.Model.Results;
 
 namespace ActionCommandGame.Sdk
@@ -49,11 +50,16 @@ namespace ActionCommandGame.Sdk
         public async Task<ServiceResult<BuyResult>> Buy(string pId, int iId)
         {
             var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
-            var route = $"api/Game/Buy/{pId}/{iId}";
+            var request = new BuyRequest
+            {
+                ItemId = iId,
+                PlayerId = pId
+            };
+            var route = $"api/Game/Buy/{request}";
             var token = _tokenStore.GetToken();
             httpClient.AddAuthorization(token);
 
-            var response = await httpClient.GetAsync(route);
+            var response = await httpClient.PostAsJsonAsync(route, request);
             response.EnsureSuccessStatusCode();
 
             var result = await response.Content.ReadFromJsonAsync<ServiceResult<BuyResult>>();

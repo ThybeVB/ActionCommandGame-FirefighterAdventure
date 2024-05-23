@@ -15,4 +15,11 @@
         @Model.Data.NegativeGameEvent.Description
         <!-- ..... -->
     }
+    @if (Model.Data.NegativeGameEventMessages is not null)
+    {
+        foreach (var message in Model.Data.NegativeGameEventMessages)
+        {
+            <p>message.Message</p>
+        }
+    }
 }

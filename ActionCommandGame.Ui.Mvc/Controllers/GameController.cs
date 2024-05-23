@@ -26,6 +26,7 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
             var uId = User.Claims.FirstOrDefault(c => c.Type == "Id");
             var user = await _playerSdk.Get(uId.Value);
             ViewData["PlayerName"] = user.Name;
+            ViewData["PlayerId"] = uId.Value;
 
             return View();
         }
@@ -48,7 +49,7 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
         {
             var uId = User.Claims.FirstOrDefault(c => c.Type == "Id");
             var result = await _gameSdk.Buy(uId.Value, itemId);
-
+            //pid evtl in viewdata
             return PartialView("_BuyPartial", result); //todo
         }
 

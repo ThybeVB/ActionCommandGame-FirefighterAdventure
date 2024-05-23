@@ -39,8 +39,35 @@
         });
     });
 
+    $(document).on('click', '.buy-button', function () {
+        var itemId = $(this).data('itemid');
+
+        $.ajax({
+            url: '/Game/BuyItem',
+            type: 'GET',
+            data: { itemId: itemId },
+            success: function (response) {
+                $('#active-panel').html(response);
+                // loadPlayerStats();
+            },
+            error: function (xhr, status, error) {
+                console.error('An error occurred:', error);
+                $('#active-panel').html('Error buying item.');
+            }
+        });
+    });
+
     function loadPlayerStats() {
-        $('#stats').load('/Game/Stats');  
+        $.ajax({
+            url: '/Game/Stats',
+            type: 'GET',
+            success: function (result) {
+                $('#active-panel').html(result);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
     }
 
     loadPlayerStats();
