@@ -41,8 +41,11 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
 
         public async Task<IActionResult> Shop()
         {
-            var allItems = await _itemSdk.Find();
+            var uId = User.Claims.FirstOrDefault(c => c.Type == "Id");
+            var user = await _playerSdk.Get(uId.Value);
 
+            var allItems = await _itemSdk.Find();
+            ViewData["Money"] = user.Money;
             return PartialView("_ShopPartial", allItems);
         }
 

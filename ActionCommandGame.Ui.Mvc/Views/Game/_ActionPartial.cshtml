@@ -26,12 +26,19 @@
     }
     @if (Model.Data.NegativeGameEvent is not null)
     {
-        <!-- ..... -->
         <div class="alert alert-danger" role="alert">
             <h4 class="alert-heading">@Model.Data.NegativeGameEvent.Name</h4>
-            <p>@Model.Data.NegativeGameEvent.Description</p>
-            <hr>
-            <p class="mb-0">defense loss todo</p>
+            <h5>@Model.Data.NegativeGameEvent.Description</h5>
+            @if (!string.IsNullOrWhiteSpace(@Model.Data.NegativeGameEvent.DefenseWithGearDescription))
+            {
+                <p>@Model.Data.NegativeGameEvent.DefenseWithGearDescription</p>
+            }
+            else
+            {
+                <p>@Model.Data.NegativeGameEvent.DefenseWithoutGearDescription</p>
+                <hr>
+                <p> class="mb-0">Defense Loss: @Model.Data.NegativeGameEvent.DefenseLoss</p>
+            }
         </div>
     }
     @if (Model.Data.NegativeGameEventMessages is not null)

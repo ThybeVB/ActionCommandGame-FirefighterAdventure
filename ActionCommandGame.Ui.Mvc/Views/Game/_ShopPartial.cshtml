@@ -2,11 +2,12 @@
 
 <h4>Shop</h4>
 
-<div class="row">
+<div class="row g-2">
+    <h5>Your current balance: <b>€ @ViewData["Money"]</b></h5>
     @foreach (var item in Model)
     {
-        <div class="col-sm-6">
-            <div class="card">
+        <div class="col-sm-3">
+            <div class="card p-2">
                 <div class="card-body">
                     <h5 class="card-title">@item.Name</h5>
                     <h6 class="card-subtitle mb-2 text-muted">€ @item.Price</h6>
