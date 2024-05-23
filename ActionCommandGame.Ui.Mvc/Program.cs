@@ -38,11 +38,12 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddAuthorization();
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.AccessDeniedPath = "/Shared/AccessDenied";
+    options.AccessDeniedPath = "/Index/AccessDenied";
 });
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
 {
     options.LoginPath = "/Index/Login";
+    options.AccessDeniedPath = "/Index/AccessDenied";
 });
 
 var app = builder.Build();

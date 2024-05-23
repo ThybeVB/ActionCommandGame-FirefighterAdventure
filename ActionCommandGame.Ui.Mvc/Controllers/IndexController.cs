@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
+using System.Reflection.Metadata.Ecma335;
 using ActionCommandGame.Services.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 
@@ -179,6 +180,12 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
         public IActionResult Register(string? returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl ?? "/Game/";
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
             return View();
         }
 
