@@ -1,8 +1,10 @@
-﻿@model Player
+﻿@using ActionCommandGame.Services.Extensions
+@model Player
 
 @if (Model != null)
 {
     <p>Money: <br/>@Model.Money</p>
+    <p>Level: <br/>@Model.GetLevel()</p>
     <p>Experience: <br/>@Model.Experience</p>
     <p>User ID: <br/>@Model.Id</p>
 }

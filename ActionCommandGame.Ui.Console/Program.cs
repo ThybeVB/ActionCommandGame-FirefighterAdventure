@@ -47,12 +47,6 @@ namespace ActionCommandGame.Ui.ConsoleApp
 
             services.AddSingleton(appSettings);
 
-            //Register the EntityFramework database In Memory as a Singleton
-           //services.AddDbContext<ActionButtonGameDbContext>(options =>
-           //{
-           //    options.UseInMemoryDatabase(nameof(ActionButtonGameDbContext));
-           //}, ServiceLifetime.Singleton, ServiceLifetime.Singleton);
-
             services.AddHttpClient("ActionCommandGameApi", options =>
             {
                 if (!string.IsNullOrWhiteSpace(appSettings.BaseAddress))

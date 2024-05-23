@@ -1,8 +1,9 @@
-﻿@model List<Player>
+﻿@using ActionCommandGame.Services.Extensions
+@model List<Player>
 
 <ol type="1">
     @foreach (var player in Model)
     {
-        <li>@player.Name with @player.Experience experience</li>
+        <li>@player.GetLevel() @player.Name with @player.Experience experience</li>
     }
 </ol>

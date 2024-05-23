@@ -11,8 +11,20 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">@item.Item.Name</h5>
+                        @if (item.Item.Fuel > 0)
+                        {
+                            <h6 class="card-subtitle mb-2 text-muted">Remaining usage: (@item.RemainingFuel/@item.Item.Fuel)</h6>
+                        }
+                        @if (item.Item.Attack > 0)
+                        {
+                            <h6 class="card-subtitle mb-2 text-muted">Remaining usage: (@item.RemainingAttack/@item.Item.Attack)</h6>
+                        }
+                        @if (item.Item.Defense > 0)
+                        {
+                            <h6 class="card-subtitle mb-2 text-muted">Remaining usage: (@item.RemainingDefense/@item.Item.Defense)</h6>
+                        }
+                        
                         <p class="card-text">@item.Item.Description</p>
-                        <!-- <a href="#" class="btn btn-primary">Buy</a> -->
                     </div>
                 </div>
             </div>

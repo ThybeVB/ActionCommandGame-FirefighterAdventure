@@ -22,4 +22,11 @@
             <p>message.Message</p>
         }
     }
+    @if (Model.Messages != null)
+    {
+        @foreach (var message in Model.Messages)
+        {
+            <p>@message.Message</p>
+        }
+    }
 }

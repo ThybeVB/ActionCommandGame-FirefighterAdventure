@@ -35,7 +35,7 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
         {
             var uId = User.Claims.FirstOrDefault(c => c.Type == "Id");
             var result = await _gameSdk.PerformAction(uId.Value);
-            return PartialView("_ActionPartial", result); //todo
+            return PartialView("_ActionPartial", result);
         }
 
         public async Task<IActionResult> Shop()
@@ -49,8 +49,7 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
         {
             var uId = User.Claims.FirstOrDefault(c => c.Type == "Id");
             var result = await _gameSdk.Buy(uId.Value, itemId);
-            //pid evtl in viewdata
-            return PartialView("_BuyPartial", result); //todo
+            return PartialView("_BuyPartial", result);
         }
 
         public async Task<IActionResult> Inventory()
