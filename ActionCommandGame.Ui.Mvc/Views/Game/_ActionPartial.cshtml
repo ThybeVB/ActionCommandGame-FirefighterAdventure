@@ -8,7 +8,20 @@
             <h4 class="alert-heading">@Model.Data.PositiveGameEvent.Name</h4>
             <p>@Model.Data.PositiveGameEvent.Description</p>
             <hr>
-            <p class="mb-0">Money gained: €@Model.Data.PositiveGameEvent.Money<br/>Experience gained: @Model.Data.PositiveGameEvent.Experience</p>
+            @if (Model.Data.PositiveGameEvent.Money != 0 && Model.Data.PositiveGameEvent.Experience != 0)
+            {
+                <p class="mb-0">Money gained: €@Model.Data.PositiveGameEvent.Money<br />Experience gained: @Model.Data.PositiveGameEvent.Experience</p>
+            }
+            @if (Model.Data.PositiveGameEvent.Experience == 0 && Model.Data.PositiveGameEvent.Money != 0)
+            {
+                <p class="mb-0">Money gained: €@Model.Data.PositiveGameEvent.Money</p>
+            }
+            @if (Model.Data.PositiveGameEvent.Money == 0 && Model.Data.PositiveGameEvent.Experience != 0)
+            {
+                <p class="mb-0">Experience gained: @Model.Data.PositiveGameEvent.Experience</p>
+            }
+
+            
         </div>
     }
     @if (Model.Data.NegativeGameEvent is not null)

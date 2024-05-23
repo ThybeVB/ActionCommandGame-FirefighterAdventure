@@ -100,10 +100,7 @@ if (app.Environment.IsDevelopment())
     await SeedRolesAndAdminAsync(scope.ServiceProvider);
 
     var dbContext = scope.ServiceProvider.GetRequiredService<ActionButtonGameDbContext>();
-    if (dbContext.Database.IsInMemory())
-    {
-        dbContext.Initialize();
-    }
+    dbContext.Initialize();
 }
 
 app.UseHttpsRedirection();

@@ -24,12 +24,16 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
             _tokenStore = tokenStore;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             if (User.Identity.IsAuthenticated)
             {
+                var token = _tokenStore.GetToken();
+                var principal = CreatePrincipalFromToken(token);
+                await HttpContext.SignInAsync(principal);
                 return LocalRedirect("/Game/");
             }
+
             return View();
         }
 
