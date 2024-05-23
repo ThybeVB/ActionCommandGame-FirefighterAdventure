@@ -4,29 +4,39 @@
 {
     @if (Model.Data.PositiveGameEvent is not null)
     {
-        @Model.Data.PositiveGameEvent.Name
-        @Model.Data.PositiveGameEvent.Description
-        @Model.Data.PositiveGameEvent.Experience
-        @Model.Data.PositiveGameEvent.Money
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">@Model.Data.PositiveGameEvent.Name</h4>
+            <p>@Model.Data.PositiveGameEvent.Description</p>
+            <hr>
+            <p class="mb-0">Money gained: €@Model.Data.PositiveGameEvent.Money<br/>Experience gained: @Model.Data.PositiveGameEvent.Experience</p>
+        </div>
     }
     @if (Model.Data.NegativeGameEvent is not null)
     {
-        @Model.Data.NegativeGameEvent.Name
-        @Model.Data.NegativeGameEvent.Description
         <!-- ..... -->
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">@Model.Data.NegativeGameEvent.Name</h4>
+            <p>@Model.Data.NegativeGameEvent.Description</p>
+            <hr>
+            <p class="mb-0">defense loss todo</p>
+        </div>
     }
     @if (Model.Data.NegativeGameEventMessages is not null)
     {
         foreach (var message in Model.Data.NegativeGameEventMessages)
         {
-            <p>message.Message</p>
+            <div class="alert alert-warning" role="alert">
+                @message.Message
+            </div>
         }
     }
     @if (Model.Messages != null)
     {
         @foreach (var message in Model.Messages)
         {
-            <p>@message.Message</p>
+            <div class="alert alert-dark" role="alert">
+                @message.Message
+            </div>
         }
     }
 }

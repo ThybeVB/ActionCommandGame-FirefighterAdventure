@@ -41,7 +41,8 @@ namespace ActionCommandGame.RestApi.Services
                 return JwtAuthenticationHelpers.LoginFailed();
             }
 
-            var token = GenerateJwtToken(user, _jwtSettings.Secret, _jwtSettings.Expiry.Value);
+            var roles = await _userManager.GetRolesAsync(user);
+            var token = GenerateJwtToken(user, _jwtSettings.Secret, _jwtSettings.Expiry.Value, roles);
             return new JwtAuthenticationResult
             {
                 Token = token
@@ -70,7 +71,8 @@ namespace ActionCommandGame.RestApi.Services
                 return JwtAuthenticationHelpers.RegisterError(result.Errors);
             }
 
-            var token = GenerateJwtToken(user, _jwtSettings.Secret, _jwtSettings.Expiry.Value);
+            var roles = await _userManager.GetRolesAsync(user);
+            var token = GenerateJwtToken(user, _jwtSettings.Secret, _jwtSettings.Expiry.Value, roles);
 
             return new JwtAuthenticationResult()
             {
@@ -78,7 +80,7 @@ namespace ActionCommandGame.RestApi.Services
             };
         }
 
-        private string GenerateJwtToken(Player user, string secret, TimeSpan expiry)
+        private string GenerateJwtToken(Player user, string secret, TimeSpan expiry, IEnumerable<string> roles)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
 
@@ -95,6 +97,8 @@ namespace ActionCommandGame.RestApi.Services
                 claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Email));
                 claims.Add(new Claim(JwtRegisteredClaimNames.Email, user.Email));
             }
+
+            claims.AddRange(roles.Select(r => new Claim(ClaimTypes.Role, r)));
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {

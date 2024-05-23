@@ -35,6 +35,7 @@ builder.Services.AddScoped<ITokenStore, TokenStore>();
 builder.Services.AddScoped<IdentitySdk>();
 
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
 {
     options.LoginPath = "/Index/Login";

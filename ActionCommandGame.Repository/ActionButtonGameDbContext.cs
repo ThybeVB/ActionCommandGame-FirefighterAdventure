@@ -1,11 +1,12 @@
 ﻿using ActionCommandGame.Model;
 using ActionCommandGame.Repository.Extensions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace ActionCommandGame.Repository
 {
-    public class ActionButtonGameDbContext: IdentityDbContext<Player>
+    public class ActionButtonGameDbContext: IdentityDbContext<Player, IdentityRole, string>
     {
         public ActionButtonGameDbContext(DbContextOptions<ActionButtonGameDbContext> options): base(options)
         {

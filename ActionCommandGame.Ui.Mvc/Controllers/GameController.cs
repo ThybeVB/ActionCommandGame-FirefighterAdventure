@@ -1,6 +1,7 @@
 ﻿using ActionCommandGame.Sdk;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace ActionCommandGame.Ui.Mvc.Controllers
 {
@@ -29,6 +30,17 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
             ViewData["PlayerId"] = uId.Value;
 
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult DebugRoles()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var roles = User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value);
+                return Ok(new { Roles = roles });
+            }
+            return Unauthorized("User is not authenticated");
         }
 
         public async Task<IActionResult> PerformAction()

@@ -48,6 +48,7 @@ var jwtSettings = new JwtSettings();
 builder.Configuration.GetSection(nameof(JwtSettings)).Bind(jwtSettings);
 builder.Services.AddSingleton(jwtSettings);
 
+builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -96,6 +97,8 @@ if (app.Environment.IsDevelopment())
 
     using var scope = app.Services.CreateScope();
 
+    await SeedRolesAndAdminAsync(scope.ServiceProvider);
+
     var dbContext = scope.ServiceProvider.GetRequiredService<ActionButtonGameDbContext>();
     if (dbContext.Database.IsInMemory())
     {
@@ -108,3 +111,26 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
+
+async Task SeedRolesAndAdminAsync(IServiceProvider serviceProvider)
+{
+    var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = serviceProvider.GetRequiredService<UserManager<Player>>();
+
+    string[] roleNames = { "Admin" };
+
+    foreach (var roleName in roleNames)
+    {
+        var roleExist = await roleManager.RoleExistsAsync(roleName);
+        if (!roleExist)
+        {
+            await roleManager.CreateAsync(new IdentityRole(roleName));
+        }
+    }
+
+    var adminUser = await userManager.FindByEmailAsync("vanbeerselthybe@gmail.com");
+    if (adminUser != null)
+    {
+        await userManager.AddToRoleAsync(adminUser, "Admin");
+    }
+}

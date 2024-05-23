@@ -156,6 +156,12 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
                 claims.Add(new Claim(ClaimTypes.Name, usernameClaim.Value));
             }
 
+            var roleClaim = token.Claims.SingleOrDefault(c => c.Type == "role");
+            if (roleClaim is not null)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, roleClaim.Value));
+            }
+
             return new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
         }
 
