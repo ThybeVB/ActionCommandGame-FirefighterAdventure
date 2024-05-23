@@ -1,12 +1,21 @@
 ﻿@using ActionCommandGame.Services.Extensions
 @model Player
 
+@{
+    var percentage = Math.Round(((double)Model.Experience / Model.GetExperienceForNextLevel()) * 100);
+}
+
 @if (Model != null)
 {
     <div style="text-align: center;">
         <p>Money: <br/>@Model.Money</p>
         <p>Level: <br/>@Model.GetLevel()</p>
+
         <p>Experience until level-up: (@Model.Experience/@Model.GetExperienceForNextLevel())</p>
+        <div class="progress" role="progressbar" aria-valuenow="@percentage" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar bg-success" style="width: @percentage%;" >@percentage%</div>
+        </div>
+
         <p>Total Experience: <br/>@Model.Experience</p>
         <p>User ID: <br/>@Model.Id</p>
     </div>
