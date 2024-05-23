@@ -1,0 +1,8 @@
+﻿@model List<Player>
+
+<ol type="1">
+    @foreach (var player in Model)
+    {
+        <li>@player.Name with @player.Experience experience</li>
+    }
+</ol>

@@ -40,6 +40,19 @@
         });
     });
 
+    $('#leaderboard-button').on('click', function () {
+        $.ajax({
+            url: '/Game/Leaderboard',
+            type: 'GET',
+            success: function (result) {
+                $('#active-panel').html(result);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+
     $(document).on('click', '.buy-button', function () {
         var itemId = $(this).data('itemid');
 

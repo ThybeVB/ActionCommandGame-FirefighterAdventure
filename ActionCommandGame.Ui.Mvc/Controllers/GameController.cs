@@ -70,5 +70,11 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
             return PartialView("_StatsPartial", result);
         }
 
+        public async Task<IActionResult> Leaderboard()
+        {
+            var players = (await _playerSdk.Find()).OrderByDescending(p => p.Experience).ToList();
+            return PartialView("_LeaderboardPartial", players);
+        }
+
     }
 }
