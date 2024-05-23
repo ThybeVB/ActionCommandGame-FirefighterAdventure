@@ -32,17 +32,6 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
             return View();
         }
 
-        [HttpGet]
-        public IActionResult DebugRoles()
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                var roles = User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value);
-                return Ok(new { Roles = roles });
-            }
-            return Unauthorized("User is not authenticated");
-        }
-
         public async Task<IActionResult> PerformAction()
         {
             var uId = User.Claims.FirstOrDefault(c => c.Type == "Id");

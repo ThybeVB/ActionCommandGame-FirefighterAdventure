@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using ActionCommandGame.Services.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ActionCommandGame.Ui.Mvc.Controllers
 {
+    [AllowAnonymous]
     public class IndexController : Controller
     {
         private readonly IdentitySdk _identitySdk;
@@ -24,6 +26,10 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
 
         public IActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return LocalRedirect("/Game/");
+            }
             return View();
         }
 
