@@ -36,6 +36,10 @@ builder.Services.AddScoped<IdentitySdk>();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddAuthorization();
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.AccessDeniedPath = "/Shared/AccessDenied";
+});
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
 {
     options.LoginPath = "/Index/Login";
@@ -56,6 +60,10 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "AdminArea",
+    pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",

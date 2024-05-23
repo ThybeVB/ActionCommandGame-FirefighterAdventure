@@ -18,11 +18,17 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-				<ul class="navbar-nav flex-grow-1">
-					<li class="nav-item">
-						<a class="nav-link text-dark" asp-area="" asp-controller="Index" asp-action="Index">Home</a>
-					</li>
-				</ul>
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Index" asp-action="Index">Home</a>
+                    </li>
+                </ul>
+                @if (User.IsInRole("Admin"))
+                {
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="Index">Admin</a></li>
+                    </ul>
+                }
 			</div>
 		</div>
 	</nav>
