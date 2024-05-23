@@ -23,7 +23,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.EnableAnnotations();
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Action Command Game API", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fireman Adventure API", Version = "v1" });
 
     var filePath = Path.Combine(AppContext.BaseDirectory, "ActionCommandGame.RestApi.xml");
     c.IncludeXmlComments(filePath);

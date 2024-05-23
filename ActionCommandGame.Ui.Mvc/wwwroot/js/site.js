@@ -6,6 +6,7 @@
             type: 'GET',
             success: function (result) {
                 $('#active-panel').html(result);
+                loadPlayerStats();
             },
             error: function (xhr, status, error) {
                 console.error(error);
@@ -48,7 +49,7 @@
             data: { itemId: itemId },
             success: function (response) {
                 $('#active-panel').html(response);
-                // loadPlayerStats();
+                loadPlayerStats();
             },
             error: function (xhr, status, error) {
                 console.error('An error occurred:', error);
@@ -62,7 +63,7 @@
             url: '/Game/Stats',
             type: 'GET',
             success: function (result) {
-                $('#active-panel').html(result);
+                $('#stats').html(result);
             },
             error: function (xhr, status, error) {
                 console.error(error);

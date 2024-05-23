@@ -2,9 +2,12 @@
     var returnUrl = ViewBag.ReturnUrl?.ToString();
 }
 
-<h3 class="ml-auto">Hello @ViewData["PlayerName"]</h3>
-<div id="stats"></div>
-
-<form method="post" class="form-inline">
-    <button type="submit" class="btn btn-primary mr-2" asp-controller="Index" asp-action="Logout" asp-route-returnUrl="@returnUrl">Logout</button>
-</form>
+<div class="sidebar-content">
+    <h3 class="ml-auto">Hello @ViewData["PlayerName"]!</h3>
+    <div id="stats"></div>
+</div>
+<div class="logout-container">
+    <form method="post" class="form-inline">
+        <button type="submit" class="btn btn-primary mr-2" asp-controller="Index" asp-action="Logout" asp-route-returnUrl="@returnUrl">Logout</button>
+    </form>
+</div>
