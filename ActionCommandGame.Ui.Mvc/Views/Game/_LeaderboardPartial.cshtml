@@ -4,6 +4,6 @@
 <ol type="1">
     @foreach (var player in Model)
     {
-        <li>@player.GetLevel() @player.Name with @player.Experience experience</li>
+        <li>Level @player.GetLevel(): <b>@player.Name</b> with @player.Experience experience</li>
     }
 </ol>

@@ -5,6 +5,7 @@
 {
     <p>Money: <br/>@Model.Money</p>
     <p>Level: <br/>@Model.GetLevel()</p>
-    <p>Experience: <br/>@Model.Experience</p>
+    <p>Experience until level-up: (@Model.Experience/@Model.GetExperienceForNextLevel())</p>
+    <p>Total Experience: <br/>@Model.Experience</p>
     <p>User ID: <br/>@Model.Id</p>
 }
