@@ -1,11 +1,20 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Admin";
 }
 
-<h2>Admin page</h2>
-
-<a asp-controller="Item" asp-action="Index">Items</a>
-<a asp-controller="PositiveGameEvents" asp-action="Index">PositiveGameEvents</a>
-<a asp-controller="NegativeGameEvents" asp-action="Index">NegativeGameEvents</a>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg" style="background-color: #212529;">
+                <div class="card-body">
+                    <h2 class="card-title text-center text-white p-2">Admin Page</h2>
+                    <div class="list-group bg-dark text-center">
+                        <a class="list-group-item list-group-item-action" asp-controller="Item" asp-action="Index" style="background-color: dimgray; color: white;">Items</a>
+                        <a class="list-group-item list-group-item-action" asp-controller="PositiveGameEvents" asp-action="Index" style="background-color: dimgray; color: white;">Positive Game Events</a>
+                        <a class="list-group-item list-group-item-action" asp-controller="NegativeGameEvents" asp-action="Index" style="background-color: dimgray; color: white;">Negative Game Events</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -2,9 +2,17 @@
     ViewData["Title"] = "Access Denied";
 }
 
-<div>
-    <h1>Access Denied</h1>
-    <h4>You do not have sufficient permissions to view this page.</h4>
-    <br/>
-    <a asp-controller="Game" asp-action="Index">Click here to go back to the game.</a>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-body text-center">
+                    <h1 class="text-danger">Access Denied</h1>
+                    <h4 class="text-muted">You do not have sufficient permissions to view this page.</h4>
+                    <br />
+                    <a class="btn btn-primary" asp-controller="Game" asp-action="Index">Click here to go back to the game</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
