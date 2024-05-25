@@ -1,3 +1,10 @@
+/* MAIN */
+
+body {
+    color: white;
+    background-color: dimgray;
+}
+
 /* HOME INDEX PAGE */
 
 .home-background {
@@ -40,28 +47,6 @@
 
 /* GAME PAGE */
 
-.sidebar-content {
-    flex: 1;
-}
-
-.logout-container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    margin-top: auto;
-    padding-bottom: 2vh;
-}
-
-.main-content {
-    margin-left: 250px; 
-    padding: 20px;
-}
-
-body {
-    color: white;
-    background-color: dimgray;
-}
-
 .sidebar {
     background-color: darkred;
     width: 250px;
@@ -76,5 +61,19 @@ body {
 }
 
 .sidebar-content {
+    flex: 1;
     color: white;
+}
+
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+}
+
+.logout-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin-top: auto;
+    padding-bottom: 2vh;
 }
