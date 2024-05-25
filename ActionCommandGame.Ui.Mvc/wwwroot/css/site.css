@@ -45,8 +45,12 @@ body {
     color: black;
 }
 
-/* GAME PAGE */
+/* ACCOUNT PAGE */
+.form-label {
+    color: black;
+}
 
+/* GAME PAGE */
 .sidebar {
     background-color: darkred;
     width: 250px;

@@ -4,31 +4,44 @@
     var returnUrl = ViewBag.ReturnUrl?.ToString();
 }
 
-<h1>Login</h1>
-<form method="post" asp-route-returnUrl="@returnUrl">
-    <div asp-validation-summary="ModelOnly"></div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h1 class="text-center text-black">Login</h1>
+                    <form method="post" asp-route-returnUrl="@returnUrl">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-    <div class="mb-3">
-        <label asp-for="Username" class="form-label"></label>
-        <input asp-for="Username" class="form-control">
-        <span asp-validation-for="Username"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Password" class="form-label"></label>
-        <input asp-for="Password" class="form-control">
-        <span asp-validation-for="Password"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="RememberMe" class="form-label form-check-label">
-            <input asp-for="RememberMe" class="form-control form-check-input">
-        </label>
-        <span asp-validation-for="RememberMe"></span>
-    </div>
+                        <div class="mb-3">
+                            <label asp-for="Username" class="form-label"></label>
+                            <input asp-for="Username" class="form-control" />
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
 
-    <button type="submit" class="btn btn-primary">Login</button>
-</form>
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label"></label>
+                            <input asp-for="Password" type="password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
 
-<a asp-action="Register" asp-route-returnUrl="@returnUrl">I don't have an account yet.</a>
+                        <div class="mb-3 form-check text-black">
+                            <input asp-for="RememberMe" class="form-check-input" />
+                            <label asp-for="RememberMe" class="form-check-label text-black">Remember me?</label>
+                            <span asp-validation-for="RememberMe" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                    </form>
+
+                    <div class="text-center mt-3">
+                        <a asp-action="Register" asp-route-returnUrl="@returnUrl">I don't have an account yet.</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Scripts
 {
