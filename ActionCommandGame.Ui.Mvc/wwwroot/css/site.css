@@ -50,7 +50,7 @@ body {
 .sidebar {
     background-color: darkred;
     width: 250px;
-    height: 100%;
+    height: 100vh;
     position: fixed;
     top: 0;
     left: 0;
@@ -76,4 +76,24 @@ body {
     align-items: flex-end;
     margin-top: auto;
     padding-bottom: 2vh;
+}
+
+body.game .navbar {
+    margin-left: 250px;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 50%;
+        height: 100vh;
+        position: relative;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .navbar {
+        margin-left: 0;
+    }
 }
