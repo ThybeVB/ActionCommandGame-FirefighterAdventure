@@ -14,6 +14,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow-y: hidden;
 }
 
 .home-background::before {
@@ -52,7 +53,7 @@ body {
 
 /* GAME PAGE */
 .sidebar {
-    background-color: darkred;
+    background-color: #bb2233;
     width: 250px;
     height: 100vh;
     position: fixed;
@@ -84,6 +85,11 @@ body {
 
 body.game .navbar {
     margin-left: 250px;
+}
+
+.shaved-card {
+    max-width: 80%; /* Adjust this percentage to the desired width */
+    margin-right: auto;
 }
 
 @media (max-width: 768px) {

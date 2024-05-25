@@ -1,37 +1,40 @@
 ﻿@model IList<PlayerItem>
 
-<h4>Inventory</h4>
+@{
+    ViewData["Title"] = "Inventory";
+}
 
-<div class="row">
-    @if (Model.Count != 0)
-    {
-        @foreach (var item in Model)
+    <h4>@ViewData["Title"]</h4>
+    <div class="row shaved-card">
+        @if (Model.Count != 0)
         {
-            <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">@item.Item.Name</h5>
-                        @if (item.Item.Fuel > 0)
-                        {
-                            <h6 class="card-subtitle mb-2 text-muted">Remaining usage: (@item.RemainingFuel/@item.Item.Fuel)</h6>
-                        }
-                        @if (item.Item.Attack > 0)
-                        {
-                            <h6 class="card-subtitle mb-2 text-muted">Remaining usage: (@item.RemainingAttack/@item.Item.Attack)</h6>
-                        }
-                        @if (item.Item.Defense > 0)
-                        {
-                            <h6 class="card-subtitle mb-2 text-muted">Remaining usage: (@item.RemainingDefense/@item.Item.Defense)</h6>
-                        }
-                        
-                        <p class="card-text">@item.Item.Description</p>
+            @foreach (var item in Model)
+            {
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title text-dark">@item.Item.Name</h5>
+                            @if (item.Item.Fuel > 0)
+                            {
+                                <h6 class="card-subtitle mb-2 text-muted">Remaining usage: (@item.RemainingFuel/@item.Item.Fuel)</h6>
+                            }
+                            @if (item.Item.Attack > 0)
+                            {
+                                <h6 class="card-subtitle mb-2 text-muted">Remaining usage: (@item.RemainingAttack/@item.Item.Attack)</h6>
+                            }
+                            @if (item.Item.Defense > 0)
+                            {
+                                <h6 class="card-subtitle mb-2 text-muted">Remaining usage: (@item.RemainingDefense/@item.Item.Defense)</h6>
+                            }
+                        </div>
                     </div>
                 </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <p class="text-center">There is nothing here :(</p>
             </div>
         }
-    }
-    else
-    {
-        <p>There is nothing here :(</p>
-    }
-</div>
+    </div>
