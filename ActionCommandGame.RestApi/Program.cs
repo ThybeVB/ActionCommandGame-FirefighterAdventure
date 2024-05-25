@@ -114,20 +114,46 @@ async Task SeedRolesAndAdminAsync(IServiceProvider serviceProvider)
     var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     var userManager = serviceProvider.GetRequiredService<UserManager<Player>>();
 
-    string[] roleNames = { "Admin" };
-
-    foreach (var roleName in roleNames)
+    var adminExists = await userManager.FindByEmailAsync("vanbeerselthybe@gmail.com");
+    if (adminExists == null)
     {
-        var roleExist = await roleManager.RoleExistsAsync(roleName);
-        if (!roleExist)
+        var adminUser = new Player()
         {
-            await roleManager.CreateAsync(new IdentityRole(roleName));
+            Email = "vanbeerselthybe@gmail.com",
+            Name = "Thybe",
+            UserName = "vanbeerselthybe@gmail.com",
+            NormalizedUserName = "VANBEERSELTHYBE@GMAIL.COM",
+            NormalizedEmail = "VANBEERSELTHYBE@GMAIL.COM",
+            PasswordHash = "AQAAAAIAAYagAAAAEBsAuWOMcIei3bmWhcPQD7JjVasnyGbzraUEZq5eMcFJ7I0h5ZwNFxDkiglQlOzAHQ==", // Vives4Lyfe@
+            ConcurrencyStamp = "c28d772c-2981-4a5b-b34f-ef3bc342fd16",
+            SecurityStamp = "YENCZX7ECN5PSKCCTDPLG6JVY4J5DOXI",
+            Money = 25
+        };
+        await userManager.CreateAsync(adminUser);
+
+        var roleExists = await roleManager.RoleExistsAsync("Admin");
+        if (!roleExists)
+        { 
+            await roleManager.CreateAsync(new IdentityRole("Admin"));
         }
+
+        await userManager.AddToRoleAsync(adminUser, "Admin");
     }
 
-    var adminUser = await userManager.FindByEmailAsync("vanbeerselthybe@gmail.com");
-    if (adminUser != null)
+    if (await userManager.FindByEmailAsync("bavo.ketels@vives.be") != null)
     {
-        await userManager.AddToRoleAsync(adminUser, "Admin");
+        var user = new Player()
+        {
+            Email = "bavo.ketels@vives.be",
+            Name = "Bavo Ketels",
+            UserName = "bavo.ketels@vives.be",
+            NormalizedUserName = "BAVO.KETELS@VIVES.BE",
+            NormalizedEmail = "BAVO.KETELS@VIVES.BE",
+            PasswordHash = "AQAAAAIAAYagAAAAEJjqloKN/74dMzcWRMKRllvPbsZQ59WHbc2p1xrnt7sqr3fdz4vqIe1d5+5Xz6K7tA==", // Test123$
+            ConcurrencyStamp = "0a2a3992-859e-4204-95f0-ea9bc9a96adc",
+            SecurityStamp = "YJ7UIFZC3FQHY4JOPZF6MBC4THU3K4IL",
+            Money = 25
+        };
+        await userManager.CreateAsync(user);
     }
 }
