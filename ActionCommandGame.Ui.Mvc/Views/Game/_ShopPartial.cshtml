@@ -14,20 +14,23 @@
                     <p class="card-text">@item.Description</p>
                     <button class="btn btn-success buy-button" data-itemid="@item.Id">Buy</button>
                 </div>
-                <div class="card-footer">
-                    @if (item.Attack is not 0)
-                    {
-                        <p>Attack: @item.Attack</p>
-                    }
-                    @if (item.Defense is not 0)
-                    {
-                        <p>Defense: @item.Defense</p>
-                    }
-                    @if (item.Fuel is not 0)
-                    {
-                        <p>Fuel: @item.Fuel</p>
-                    }
-                </div>
+                @if (item.Attack is not 0 || item.Defense is not 0 || item.Fuel is not 0)
+                {
+                    <div class="card-footer">
+                        @if (item.Attack is not 0)
+                        {
+                            <p>Attack: @item.Attack</p>
+                        }
+                        @if (item.Defense is not 0)
+                        {
+                            <p>Defense: @item.Defense</p>
+                        }
+                        @if (item.Fuel is not 0)
+                        {
+                            <p>Fuel: @item.Fuel</p>
+                        }
+                    </div>
+                }
             </div>
         </div>
     }

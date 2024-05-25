@@ -23,6 +23,13 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Details(int itemId)
+        {
+            var item = await _itemSdk.Get(itemId);
+            return PartialView("_DetailsPartial", item);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Create()
         {
             return View();

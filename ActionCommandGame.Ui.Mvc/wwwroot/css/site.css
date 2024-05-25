@@ -1,15 +1,44 @@
-.sidebar {
-    width: 250px;
-    height: 100%;
-    position: fixed;
+/* HOME INDEX PAGE */
+
+.home-background {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-background::before {
+    content: "";
+    position: absolute;
     top: 0;
     left: 0;
-    background-color: #f8f9fa;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    background-image: url('../img/bg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: blur(3px);
+    z-index: 0;
 }
+
+.content-box {
+    position: relative;
+    z-index: 1;
+    filter: none;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    color: black;
+}
+
+/* GAME PAGE */
 
 .sidebar-content {
     flex: 1;
@@ -26,4 +55,26 @@
 .main-content {
     margin-left: 250px; 
     padding: 20px;
+}
+
+body {
+    color: white;
+    background-color: dimgray;
+}
+
+.sidebar {
+    background-color: darkred;
+    width: 250px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sidebar-content {
+    color: white;
 }

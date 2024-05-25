@@ -31,8 +31,11 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
             {
                 var token = _tokenStore.GetToken();
                 var principal = CreatePrincipalFromToken(token);
-                await HttpContext.SignInAsync(principal);
-                return LocalRedirect("/Game/");
+                if (principal.Identity != null && principal.Identity.IsAuthenticated)
+                {
+                    await HttpContext.SignInAsync(principal);
+                    return LocalRedirect("/Game/");
+                }
             }
 
             return View();

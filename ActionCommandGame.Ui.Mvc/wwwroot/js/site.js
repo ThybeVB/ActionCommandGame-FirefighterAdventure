@@ -71,6 +71,22 @@
         });
     });
 
+    $('#loadModalButton').on('click', function () {
+        var itemId = $(this).data('itemid');
+
+        $.ajax({
+            url: '/Item/Details',
+            type: 'GET',
+            data: { itemId: itemId },
+            success: function (result) {
+                $('#active-modal').html(result);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+
     function loadPlayerStats() {
         $.ajax({
             url: '/Game/Stats',

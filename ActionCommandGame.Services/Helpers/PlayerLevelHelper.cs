@@ -35,5 +35,12 @@ namespace ActionCommandGame.Services.Helpers
             var experienceForNextLevel = GetExperienceForNextLevel(experience);
             return experienceForNextLevel - experience;
         }
+
+        public static int GetExperienceForLastLevel(int experience)
+        {
+            var currentLevel = GetLevelFromExperience(experience);
+            var lastLevel = currentLevel;
+            return GetExperienceFromLevel(lastLevel);
+        }
     }
 }

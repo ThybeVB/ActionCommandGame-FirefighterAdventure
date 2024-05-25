@@ -24,5 +24,10 @@ namespace ActionCommandGame.Services.Extensions
         {
             return PlayerLevelHelper.GetRemainingExperienceUntilNextLevel(player.Experience);
         }
+
+        public static int MinimumXpForLastLevel(this Player player)
+        {
+            return PlayerLevelHelper.GetExperienceForLastLevel(player.Experience);
+        }
     }
 }
