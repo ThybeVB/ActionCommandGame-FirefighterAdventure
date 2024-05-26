@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using ActionCommandGame.Model.Abstractions;
+﻿using ActionCommandGame.Model.Abstractions;
+using System.Collections.Generic;
 
 namespace ActionCommandGame.Model
 {
@@ -20,7 +20,7 @@ namespace ActionCommandGame.Model
         public int Attack { get; set; }
         public int Defense { get; set; }
         public int ActionCooldownSeconds { get; set; }
-        
+
         public IList<PlayerItem> PlayerItems { get; set; }
     }
 }

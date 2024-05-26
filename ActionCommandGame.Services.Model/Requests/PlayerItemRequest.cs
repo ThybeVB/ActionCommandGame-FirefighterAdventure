@@ -1,6 +1,6 @@
 ﻿namespace ActionCommandGame.Services.Model.Requests
 {
-    public class PlayerItemRequest 
+    public class PlayerItemRequest
     {
         public string PlayerId { get; set; }
 

@@ -1,7 +1,6 @@
 ﻿using ActionCommandGame.Sdk;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace ActionCommandGame.Ui.Mvc.Controllers
 {
@@ -60,7 +59,7 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
         {
             var uId = User.Claims.FirstOrDefault(c => c.Type == "Id");
             var ownedItems = await _playerItemSdk.Find(uId.Value);
-            
+
             return PartialView("_InventoryPartial", ownedItems);
 
         }

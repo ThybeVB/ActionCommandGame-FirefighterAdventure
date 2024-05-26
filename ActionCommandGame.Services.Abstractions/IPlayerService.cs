@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using ActionCommandGame.Model;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using ActionCommandGame.Model;
 
 namespace ActionCommandGame.Services.Abstractions
 {

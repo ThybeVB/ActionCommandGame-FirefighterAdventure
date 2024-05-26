@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using ActionCommandGame.Services.Model.Core;
+﻿using ActionCommandGame.Services.Model.Core;
 using ActionCommandGame.Services.Model.Results;
+using System.Threading.Tasks;
 
 namespace ActionCommandGame.Services.Abstractions
 {

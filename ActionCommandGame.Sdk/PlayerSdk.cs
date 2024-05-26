@@ -1,7 +1,7 @@
-﻿using System.Net.Http.Json;
-using ActionCommandGame.Model;
+﻿using ActionCommandGame.Model;
 using ActionCommandGame.Sdk.Extensions;
 using ActionCommandGame.Services.Abstractions;
+using System.Net.Http.Json;
 
 namespace ActionCommandGame.Sdk
 {

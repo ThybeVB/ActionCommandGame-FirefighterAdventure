@@ -20,7 +20,7 @@ namespace ActionCommandGame.Services.Helpers
                 return 0;
             }
 
-            return ((int)Math.Pow(level,2) + level) / 2 * 100 - level * 100;
+            return ((int)Math.Pow(level, 2) + level) / 2 * 100 - level * 100;
         }
 
         public static int GetExperienceForNextLevel(int experience)

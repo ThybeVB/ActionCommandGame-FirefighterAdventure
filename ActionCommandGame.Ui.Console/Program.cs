@@ -1,14 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using ActionCommandGame.Repository;
-using ActionCommandGame.Sdk;
+﻿using ActionCommandGame.Sdk;
 using ActionCommandGame.Services;
 using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Settings;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Threading.Tasks;
 
 namespace ActionCommandGame.Ui.ConsoleApp
 {
@@ -22,21 +19,21 @@ namespace ActionCommandGame.Ui.ConsoleApp
 
         private static async Task MainAsync(string[] args)
         {
-           //var builder = new ConfigurationBuilder()
-           //    .SetBasePath(Directory.GetCurrentDirectory())
-           //    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-           //
-           //Configuration = builder.Build();
-           //
-           //var serviceCollection = new ServiceCollection();
-           //ConfigureServices(serviceCollection);
-           //ServiceProvider = serviceCollection.BuildServiceProvider();
-           //
-           //var database = ServiceProvider.GetRequiredService<ActionButtonGameDbContext>();
-           ////database.Initialize();
-           //
-           //var game = ServiceProvider.GetRequiredService<Game>();
-           //await game.Start();
+            //var builder = new ConfigurationBuilder()
+            //    .SetBasePath(Directory.GetCurrentDirectory())
+            //    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+            //
+            //Configuration = builder.Build();
+            //
+            //var serviceCollection = new ServiceCollection();
+            //ConfigureServices(serviceCollection);
+            //ServiceProvider = serviceCollection.BuildServiceProvider();
+            //
+            //var database = ServiceProvider.GetRequiredService<ActionButtonGameDbContext>();
+            ////database.Initialize();
+            //
+            //var game = ServiceProvider.GetRequiredService<Game>();
+            //await game.Start();
         }
 
         public static void ConfigureServices(IServiceCollection services)
@@ -60,7 +57,7 @@ namespace ActionCommandGame.Ui.ConsoleApp
             services.AddScoped<PositiveGameEventSdk>();
             services.AddScoped<NegativeGameEventSdk>();
             services.AddScoped<PlayerItemSdk>();
-            
+
             services.AddTransient<Game>();
 
             services.AddTransient<IGameService, GameService>();

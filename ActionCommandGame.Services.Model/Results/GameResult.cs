@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using ActionCommandGame.Model;
+﻿using ActionCommandGame.Model;
 using ActionCommandGame.Services.Model.Core;
+using System.Collections.Generic;
 
 namespace ActionCommandGame.Services.Model.Results
 {

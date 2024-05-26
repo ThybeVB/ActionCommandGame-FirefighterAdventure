@@ -1,5 +1,3 @@
-using System.Text;
-using System.Text.Json.Serialization;
 using ActionCommandGame.Model;
 using ActionCommandGame.Repository;
 using ActionCommandGame.RestApi.Services;
@@ -12,6 +10,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -133,7 +133,7 @@ async Task SeedRolesAndAdminAsync(IServiceProvider serviceProvider)
 
         var roleExists = await roleManager.RoleExistsAsync("Admin");
         if (!roleExists)
-        { 
+        {
             await roleManager.CreateAsync(new IdentityRole("Admin"));
         }
 

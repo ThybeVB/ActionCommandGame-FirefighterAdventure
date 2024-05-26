@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration
-	.SetBasePath(Directory.GetCurrentDirectory())
-	.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
 builder.Services.AddControllersWithViews();
 
@@ -18,10 +18,10 @@ builder.Configuration.Bind(nameof(AppSettings), appSettings);
 
 builder.Services.AddHttpClient("ActionCommandGameApi", options =>
 {
-	if (!string.IsNullOrWhiteSpace(appSettings.BaseAddress))
-	{
-		options.BaseAddress = new Uri(appSettings.BaseAddress);
-	}
+    if (!string.IsNullOrWhiteSpace(appSettings.BaseAddress))
+    {
+        options.BaseAddress = new Uri(appSettings.BaseAddress);
+    }
 });
 
 builder.Services.AddScoped<PlayerSdk>();

@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using ActionCommandGame.Model.Abstractions;
+﻿using ActionCommandGame.Model.Abstractions;
+using System.Collections.Generic;
 
 namespace ActionCommandGame.Model
 {
-    public class PlayerItem: IIdentifiable
+    public class PlayerItem : IIdentifiable
     {
         public PlayerItem()
         {

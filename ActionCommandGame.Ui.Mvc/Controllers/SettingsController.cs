@@ -18,7 +18,7 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
             _playerSdk = playerSdk;
         }
 
-        
+
         public async Task<IActionResult> Index()
         {
             var uId = User.Claims.FirstOrDefault(c => c.Type == "Id");

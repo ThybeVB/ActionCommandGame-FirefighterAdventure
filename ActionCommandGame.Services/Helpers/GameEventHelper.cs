@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using ActionCommandGame.Model;
+﻿using ActionCommandGame.Model;
 using ActionCommandGame.Model.Abstractions;
 using ActionCommandGame.Services.Model.Results;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ActionCommandGame.Services.Helpers
 {
@@ -48,7 +48,7 @@ namespace ActionCommandGame.Services.Helpers
 
         //Generate a cumulative list, where each probability is added to the previous
         private static IEnumerable<CumulativeGameEvent<T>> CreateCumulativeGameEvents<T>(IList<T> gameEvents)
-            where T: IHasProbability
+            where T : IHasProbability
         {
             int currentCumulativeProbability = 0;
             foreach (var gameEvent in gameEvents)

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ActionCommandGame.Model;
+﻿using ActionCommandGame.Model;
 using ActionCommandGame.Repository;
 using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Services.Extensions;
@@ -10,6 +6,10 @@ using ActionCommandGame.Services.Model.Core;
 using ActionCommandGame.Services.Model.Results;
 using ActionCommandGame.Settings;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ActionCommandGame.Services
 {
@@ -74,7 +74,9 @@ namespace ActionCommandGame.Services
             var positiveGameEvent = await _positiveGameEventService.GetRandomPositiveGameEvent(hasAttackItem);
             if (positiveGameEvent == null)
             {
-                return new ServiceResult<GameResult>{Messages = 
+                return new ServiceResult<GameResult>
+                {
+                    Messages =
                     new List<ServiceMessage>
                     {
                         new ServiceMessage
@@ -83,7 +85,8 @@ namespace ActionCommandGame.Services
                             Message = "Something went wrong getting the Positive Game Event.",
                             MessagePriority = MessagePriority.Error
                         }
-                    }};
+                    }
+                };
             }
 
             var negativeGameEvent = await _negativeGameEventService.GetRandomNegativeGameEvent();
@@ -99,7 +102,7 @@ namespace ActionCommandGame.Services
             //Check if we leveled up
             if (oldLevel < newLevel)
             {
-                levelMessages = new List<ServiceMessage>{new ServiceMessage{Code="LevelUp", Message = $"Congratulations, you arrived at level {newLevel}"}};
+                levelMessages = new List<ServiceMessage> { new ServiceMessage { Code = "LevelUp", Message = $"Congratulations, you arrived at level {newLevel}" } };
             }
 
             //Consume fuel
@@ -188,7 +191,7 @@ namespace ActionCommandGame.Services
             {
                 return new ServiceResult<BuyResult>().NotEnoughMoney();
             }
-            
+
             await _playerItemService.Create(playerId, itemId);
 
             player.Money -= item.Price;

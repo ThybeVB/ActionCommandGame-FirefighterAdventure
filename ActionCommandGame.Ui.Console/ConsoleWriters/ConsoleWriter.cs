@@ -1,7 +1,7 @@
-﻿using System;
+﻿using ActionCommandGame.Services.Model.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using ActionCommandGame.Services.Model.Core;
 
 namespace ActionCommandGame.Ui.ConsoleApp.ConsoleWriters
 {

@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ActionCommandGame.Model;
-using ActionCommandGame.Sdk;
+﻿using ActionCommandGame.Model;
 using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Services.Extensions;
 using ActionCommandGame.Services.Model.Core;
 using ActionCommandGame.Services.Model.Results;
 using ActionCommandGame.Settings;
 using ActionCommandGame.Ui.ConsoleApp.ConsoleWriters;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ActionCommandGame.Ui.ConsoleApp
 {
@@ -40,7 +39,7 @@ namespace ActionCommandGame.Ui.ConsoleApp
         public async Task Start()
         {
             Console.OutputEncoding = Encoding.UTF8;
-            ConsoleBlockWriter.Write(_settings.GameName, 4 , ConsoleColor.Blue);
+            ConsoleBlockWriter.Write(_settings.GameName, 4, ConsoleColor.Blue);
             ConsoleWriter.WriteText($"Play your game. Try typing \"help\" or \"{_settings.ActionCommand}\"", ConsoleColor.Yellow);
 
             //Get the player from somewhere
@@ -141,7 +140,7 @@ namespace ActionCommandGame.Ui.ConsoleApp
             if (item.ActionCooldownSeconds > 0)
             {
                 ConsoleWriter.WriteText("\t\tCooldown seconds: ", ConsoleColor.White, false);
-                ConsoleWriter.WriteText($"{item.ActionCooldownSeconds}"); 
+                ConsoleWriter.WriteText($"{item.ActionCooldownSeconds}");
             }
         }
 
@@ -281,10 +280,10 @@ namespace ActionCommandGame.Ui.ConsoleApp
         private async Task ShowShop()
         {
             ConsoleWriter.WriteText("Available Shop Items", ConsoleColor.Green);
-            
+
             //var shopItems = await _itemSdk.Find();
             var shopItems = await _itemService.Find();
-            
+
             foreach (var item in shopItems)
             {
                 ShowItem(item);
@@ -365,7 +364,7 @@ namespace ActionCommandGame.Ui.ConsoleApp
             var idPart = commandParts[1];
 
             int.TryParse(idPart, out var itemId);
-            
+
             return itemId;
         }
     }

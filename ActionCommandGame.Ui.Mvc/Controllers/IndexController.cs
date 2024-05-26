@@ -1,15 +1,14 @@
-using ActionCommandGame.Ui.Mvc.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 using ActionCommandGame.Sdk;
+using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Services.Model.Requests.Identity;
+using ActionCommandGame.Ui.Mvc.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using System.Security.Claims;
-using System.IdentityModel.Tokens.Jwt;
-using System.Reflection.Metadata.Ecma335;
-using ActionCommandGame.Services.Abstractions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace ActionCommandGame.Ui.Mvc.Controllers
 {
@@ -69,7 +68,7 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
                 Username = model.Username,
                 Password = model.Password
             };
-            
+
             var loginResult = await _identitySdk.SignIn(loginRequest);
             if (loginResult.Messages.Count > 0) //todo: rare workaround
             {

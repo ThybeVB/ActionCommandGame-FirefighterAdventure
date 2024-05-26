@@ -10,30 +10,30 @@ namespace ActionCommandGame.RestApi.Controllers
     {
         private readonly IdentityService _identityService;
 
-           public IdentityController(IdentityService identityService)
-           {
-               _identityService = identityService;
-           }
+        public IdentityController(IdentityService identityService)
+        {
+            _identityService = identityService;
+        }
 
-           [HttpPost("signin")]
-           public async Task<IActionResult> SignIn(UserSignInRequest request)
-           {
-               var result = await _identityService.SignIn(request);
-               return Ok(result);
-           }
+        [HttpPost("signin")]
+        public async Task<IActionResult> SignIn(UserSignInRequest request)
+        {
+            var result = await _identityService.SignIn(request);
+            return Ok(result);
+        }
 
-           [HttpPost("register")]
-           public async Task<IActionResult> Register(UserRegisterRequest request)
-           {
-               var result = await _identityService.Register(request);
-               return Ok(result);
-           }
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(UserRegisterRequest request)
+        {
+            var result = await _identityService.Register(request);
+            return Ok(result);
+        }
 
-           [HttpPost("update")]
-           public async Task<IActionResult> Update(UserRegisterRequest request)
-           {
-               var result = await _identityService.Update(request);
-               return Ok(result);
-           }
+        [HttpPost("update")]
+        public async Task<IActionResult> Update(UserRegisterRequest request)
+        {
+            var result = await _identityService.Update(request);
+            return Ok(result);
+        }
     }
 }

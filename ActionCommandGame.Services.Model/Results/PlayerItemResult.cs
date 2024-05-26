@@ -14,6 +14,6 @@ namespace ActionCommandGame.Services.Model.Results
 
         public int RemainingAttack { get; set; }
         public int RemainingDefense { get; set; }
-        public int RemainingFuel {get; set; }
+        public int RemainingFuel { get; set; }
     }
 }

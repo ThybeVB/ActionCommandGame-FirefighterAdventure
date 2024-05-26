@@ -1,17 +1,17 @@
-﻿using System.Linq;
-using ActionCommandGame.Model;
+﻿using ActionCommandGame.Model;
 using ActionCommandGame.Repository.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace ActionCommandGame.Repository
 {
-    public class ActionButtonGameDbContext: IdentityDbContext<Player, IdentityRole, string>
+    public class ActionButtonGameDbContext : IdentityDbContext<Player, IdentityRole, string>
     {
-        public ActionButtonGameDbContext(DbContextOptions<ActionButtonGameDbContext> options): base(options)
+        public ActionButtonGameDbContext(DbContextOptions<ActionButtonGameDbContext> options) : base(options)
         {
-            
+
         }
 
         public DbSet<PositiveGameEvent> PositiveGameEvents { get; set; }
@@ -68,7 +68,7 @@ namespace ActionCommandGame.Repository
             PositiveGameEvents.Add(new PositiveGameEvent { Name = "Fire safety drill", Description = "Conduct a fire drill at a local school. Gain experience but no immediate benefits.", Probability = 750, Experience = 20 });
             PositiveGameEvents.Add(new PositiveGameEvent { Name = "Community outreach", Description = "Hand out fire safety pamphlets in the community.", Probability = 700, Experience = 2 });
             PositiveGameEvents.Add(new PositiveGameEvent { Name = "Daily station maintenance", Description = "Clean and maintain the fire station. No immediate benefits.", Probability = 650 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Administrative duties", Description = "Complete necessary paperwork and administrative tasks.", Probability = 600, Experience = 5});
+            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Administrative duties", Description = "Complete necessary paperwork and administrative tasks.", Probability = 600, Experience = 5 });
             PositiveGameEvents.Add(new PositiveGameEvent { Name = "Restock supplies", Description = "Restock the fire truck with standard supplies. Everything is as expected.", Probability = 550, Experience = 10 });
 
             // Positive Events
@@ -87,9 +87,9 @@ namespace ActionCommandGame.Repository
             PositiveGameEvents.Add(new PositiveGameEvent { Name = "Receive a morale boost from rescued civilians", Description = "The gratitude of rescued civilians boosted your morale.", Probability = 400, Experience = 30 });
             PositiveGameEvents.Add(new PositiveGameEvent { Name = "Locate an emergency exit quickly", Description = "You quickly located an emergency exit, ensuring a safe retreat.", Probability = 350 });
             PositiveGameEvents.Add(new PositiveGameEvent { Name = "Get a commendation from the fire chief", Description = "You received a commendation from the fire chief for your actions.", Probability = 300, Money = 25, Experience = 35 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Discover an efficient firefighting technique", Description = "You discovered an efficient technique for fighting fires.", Probability = 250, Experience = 150});
+            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Discover an efficient firefighting technique", Description = "You discovered an efficient technique for fighting fires.", Probability = 250, Experience = 150 });
             PositiveGameEvents.Add(new PositiveGameEvent { Name = "Save valuable property from fire", Description = "You saved valuable property from being destroyed by fire.", Probability = 200, Money = 100, Experience = 20 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Receive a surprise supply drop", Description = "You received a surprise supply drop with essential equipment.", Probability = 150, Money = 500, Experience = 300});
+            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Receive a surprise supply drop", Description = "You received a surprise supply drop with essential equipment.", Probability = 150, Money = 500, Experience = 300 });
             PositiveGameEvents.Add(new PositiveGameEvent { Name = "Uncover a water main", Description = "You uncovered a water main that can be used for firefighting.", Probability = 100 });
 
             /*

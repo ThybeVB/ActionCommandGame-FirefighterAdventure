@@ -1,9 +1,9 @@
-﻿using ActionCommandGame.Services.Model.Requests.Identity;
-using System.Net.Http.Json;
-using ActionCommandGame.Sdk.Extensions;
+﻿using ActionCommandGame.Sdk.Extensions;
 using ActionCommandGame.Services.Abstractions;
-using ActionCommandGame.Services.Model.Results.Identity;
 using ActionCommandGame.Services.Model.Core;
+using ActionCommandGame.Services.Model.Requests.Identity;
+using ActionCommandGame.Services.Model.Results.Identity;
+using System.Net.Http.Json;
 
 namespace ActionCommandGame.Sdk
 {

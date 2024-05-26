@@ -2,7 +2,7 @@
 
 namespace ActionCommandGame.Model
 {
-    public class PositiveGameEvent: IIdentifiable, IHasProbability
+    public class PositiveGameEvent : IIdentifiable, IHasProbability
     {
         public int Id { get; set; }
         public string Name { get; set; }

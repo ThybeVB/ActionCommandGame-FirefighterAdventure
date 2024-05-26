@@ -1,5 +1,5 @@
-﻿using ActionCommandGame.RestApi.Models.Enums;
-using ActionCommandGame.RestApi.Models;
+﻿using ActionCommandGame.RestApi.Models;
+using ActionCommandGame.RestApi.Models.Enums;
 using Microsoft.AspNetCore.Identity;
 
 namespace ActionCommandGame.RestApi.Services.Helpers

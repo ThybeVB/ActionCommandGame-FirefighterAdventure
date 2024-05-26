@@ -8,7 +8,7 @@
 @if (Model != null)
 {
     <div class="text-center">
-        <p>Money: <br/><strong>@Model.Money</strong></p>
+        <p>Money: <br/><strong>&euro; @Model.Money</strong></p>
         <p>Level: <br/><strong>@Model.GetLevel()</strong></p>
 
         <p>Experience until level-up: <br/><strong>(@Model.Experience/@Model.GetExperienceForNextLevel())</strong></p>
@@ -19,7 +19,7 @@
         </div>
 
         <p>Total Experience: <br/><strong>@Model.Experience</strong></p>
-            
+
         <p>
             Attack: <strong>@(Model.CurrentAttackPlayerItem?.RemainingAttack ?? 0)</strong><br/>
             Defense: <strong>@(Model.CurrentDefensePlayerItem?.RemainingDefense ?? 0)</strong><br/>

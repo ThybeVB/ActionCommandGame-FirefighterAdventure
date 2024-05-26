@@ -1,17 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ActionCommandGame.Model;
+﻿using ActionCommandGame.Model;
 using ActionCommandGame.Repository;
 using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Services.Helpers;
 using ActionCommandGame.Services.Model.Requests;
 using ActionCommandGame.Services.Model.Results;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ActionCommandGame.Services
 {
-    public class PositiveGameEventService: IPositiveGameEventService
+    public class PositiveGameEventService : IPositiveGameEventService
     {
         private readonly ActionButtonGameDbContext _database;
 
