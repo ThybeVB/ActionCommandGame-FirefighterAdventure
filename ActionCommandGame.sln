@@ -5,8 +5,6 @@ VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActionCommandGame.Model", "ActionCommandGame.Model\ActionCommandGame.Model.csproj", "{4FD7A06D-270C-4C72-B6F0-16B268EE54FB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActionCommandGame.Ui.ConsoleApp", "ActionCommandGame.Ui.Console\ActionCommandGame.Ui.ConsoleApp.csproj", "{6D6F5E15-7B32-40CE-A833-9CB5BC4DF3E7}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActionCommandGame.Repository", "ActionCommandGame.Repository\ActionCommandGame.Repository.csproj", "{3DBDF25D-9A16-458A-A89E-571CE1BB527C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActionCommandGame.Services", "ActionCommandGame.Services\ActionCommandGame.Services.csproj", "{1FEBB973-A346-409B-949F-E75F1680CBAB}"
@@ -23,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActionCommandGame.RestApi",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActionCommandGame.Sdk", "ActionCommandGame.Sdk\ActionCommandGame.Sdk.csproj", "{8D24A95D-0D45-448F-9303-E784BE6B168F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActionCommandGame.Ui.Mvc", "ActionCommandGame.Ui.Mvc\ActionCommandGame.Ui.Mvc.csproj", "{E8AA607E-8000-447C-97D2-D04F131ED885}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActionCommandGame.Ui.Mvc", "ActionCommandGame.Ui.Mvc\ActionCommandGame.Ui.Mvc.csproj", "{E8AA607E-8000-447C-97D2-D04F131ED885}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +33,6 @@ Global
 		{4FD7A06D-270C-4C72-B6F0-16B268EE54FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FD7A06D-270C-4C72-B6F0-16B268EE54FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FD7A06D-270C-4C72-B6F0-16B268EE54FB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6D6F5E15-7B32-40CE-A833-9CB5BC4DF3E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6D6F5E15-7B32-40CE-A833-9CB5BC4DF3E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6D6F5E15-7B32-40CE-A833-9CB5BC4DF3E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6D6F5E15-7B32-40CE-A833-9CB5BC4DF3E7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3DBDF25D-9A16-458A-A89E-571CE1BB527C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3DBDF25D-9A16-458A-A89E-571CE1BB527C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DBDF25D-9A16-458A-A89E-571CE1BB527C}.Release|Any CPU.ActiveCfg = Release|Any CPU
