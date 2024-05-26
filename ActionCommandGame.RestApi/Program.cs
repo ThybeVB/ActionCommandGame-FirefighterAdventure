@@ -40,7 +40,7 @@ builder.Services.AddSingleton(appSettings);
 
 builder.Services.AddDbContext<ActionButtonGameDbContext>(options =>
 {
-    options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=FiremanAdventure;Trusted_Connection=True;TrustServerCertificate=True;Encrypt=False");
+    options.UseSqlServer(appSettings.ConnectionString);
 }, ServiceLifetime.Singleton);
 
 

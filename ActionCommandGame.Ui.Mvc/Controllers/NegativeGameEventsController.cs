@@ -23,7 +23,7 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             return View();
         }
