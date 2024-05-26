@@ -1,0 +1,37 @@
+﻿@model NegativeGameEvent
+
+@{
+    ViewData["Title"] = "Negative event details";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-body text-black">
+                    <h2 class="card-title text-black">@Model.Name</h2>
+                    <p class="card-text text-black">@Model.Description</p>
+                    <hr>
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="text-black"><strong>Id:</strong> @Model.Id</p>
+                        </div>
+                        <div class="col-6">
+                            <p class="text-black"><strong>DefenseWithGearDescription:</strong> @Model.DefenseWithGearDescription</p>
+                        </div>
+                        <div class="col-6">
+                            <p class="text-black"><strong>DefenseWithoutGearDescription:</strong> @Model.DefenseWithoutGearDescription</p>
+                        </div>
+                        <div class="col-6">
+                            <p class="text-black"><strong>DefenseLoss:</strong> @Model.DefenseLoss</p>
+                        </div>
+                        <div class="col-6">
+                            <p class="text-black"><strong>Probability:</strong> @Model.Probability</p>
+                        </div>
+                    </div>
+                    <a href="@Url.Action("Index", "NegativeGameEvents")" class="btn btn-secondary mt-3">Back to negative events</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

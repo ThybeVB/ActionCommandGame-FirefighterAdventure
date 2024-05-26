@@ -2,6 +2,7 @@
 using ActionCommandGame.Sdk;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel;
 
 namespace ActionCommandGame.Ui.Mvc.Controllers
 {
@@ -23,10 +24,10 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(int itemId)
+        public async Task<IActionResult> Details(int id)
         {
-            var item = await _itemSdk.Get(itemId);
-            return PartialView("_DetailsPartial", item);
+            var item = await _itemSdk.Get(id);
+            return View("Details", item);
         }
 
         [HttpGet]

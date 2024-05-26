@@ -1,0 +1,37 @@
+﻿@model Item
+
+@{
+    ViewData["Title"] = "Item Details";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-body text-black">
+                    <h2 class="card-title text-black">@Model.Name</h2>
+                    <p class="card-text text-black">@Model.Description</p>
+                    <hr>
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="text-black"><strong>Price:</strong> €@Model.Price</p>
+                        </div>
+                        <div class="col-6">
+                            <p class="text-black"><strong>Fuel:</strong> @Model.Fuel</p>
+                        </div>
+                        <div class="col-6">
+                            <p class="text-black"><strong>Attack:</strong> @Model.Attack</p>
+                        </div>
+                        <div class="col-6">
+                            <p class="text-black"><strong>Defense:</strong> @Model.Defense</p>
+                        </div>
+                        <div class="col-6">
+                            <p class="text-black"><strong>Action Cooldown:</strong> @Model.ActionCooldownSeconds seconds</p>
+                        </div>
+                    </div>
+                    <a href="@Url.Action("Index", "Item")" class="btn btn-secondary mt-3">Back to items</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -42,6 +42,13 @@ namespace ActionCommandGame.Ui.Mvc.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var negativeGameEvent = await _negativeGameEventSdk.Get(id);
+            return View("Details", negativeGameEvent);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Edit([FromRoute] int id)
         {
             var negativeGameEvent = await _negativeGameEventSdk.Get(id);
