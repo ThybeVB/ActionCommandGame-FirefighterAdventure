@@ -41,8 +41,31 @@ namespace ActionCommandGame.Sdk
 
         public async Task<JwtAuthenticationResult?> Register(UserRegisterRequest request)
         {
-            var httpClient = _httpClientFactory.CreateClient("PeopleManagerApi");
+            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
             var route = "https://localhost:7065/api/Identity/register"; //todo wrm???? edit: binding config not working, fix later
+            var response = await httpClient.PostAsJsonAsync(route, request);
+
+            response.EnsureSuccessStatusCode();
+
+            var result = await response.Content.ReadFromJsonAsync<JwtAuthenticationResult>();
+            if (result is null)
+            {
+                return new JwtAuthenticationResult()
+                {
+                    Messages = new List<ServiceMessage>
+                    {
+                        new ServiceMessage { Code = "ApiError", Message = "An API error occurred." }
+                    }
+                };
+            }
+
+            return result;
+        }
+
+        public async Task<JwtAuthenticationResult?> Update(UserRegisterRequest request)
+        {
+            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
+            var route = "https://localhost:7065/api/Identity/update"; //todo wrm???? edit: binding config not working, fix later
             var response = await httpClient.PostAsJsonAsync(route, request);
 
             response.EnsureSuccessStatusCode();

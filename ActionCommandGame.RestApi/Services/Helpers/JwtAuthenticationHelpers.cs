@@ -69,5 +69,21 @@ namespace ActionCommandGame.RestApi.Services.Helpers
 
             return jwtResult;
         }
+
+        public static JwtAuthenticationResult UpdateError(IEnumerable<IdentityError> errors)
+        {
+            var jwtResult = new JwtAuthenticationResult();
+            foreach (var error in errors)
+            {
+                jwtResult.Messages.Add(new ServiceMessage
+                {
+                    Code = error.Code,
+                    Message = error.Description,
+                    Type = ServiceMessageType.Error
+                });
+            }
+
+            return jwtResult;
+        }
     }
 }

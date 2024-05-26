@@ -80,6 +80,36 @@ namespace ActionCommandGame.RestApi.Services
             };
         }
 
+        public async Task<JwtAuthenticationResult> Update(UserRegisterRequest request)
+        {
+            if (string.IsNullOrWhiteSpace(_jwtSettings.Secret)
+                || !_jwtSettings.Expiry.HasValue)
+            {
+                return JwtAuthenticationHelpers.JwtConfigurationError();
+            }
+
+            var existingUser = await _userManager.FindByEmailAsync(request.Username);
+
+            await _userManager.RemovePasswordAsync(existingUser);
+            await _userManager.AddPasswordAsync(existingUser, request.Password);
+
+            existingUser.Name = request.DisplayName;
+            var result = await _userManager.UpdateAsync(existingUser);
+
+            if (!result.Succeeded)
+            {
+                return JwtAuthenticationHelpers.UpdateError(result.Errors);
+            }
+
+            var roles = await _userManager.GetRolesAsync(existingUser);
+            var token = GenerateJwtToken(existingUser, _jwtSettings.Secret, _jwtSettings.Expiry.Value, roles);
+
+            return new JwtAuthenticationResult()
+            {
+                Token = token
+            };
+        }
+
         private string GenerateJwtToken(Player user, string secret, TimeSpan expiry, IEnumerable<string> roles)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();

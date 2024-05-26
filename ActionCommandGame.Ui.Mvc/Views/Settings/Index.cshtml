@@ -1,11 +1,43 @@
-﻿@model Player
+﻿@model RegisterModel
 @{
     ViewData["Title"] = "Settings";
+    var returnUrl = ViewBag.ReturnUrl?.ToString();
 }
 
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h3 class="text-center text-black">Change your settings</h3>
+                    <form method="post" asp-route-returnUrl="@returnUrl" class="mx-auto" style="max-width: 600px;">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-<div class="container">
-    <h2>Settings for @Model.Name</h2>
+                        <div class="mb-3">
+                            <label asp-for="Username" class="form-label">Email address:</label>
+                            <input asp-for="Username" class="form-control" readonly>
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="DisplayName" class="form-label">Display name:</label>
+                            <input asp-for="DisplayName" class="form-control">
+                            <span asp-validation-for="DisplayName" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label">Password:</label>
+                            <input asp-for="Password" class="form-control" type="password">
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="ConfirmPassword" class="form-label">Confirm Password:</label>
+                            <input asp-for="ConfirmPassword" class="form-control" type="password">
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
 
-    <button class="btn btn-secondary">Change password</button>
+                        <button type="submit" class="btn btn-primary w-100">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

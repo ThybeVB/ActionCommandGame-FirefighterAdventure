@@ -140,7 +140,8 @@ async Task SeedRolesAndAdminAsync(IServiceProvider serviceProvider)
         await userManager.AddToRoleAsync(adminUser, "Admin");
     }
 
-    if (await userManager.FindByEmailAsync("bavo.ketels@vives.be") != null)
+    var existingUser = await userManager.FindByEmailAsync("bavo.ketels@vives.be");
+    if (existingUser == null)
     {
         var user = new Player()
         {
