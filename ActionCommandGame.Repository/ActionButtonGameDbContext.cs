@@ -23,7 +23,6 @@ namespace ActionCommandGame.Repository
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ConfigureRelationships();
-
             base.OnModelCreating(modelBuilder);
         }
 
@@ -49,11 +48,6 @@ namespace ActionCommandGame.Repository
                 GenerateNegativeGameEvents();
             }
 
-            /*Players.Add(new Player { Name = "John Doe", Money = 100 });
-            Players.Add(new Player { Name = "John Francks", Money = 100000, Experience = 2000 });
-            Players.Add(new Player { Name = "Luc Doleman", Money = 500, Experience = 5 });
-            Players.Add(new Player { Name = "Emilio Fratilleci", Money = 12345, Experience = 200 });*/
-
             SaveChanges();
         }
 
@@ -67,7 +61,7 @@ namespace ActionCommandGame.Repository
             PositiveGameEvents.Add(new PositiveGameEvent { Name = "Inspect hydrants", Description = "Perform routine inspections of fire hydrants. Everything is in order.", Probability = 800 });
             PositiveGameEvents.Add(new PositiveGameEvent { Name = "Fire safety drill", Description = "Conduct a fire drill at a local school. Gain experience but no immediate benefits.", Probability = 750, Experience = 20 });
             PositiveGameEvents.Add(new PositiveGameEvent { Name = "Community outreach", Description = "Hand out fire safety pamphlets in the community.", Probability = 700, Experience = 2 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Daily station maintenance", Description = "Clean and maintain the fire station. No immediate benefits.", Probability = 650 });
+            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Daily station maintenance", Description = "Clean and maintain the fire station. No immediate benefits.", Probability = 650, Experience = 1 });
             PositiveGameEvents.Add(new PositiveGameEvent { Name = "Administrative duties", Description = "Complete necessary paperwork and administrative tasks.", Probability = 600, Experience = 5 });
             PositiveGameEvents.Add(new PositiveGameEvent { Name = "Restock supplies", Description = "Restock the fire truck with standard supplies. Everything is as expected.", Probability = 550, Experience = 10 });
 
@@ -75,60 +69,22 @@ namespace ActionCommandGame.Repository
             PositiveGameEvents.Add(new PositiveGameEvent { Name = "Rescue a trapped civilian", Description = "You heroically rescued a civilian trapped in a burning building.", Probability = 1000, Money = 50, Experience = 60 });
             PositiveGameEvents.Add(new PositiveGameEvent { Name = "Find a hidden water source", Description = "You discovered a hidden water source that can be used to fight fires.", Probability = 950, Money = 40, Experience = 50 });
             PositiveGameEvents.Add(new PositiveGameEvent { Name = "Extinguish a major fire", Description = "You successfully extinguished a major fire, preventing widespread damage.", Probability = 900, Money = 60, Experience = 70 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Discover a safe zone", Description = "You found a safe zone where the team can regroup and recover.", Probability = 850 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Receive backup from a fellow firefighter", Description = "A fellow firefighter joined you, providing much-needed support.", Probability = 800 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Find an extra first aid kit", Description = "You found an extra first aid kit to help treat injuries.", Probability = 750 });
+            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Discover a safe zone", Description = "You found a safe zone where the team can regroup and recover.", Probability = 850, Experience = 10, Money = 20});
+            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Receive backup from a fellow firefighter", Description = "A fellow firefighter joined you, providing much-needed support.", Probability = 800, Money = 100, Experience = 50});
+            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Find an extra first aid kit", Description = "You found an extra first aid kit to help treat injuries.", Probability = 750, Experience = 20, Money = 5 });
             PositiveGameEvents.Add(new PositiveGameEvent { Name = "Successfully navigate through a smoke-filled room", Description = "You navigated through a smoke-filled room without incident.", Probability = 700, Experience = 35 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Replenish gear at a supply station", Description = "You replenished your gear at a nearby supply station.", Probability = 650 });
+            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Replenish gear at a supply station", Description = "You replenished your gear at a nearby supply station.", Probability = 650, Money = 35, Experience = 10});
             PositiveGameEvents.Add(new PositiveGameEvent { Name = "Successfully evacuate a building", Description = "You successfully evacuated a building full of people.", Probability = 600, Money = 35, Experience = 45 });
             PositiveGameEvents.Add(new PositiveGameEvent { Name = "Receive a community hero award", Description = "You received a community hero award for your bravery.", Probability = 550, Money = 40, Experience = 50 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Find a useful tool in the debris", Description = "You found a useful tool in the debris that can aid in firefighting.", Probability = 500 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Rescue a fellow firefighter", Description = "You rescued a fellow firefighter who was in danger.", Probability = 450, Experience = 40 });
+            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Find a useful tool in the debris", Description = "You found a useful tool in the debris that can aid in firefighting.", Probability = 500, Experience = 15, Money = 20});
+            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Rescue a fellow firefighter", Description = "You rescued a fellow firefighter who was in danger.", Probability = 450, Experience = 40, Money = 15});
             PositiveGameEvents.Add(new PositiveGameEvent { Name = "Receive a morale boost from rescued civilians", Description = "The gratitude of rescued civilians boosted your morale.", Probability = 400, Experience = 30 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Locate an emergency exit quickly", Description = "You quickly located an emergency exit, ensuring a safe retreat.", Probability = 350 });
+            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Locate an emergency exit quickly", Description = "You quickly located an emergency exit, ensuring a safe retreat.", Probability = 350, Experience = 50, Money = 75});
             PositiveGameEvents.Add(new PositiveGameEvent { Name = "Get a commendation from the fire chief", Description = "You received a commendation from the fire chief for your actions.", Probability = 300, Money = 25, Experience = 35 });
             PositiveGameEvents.Add(new PositiveGameEvent { Name = "Discover an efficient firefighting technique", Description = "You discovered an efficient technique for fighting fires.", Probability = 250, Experience = 150 });
             PositiveGameEvents.Add(new PositiveGameEvent { Name = "Save valuable property from fire", Description = "You saved valuable property from being destroyed by fire.", Probability = 200, Money = 100, Experience = 20 });
             PositiveGameEvents.Add(new PositiveGameEvent { Name = "Receive a surprise supply drop", Description = "You received a surprise supply drop with essential equipment.", Probability = 150, Money = 500, Experience = 300 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Uncover a water main", Description = "You uncovered a water main that can be used for firefighting.", Probability = 100 });
-
-            /*
-            
-            ACTIONCOMMANDGAME
-            
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Nothing but boring rocks", Probability = 1000 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "The biggest Opal you ever saw.", Description = "It slips out of your hands and rolls inside a crack in the floor. It is out of reach.", Probability = 500 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Sand, dirt and dust", Probability = 1000 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "A piece of empty paper", Description = "You hold it to the light and warm it up to reveal secret texts, but it remains empty.", Probability = 1000 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "A small water stream", Description = "The water flows around your feet and creates a dirty puddle.", Probability = 1000 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Junk", Money = 1, Experience = 1, Probability = 2000 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Murphy's idea bin", Money = 1, Experience = 1, Probability = 300 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Donald's book of excuses", Money = 1, Experience = 1, Probability = 300 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Children's Treasure Map", Money = 1, Experience = 1, Probability = 300 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Trinket", Money = 5, Experience = 3, Probability = 1000 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Old Tool", Money = 10, Experience = 5, Probability = 800 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Old Equipment", Money = 10, Experience = 5, Probability = 800 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Ornate Shell", Money = 10, Experience = 5, Probability = 800 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Fossil", Money = 12, Experience = 6, Probability = 700 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Cave Shroom", Money = 20, Experience = 8, Probability = 650 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Artifact", Money = 30, Experience = 10, Probability = 500 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Scrap Metal", Money = 50, Experience = 13, Probability = 400 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Jewelry", Money = 60, Experience = 15, Probability = 400 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Peculiar Mask", Money = 100, Experience = 40, Probability = 350 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Quartz Geode", Money = 140, Experience = 50, Probability = 300 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Ancient Weapon", Money = 160, Experience = 80, Probability = 300 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Ancient Instrument", Money = 160, Experience = 80, Probability = 300 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Ancient Texts", Money = 180, Experience = 80, Probability = 300 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Gemstone", Money = 300, Experience = 100, Probability = 110 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Mysterious Potion", Money = 300, Experience = 100, Probability = 80 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Meteorite", Money = 400, Experience = 150, Probability = 200 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Ancient Bust", Money = 500, Experience = 150, Probability = 150 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Buried Treasure", Money = 1000, Experience = 200, Probability = 100 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Alien DNA", Money = 60000, Experience = 1500, Probability = 5 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Rare Collector's Item", Money = 3000, Experience = 400, Probability = 30 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Pure Gold", Money = 2000, Experience = 350, Probability = 30 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Safe Deposit Box Key", Money = 20000, Experience = 1000, Probability = 10 });
-            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Advanced Bio Tech", Money = 30000, Experience = 1500, Probability = 10 });*/
+            PositiveGameEvents.Add(new PositiveGameEvent { Name = "Uncover a water main", Description = "You uncovered a water main that can be used for firefighting.", Probability = 100, Money = 500, Experience = 350});
         }
 
         public void GenerateNegativeGameEvents()
@@ -202,58 +158,10 @@ namespace ActionCommandGame.Repository
                 DefenseLoss = 40,
                 Probability = 10
             });
-
-
-            /*
-             * ACTIONCOMMANDGAME
-             *
-             * NegativeGameEvents.Add(new NegativeGameEvent
-             
-            {
-                Name = "Rockfall",
-                Description = "As you are mining, the cave walls rumble and rocks tumble down on you",
-                DefenseWithGearDescription = "Your mining gear allows you and your tools to escape unscathed",
-                DefenseWithoutGearDescription = "You try to cover your face but the rocks are too heavy. That hurt!",
-                DefenseLoss = 2,
-                Probability = 100
-            });
-            NegativeGameEvents.Add(new NegativeGameEvent
-            {
-                Name = "Cave Rat",
-                Description = "As you are mining, you feel something scurry between your feet!",
-                DefenseWithGearDescription = "It tries to bite you, but your mining gear keeps the rat's teeth from sinking in.",
-                DefenseWithoutGearDescription = "It tries to bite you and nicks you in the ankles. It already starts to glow dangerously.",
-                DefenseLoss = 3,
-                Probability = 50
-            });
-            NegativeGameEvents.Add(new NegativeGameEvent
-            {
-                Name = "Sinkhole",
-                Description = "As you are mining, the ground suddenly gives way and you fall down into a chasm!",
-                DefenseWithGearDescription = "Your gear grants a safe landing, protecting you and your pickaxe.",
-                DefenseWithoutGearDescription = "You tumble down the dark hole and take a really bad landing. That hurt!",
-                DefenseLoss = 2,
-                Probability = 100
-            });
-            NegativeGameEvents.Add(new NegativeGameEvent
-            {
-                Name = "Ancient Bacteria",
-                Description = "As you are mining, you uncover a green slime oozing from the cracks!",
-                DefenseWithGearDescription = "Your gear barely covers you from the noxious goop. You are safe.",
-                DefenseWithoutGearDescription = "The slime covers your hands and arms and starts biting through your flesh. This hurts!",
-                DefenseLoss = 3,
-                Probability = 50
-            });
-            */
         }
 
         private void GenerateAttackItems()
         {
-            /*Items.Add(new Item { Name = "Basic Pickaxe", Attack = 50, Price = 50 });
-            Items.Add(new Item { Name = "Enhanced Pick", Attack = 300, Price = 300 });
-            Items.Add(new Item { Name = "Turbo Pick", Attack = 500, Price = 500 });
-            Items.Add(new Item { Name = "Mithril Warpick", Attack = 5000, Price = 15000 });
-            Items.Add(new Item { Name = "Thor's Hammer", Attack = 50, Price = 1000000 });*/
             Items.Add(new Item { Name = "Basic Hatchet", Description = "A basic hatchet for breaking through obstacles.", Attack = 50, Price = 50 });
             Items.Add(new Item { Name = "Fire Extinguisher", Description = "A standard fire extinguisher for putting out flames.", Attack = 150, Price = 100 });
             Items.Add(new Item { Name = "Heavy-Duty Crowbar", Description = "A sturdy crowbar for prying open doors and windows.", Attack = 200, Price = 150 });
@@ -269,13 +177,6 @@ namespace ActionCommandGame.Repository
 
         private void GenerateDefenseItems()
         {
-            /*Items.Add(new Item { Name = "Torn Clothes", Defense = 20, Price = 20 });
-            Items.Add(new Item { Name = "Hardened Leather Gear", Defense = 150, Price = 200 });
-            Items.Add(new Item { Name = "Iron plated Armor", Defense = 500, Price = 1000 });
-            Items.Add(new Item { Name = "Rock Shield", Defense = 2000, Price = 10000 });
-            Items.Add(new Item { Name = "Emerald Shield", Defense = 2000, Price = 10000 });
-            Items.Add(new Item { Name = "Diamond Shield", Defense = 20000, Price = 10000 });*/
-
             Items.Add(new Item { Name = "Basic Firefighter Suit", Description = "A basic suit offering minimal protection.", Defense = 50, Price = 50 });
             Items.Add(new Item { Name = "Protective Gloves", Description = "Gloves that protect your hands from burns and cuts.", Defense = 100, Price = 75 });
             Items.Add(new Item { Name = "Fire-Resistant Helmet", Description = "A helmet designed to protect against falling debris and high heat.", Defense = 150, Price = 100 });
@@ -290,12 +191,6 @@ namespace ActionCommandGame.Repository
 
         private void GenerateFoodItems()
         {
-            /*Items.Add(new Item { Name = "Apple", ActionCooldownSeconds = 50, Fuel = 4, Price = 8 });
-            Items.Add(new Item { Name = "Energy Bar", ActionCooldownSeconds = 45, Fuel = 5, Price = 10 });
-            Items.Add(new Item { Name = "Field Rations", ActionCooldownSeconds = 30, Fuel = 30, Price = 300 });
-            Items.Add(new Item { Name = "Abbye cheese", ActionCooldownSeconds = 25, Fuel = 100, Price = 500 });
-            Items.Add(new Item { Name = "Abbye Beer", ActionCooldownSeconds = 25, Fuel = 100, Price = 500 });
-            Items.Add(new Item { Name = "Celestial Burrito", ActionCooldownSeconds = 15, Fuel = 500, Price = 10000 });*/
             Items.Add(new Item { Name = "Protein Shake", ActionCooldownSeconds = 50, Fuel = 5, Price = 10 });
             Items.Add(new Item { Name = "Granola Bar", ActionCooldownSeconds = 45, Fuel = 10, Price = 15 });
             Items.Add(new Item { Name = "Hydration Pack", ActionCooldownSeconds = 40, Fuel = 15, Price = 20 });
@@ -309,8 +204,6 @@ namespace ActionCommandGame.Repository
 
 #if DEBUG
             Items.Add(new Item { Name = "Developer Food", ActionCooldownSeconds = 1, Fuel = 1000, Price = 1 });
-
-            //God Mode Item
             Items.Add(new Item
             {
                 Name = "GOD MODE",
@@ -326,10 +219,6 @@ namespace ActionCommandGame.Repository
 
         private void GenerateDecorativeItems()
         {
-            /*Items.Add(new Item { Name = "Balloon", Description = "Does nothing. Do you feel special now?", Price = 10 });
-            Items.Add(new Item { Name = "Blue Medal", Description = "For those who cannot afford the Crown of Flexing.", Price = 100000 });
-            Items.Add(new Item { Name = "Crown of Flexing", Description = "Yes, show everyone how much money you are willing to spend on something useless!", Price = 500000 });
-        */
             Items.Add(new Item { Name = "Mini Firetruck Model", Description = "A miniature model of a firetruck. It's just for show.", Price = 50 });
             Items.Add(new Item { Name = "Firefighter Trophy", Description = "A shiny trophy for display. It has no practical use.", Price = 500 });
             Items.Add(new Item { Name = "Commemorative Fire Helmet", Description = "A decorative helmet to celebrate your achievements. It does nothing.", Price = 10000 });

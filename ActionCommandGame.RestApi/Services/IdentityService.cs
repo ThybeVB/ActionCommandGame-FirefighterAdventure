@@ -63,7 +63,7 @@ namespace ActionCommandGame.RestApi.Services
                 return JwtAuthenticationHelpers.UserExists();
             }
 
-            var user = new Player { Name = request.DisplayName, UserName = request.Username, Email = request.Username };
+            var user = new Player { Name = request.DisplayName, UserName = request.Username, Email = request.Username, Money = 25 };
             var result = await _userManager.CreateAsync(user, request.Password);
 
             if (!result.Succeeded)
@@ -138,7 +138,6 @@ namespace ActionCommandGame.RestApi.Services
             };
 
             var token = jwtTokenHandler.CreateToken(tokenDescriptor);
-
             var jwtToken = jwtTokenHandler.WriteToken(token);
 
             return jwtToken;

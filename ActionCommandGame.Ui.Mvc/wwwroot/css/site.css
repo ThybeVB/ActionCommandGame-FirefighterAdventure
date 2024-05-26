@@ -51,6 +51,10 @@ body {
     color: black;
 }
 
+.validation-summary-errors {
+    color: darkred;
+}
+
 /* GAME PAGE */
 .sidebar {
     background-color: #bb2233;
@@ -88,7 +92,7 @@ body.game .navbar {
 }
 
 .shaved-card {
-    max-width: 80%; /* Adjust this percentage to the desired width */
+    max-width: 80%;
     margin-right: auto;
 }
 
