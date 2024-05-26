@@ -21,7 +21,7 @@ namespace ActionCommandGame.Sdk
 
         public async Task<ServiceResult<GameResult>> PerformAction(string pId)
         {
-            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
+            var httpClient = _httpClientFactory.CreateClient(HttpClientExtensions.ApiName);
             var route = $"api/Game/PerformAction/{pId}";
             var token = _tokenStore.GetToken();
             httpClient.AddAuthorization(token);
@@ -49,7 +49,7 @@ namespace ActionCommandGame.Sdk
 
         public async Task<ServiceResult<BuyResult>> Buy(string pId, int iId)
         {
-            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
+            var httpClient = _httpClientFactory.CreateClient(HttpClientExtensions.ApiName);
             var request = new BuyRequest
             {
                 ItemId = iId,

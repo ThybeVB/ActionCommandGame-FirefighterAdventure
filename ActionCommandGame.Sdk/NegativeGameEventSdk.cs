@@ -18,7 +18,7 @@ namespace ActionCommandGame.Sdk
 
         public async Task<IList<NegativeGameEvent>> Find()
         {
-            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
+            var httpClient = _httpClientFactory.CreateClient(HttpClientExtensions.ApiName);
             var route = "/api/NegativeGameEvent";
             var token = _tokenStore.GetToken();
             httpClient.AddAuthorization(token);
@@ -36,7 +36,7 @@ namespace ActionCommandGame.Sdk
 
         public async Task<NegativeGameEvent?> Get(int id)
         {
-            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
+            var httpClient = _httpClientFactory.CreateClient(HttpClientExtensions.ApiName);
             var route = $"/api/NegativeGameEvent/{id}";
             var token = _tokenStore.GetToken();
             httpClient.AddAuthorization(token);
@@ -50,7 +50,7 @@ namespace ActionCommandGame.Sdk
 
         public async Task<NegativeGameEvent?> Create(NegativeGameEvent request)
         {
-            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
+            var httpClient = _httpClientFactory.CreateClient(HttpClientExtensions.ApiName);
             var route = $"api/NegativeGameEvent";
             var token = _tokenStore.GetToken();
             httpClient.AddAuthorization(token);
@@ -64,7 +64,7 @@ namespace ActionCommandGame.Sdk
 
         public async Task<NegativeGameEvent?> Update(int id, NegativeGameEvent request)
         {
-            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
+            var httpClient = _httpClientFactory.CreateClient(HttpClientExtensions.ApiName);
             var route = $"api/NegativeGameEvent/{id}";
             var token = _tokenStore.GetToken();
             httpClient.AddAuthorization(token);
@@ -78,7 +78,7 @@ namespace ActionCommandGame.Sdk
 
         public async Task Delete(int id)
         {
-            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
+            var httpClient = _httpClientFactory.CreateClient(HttpClientExtensions.ApiName);
             var route = $"/api/NegativeGameEvent/{id}";
             var token = _tokenStore.GetToken();
             httpClient.AddAuthorization(token);

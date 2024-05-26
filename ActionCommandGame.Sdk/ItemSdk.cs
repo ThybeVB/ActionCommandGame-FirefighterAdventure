@@ -18,7 +18,7 @@ namespace ActionCommandGame.Sdk
 
         public async Task<IList<Item>> Find()
         {
-            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
+            var httpClient = _httpClientFactory.CreateClient(HttpClientExtensions.ApiName);
             var route = "/api/Item";
             var token = _tokenStore.GetToken();
             httpClient.AddAuthorization(token);
@@ -36,7 +36,7 @@ namespace ActionCommandGame.Sdk
 
         public async Task<Item?> Get(int id)
         {
-            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
+            var httpClient = _httpClientFactory.CreateClient(HttpClientExtensions.ApiName);
             var route = $"/api/Item/{id}";
             var token = _tokenStore.GetToken();
             httpClient.AddAuthorization(token);
@@ -50,7 +50,7 @@ namespace ActionCommandGame.Sdk
 
         public async Task<Item?> Create(Item item)
         {
-            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
+            var httpClient = _httpClientFactory.CreateClient(HttpClientExtensions.ApiName);
             var route = $"api/Item";
             var token = _tokenStore.GetToken();
             httpClient.AddAuthorization(token);
@@ -64,7 +64,7 @@ namespace ActionCommandGame.Sdk
 
         public async Task<Item?> Update(int id, Item item)
         {
-            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
+            var httpClient = _httpClientFactory.CreateClient(HttpClientExtensions.ApiName);
             var route = $"api/Item/{id}";
             var token = _tokenStore.GetToken();
             httpClient.AddAuthorization(token);
@@ -78,7 +78,7 @@ namespace ActionCommandGame.Sdk
 
         public async Task Delete(int id)
         {
-            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
+            var httpClient = _httpClientFactory.CreateClient(HttpClientExtensions.ApiName);
             var route = $"/api/Item/{id}";
             var token = _tokenStore.GetToken();
             httpClient.AddAuthorization(token);

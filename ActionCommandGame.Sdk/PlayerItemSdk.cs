@@ -18,7 +18,7 @@ namespace ActionCommandGame.Sdk
 
         public async Task<IList<PlayerItem>> Find(string? currentPlayerId)
         {
-            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
+            var httpClient = _httpClientFactory.CreateClient(HttpClientExtensions.ApiName);
             var route = $"/api/PlayerItem/find";
             if (!string.IsNullOrWhiteSpace(currentPlayerId))
             {
@@ -41,7 +41,7 @@ namespace ActionCommandGame.Sdk
 
         public async Task<PlayerItem?> Get(int id)
         {
-            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
+            var httpClient = _httpClientFactory.CreateClient(HttpClientExtensions.ApiName);
             var route = $"/api/PlayerItem/{id}";
             var token = _tokenStore.GetToken();
             httpClient.AddAuthorization(token);
@@ -55,7 +55,7 @@ namespace ActionCommandGame.Sdk
 
         public async Task<PlayerItem?> Create(PlayerItem playerItem)
         {
-            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
+            var httpClient = _httpClientFactory.CreateClient(HttpClientExtensions.ApiName);
             var route = $"api/PlayerItem";
             var token = _tokenStore.GetToken();
             httpClient.AddAuthorization(token);
@@ -69,7 +69,7 @@ namespace ActionCommandGame.Sdk
 
         public async Task<PlayerItem?> Update(int id, PlayerItem playerItem)
         {
-            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
+            var httpClient = _httpClientFactory.CreateClient(HttpClientExtensions.ApiName);
             var route = $"api/PlayerItem/{id}";
             var token = _tokenStore.GetToken();
             httpClient.AddAuthorization(token);
@@ -83,7 +83,7 @@ namespace ActionCommandGame.Sdk
 
         public async Task Delete(int id)
         {
-            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
+            var httpClient = _httpClientFactory.CreateClient(HttpClientExtensions.ApiName);
             var route = $"/api/PlayerItem/{id}";
             var token = _tokenStore.GetToken();
             httpClient.AddAuthorization(token);

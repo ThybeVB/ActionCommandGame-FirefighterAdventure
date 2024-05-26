@@ -2,6 +2,8 @@
 {
     public static class HttpClientExtensions
     {
+        public static string ApiName = "ActionCommandGameApi";
+
         public static HttpClient AddAuthorization(this HttpClient httpClient, string bearerToken)
         {
             if (httpClient.DefaultRequestHeaders.Contains("Authorization"))

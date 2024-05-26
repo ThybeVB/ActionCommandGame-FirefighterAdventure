@@ -18,7 +18,7 @@ namespace ActionCommandGame.Sdk
 
         public async Task<IList<Player>> Find()
         {
-            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
+            var httpClient = _httpClientFactory.CreateClient(HttpClientExtensions.ApiName);
             var route = "/api/Player";
             var bearer = _tokenStore.GetToken();
             httpClient.AddAuthorization(bearer);
@@ -36,7 +36,7 @@ namespace ActionCommandGame.Sdk
 
         public async Task<Player?> Get(string id)
         {
-            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
+            var httpClient = _httpClientFactory.CreateClient(HttpClientExtensions.ApiName);
             var route = $"/api/Player/{id}";
             var bearer = _tokenStore.GetToken();
             httpClient.AddAuthorization(bearer);
@@ -50,7 +50,7 @@ namespace ActionCommandGame.Sdk
 
         public async Task<Player?> Create(Player player)
         {
-            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
+            var httpClient = _httpClientFactory.CreateClient(HttpClientExtensions.ApiName);
             var route = $"api/Player";
             var bearer = _tokenStore.GetToken();
             httpClient.AddAuthorization(bearer);
@@ -64,7 +64,7 @@ namespace ActionCommandGame.Sdk
 
         public async Task<Player?> Update(string id, Player player)
         {
-            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
+            var httpClient = _httpClientFactory.CreateClient(HttpClientExtensions.ApiName);
             var route = $"api/Player/{id}";
             var bearer = _tokenStore.GetToken();
             httpClient.AddAuthorization(bearer);
@@ -78,7 +78,7 @@ namespace ActionCommandGame.Sdk
 
         public async Task Delete(string id)
         {
-            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
+            var httpClient = _httpClientFactory.CreateClient(HttpClientExtensions.ApiName);
             var route = $"/api/Player/{id}";
             var bearer = _tokenStore.GetToken();
             httpClient.AddAuthorization(bearer);

@@ -1,5 +1,6 @@
 ﻿using ActionCommandGame.Services.Model.Requests.Identity;
 using System.Net.Http.Json;
+using ActionCommandGame.Sdk.Extensions;
 using ActionCommandGame.Services.Abstractions;
 using ActionCommandGame.Services.Model.Results.Identity;
 using ActionCommandGame.Services.Model.Core;
@@ -17,8 +18,8 @@ namespace ActionCommandGame.Sdk
 
         public async Task<JwtAuthenticationResult?> SignIn(UserSignInRequest request)
         {
-            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
-            var route = "https://localhost:7065/api/Identity/signin"; //todo wrm??
+            var httpClient = _httpClientFactory.CreateClient(HttpClientExtensions.ApiName);
+            var route = "/api/Identity/signin";
             var response = await httpClient.PostAsJsonAsync(route, request);
 
             response.EnsureSuccessStatusCode();
@@ -41,8 +42,8 @@ namespace ActionCommandGame.Sdk
 
         public async Task<JwtAuthenticationResult?> Register(UserRegisterRequest request)
         {
-            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
-            var route = "https://localhost:7065/api/Identity/register"; //todo wrm???? edit: binding config not working, fix later
+            var httpClient = _httpClientFactory.CreateClient(HttpClientExtensions.ApiName);
+            var route = "/api/Identity/register";
             var response = await httpClient.PostAsJsonAsync(route, request);
 
             response.EnsureSuccessStatusCode();
@@ -64,8 +65,8 @@ namespace ActionCommandGame.Sdk
 
         public async Task<JwtAuthenticationResult?> Update(UserRegisterRequest request)
         {
-            var httpClient = _httpClientFactory.CreateClient("ActionCommandGameApi");
-            var route = "https://localhost:7065/api/Identity/update"; //todo wrm???? edit: binding config not working, fix later
+            var httpClient = _httpClientFactory.CreateClient(HttpClientExtensions.ApiName);
+            var route = "/api/Identity/update";
             var response = await httpClient.PostAsJsonAsync(route, request);
 
             response.EnsureSuccessStatusCode();
